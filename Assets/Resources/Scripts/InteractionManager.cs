@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class InteractionManager : MonoBehaviour
@@ -29,13 +30,7 @@ public class InteractionManager : MonoBehaviour
         Entity deleteEntity = other.GetComponent<Entity>();
         if (deleteEntity != null)
         {
-            for (int i = 0; i < _entitiesToInteract.Count; i++)
-            {
-                if (_entitiesToInteract[i] == deleteEntity)
-                {
-                    _entitiesToInteract.RemoveAt(i);
-                }
-            }
+            RemoveEntityToInteract(deleteEntity);
         }
     }
 
@@ -90,7 +85,32 @@ public class InteractionManager : MonoBehaviour
         if (_entity == null) return;
         if (Input.GetKeyDown(_entity.GetKeyToInteract()))
         {
-            _entity.Interact();
+            StartCoroutine(Interact());
+        }
+    }
+
+    private void RemoveEntityToInteract(Entity entity)
+    {
+        for (int i = 0; i < _entitiesToInteract.Count(); i++)
+        {
+            if (_entitiesToInteract[i] == entity)
+            {
+                _entitiesToInteract.RemoveAt(i);
+                if (entity == _entity)
+                {
+                    _entity = null;
+                    ChangeActiveEntity();
+                }
+            }
+        }
+    }
+
+    private IEnumerator Interact()
+    {
+        yield return StartCoroutine(_entity.Interact());
+        if (!_entity.GetInteractIsAvailable())
+        {
+            RemoveEntityToInteract(_entity);
         }
     }
 }

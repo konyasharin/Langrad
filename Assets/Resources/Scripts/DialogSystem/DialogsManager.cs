@@ -29,8 +29,12 @@ public class DialogsManager : MonoBehaviour
         foreach (var sentence in dialog.sentences)
         {
             yield return StartCoroutine(_dialogWindow.ShowText(sentence));
+            if (sentence.choiceElements.Length != 0)
+            {
+                yield return StartCoroutine(_dialogWindow.ShowChoice());
+            }
         }
-
+        
         yield return StartCoroutine(_dialogWindow.Deactivate());
     }
 }

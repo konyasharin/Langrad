@@ -25,12 +25,12 @@ public abstract class Entity : MonoBehaviour
         return InteractIsAvailable;
     }
     
-    public void Interact()
+    public IEnumerator Interact()
     {
         switch (EntityType)
         {
             case EntityTypes.Character:
-                StartCoroutine(GetComponent<Character>().StartDialog());
+                yield return StartCoroutine(GetComponent<Character>().StartDialog());
                 break;
         }
     }

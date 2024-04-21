@@ -118,4 +118,9 @@ public class DialogWindow : MonoBehaviour
         }
         _isSkip = false;
     }
+
+    public IEnumerator ShowChoice()
+    {
+        
+    }
 }
