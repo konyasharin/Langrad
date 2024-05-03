@@ -389,6 +389,7 @@ GameObject:
   m_Component:
   - component: {fileID: 82438245}
   - component: {fileID: 82438244}
+  - component: {fileID: 82438246}
   m_Layer: 0
   m_Name: DialogsManager
   m_TagString: Untagged
@@ -423,6 +424,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &82438246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 82438243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b79e2bccc703dc048b1e727c9a89a7e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &130369412
 GameObject:
   m_ObjectHideFlags: 0
@@ -2277,6 +2290,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 743126106}
+  - {fileID: 696675802}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2510,6 +2524,81 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1612950180}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &696675801
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 696675802}
+  - component: {fileID: 696675803}
+  - component: {fileID: 696675804}
+  m_Layer: 5
+  m_Name: Choice
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &696675802
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 696675801}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 341972359}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 720}
+  m_SizeDelta: {x: 1500, y: 700}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &696675803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 696675801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 6
+  m_StartCorner: 2
+  m_StartAxis: 1
+  m_CellSize: {x: 500, y: 100}
+  m_Spacing: {x: 0, y: 20}
+  m_Constraint: 0
+  m_ConstraintCount: 2
+--- !u!114 &696675804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 696675801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfa42a404173e814992fb17ee3cfe968, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  choiceButton: {fileID: 8356013382617490333, guid: 5fdecbee7d2c022478915645ba9c922e, type: 3}
+  _showTime: 0.453
 --- !u!1 &704440498
 GameObject:
   m_ObjectHideFlags: 0
@@ -2614,12 +2703,23 @@ MonoBehaviour:
       text: "\u0442\u0435\u0441\u0442 \u0442\u0435\u0441\u0442 \u0442\u0435\u0441\u0442"
     - name: "\u0412\u043E\u0432\u0430\u043D"
       text: "\u0442\u0435\u0441\u0442 \u0442\u0435\u0441\u0442 \u0442\u0435\u0441\u0442\u043F\u0440\u0432\u0432\u043F\u0432\u043F\u0432\u0430\u043F\u0432\u043F\u0432\u0430\u043F\u0432\u043F\u0432\u043F\u0432"
+    choices:
+    - plotInfluence: 0
+      influenceCount: 1
+      text: 1123
+    - plotInfluence: 0
+      influenceCount: 1
+      text: 1123
+    - plotInfluence: 0
+      influenceCount: 1
+      text: 1123
   - dialogStatus: 0
     sentences:
     - name: "\u041A\u043E\u043B\u044F"
       text: "\u0442\u0435\u0441\u0442 \u0442\u0435\u0441\u0442 \u0442\u0435\u0441\u0442\u043F\u0440\u0432\u0432\u043F\u0432\u043F\u0432\u0430\u043F\u0432\u043F\u0432\u0430\u043F\u0432\u043F\u0432\u043F\u0432"
     - name: "\u0412\u043E\u0432\u0430\u043D"
       text: "\u0412\u043E\u0432\u0430\u043D123"
+    choices: []
 --- !u!95 &704440502
 Animator:
   serializedVersion: 5
@@ -2800,7 +2900,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tmpTextField: {fileID: 1319389099}
   tmpNameField: {fileID: 477383860}
-  totalMovementTime: 0.5
+  move:
+    totalMovementTime: 0.5
+    fromPosition: {x: 0, y: -200}
+    toPosition: {x: 0, y: 200}
   speedText: 0.075
 --- !u!1 &954316784
 GameObject:
@@ -3078,12 +3181,14 @@ MonoBehaviour:
       text: "\u0442\u0435\u0441\u0442 \u0442\u0435\u0441\u0442 \u0442\u0435\u0441\u0442"
     - name: "\u0412\u043E\u0432\u0430\u043D"
       text: "\u0442\u0435\u0441\u0442 \u0442\u0435\u0441\u0442 \u0442\u0435\u0441\u0442\u043F\u0440\u0432\u0432\u043F\u0432\u043F\u0432\u0430\u043F\u0432\u043F\u0432\u0430\u043F\u0432\u043F\u0432\u043F\u0432"
+    choices: []
   - dialogStatus: 0
     sentences:
     - name: "\u041A\u043E\u043B\u044F"
       text: "\u0442\u0435\u0441\u0442 \u0442\u0435\u0441\u0442 \u0442\u0435\u0441\u0442\u043F\u0440\u0432\u0432\u043F\u0432\u043F\u0432\u0430\u043F\u0432\u043F\u0432\u0430\u043F\u0432\u043F\u0432\u043F\u0432"
     - name: "\u0412\u043E\u0432\u0430\u043D"
       text: "\u0412\u043E\u0432\u0430\u043D123"
+    choices: []
 --- !u!1 &1124855829
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,6 +7,4 @@ public struct Sentence
     public string name;
     [TextArea]
     public string text;
-
-    public string[] choiceElements;
 }

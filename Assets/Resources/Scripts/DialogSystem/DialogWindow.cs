@@ -11,6 +11,7 @@ public class DialogWindow : MonoBehaviour
     private static DialogWindow _instance;
     [SerializeField] private TMP_Text tmpTextField;
     [SerializeField] private TMP_Text tmpNameField;
+    [SerializeField] private CanvasMove move;
     private RectTransform _rectTransform;
     /// <summary>
     /// Показывает активно ли сейчас диалоговое окно
@@ -25,9 +26,6 @@ public class DialogWindow : MonoBehaviour
     /// (или для прекращения диалога)
     /// </summary>
     private bool _isWait = false;
-    [Range(0.1f, 0.5f)]
-    [SerializeField]
-    private float totalMovementTime;
     [Range(0.05f, 0.1f)]
     [SerializeField]
     private float speedText;
@@ -64,26 +62,17 @@ public class DialogWindow : MonoBehaviour
     {
         tmpNameField.text = "";
         tmpTextField.text = "";
-        yield return StartCoroutine(Move(_rectTransform.anchoredPosition, new Vector2(_rectTransform.anchoredPosition.x, 200)));
+        yield return StartCoroutine(CanvasManager.Move(move, _rectTransform));
         _isActive = true;
     }
 
     public IEnumerator Deactivate()
     {
         _isActive = false;
-        yield return StartCoroutine(Move(_rectTransform.anchoredPosition, new Vector2(_rectTransform.anchoredPosition.x, -200)));
-    }
-
-    private IEnumerator Move(Vector2 fromPosition, Vector2 toPosition)
-    {
-        float currentMovementTime = 0f;
-        while (currentMovementTime < totalMovementTime)
-        {
-            currentMovementTime += Time.deltaTime;
-            _rectTransform.anchoredPosition =
-                Vector2.Lerp(fromPosition, toPosition, currentMovementTime / totalMovementTime);
-            yield return null;
-        }
+        CanvasMove deactivateMove = move;
+        deactivateMove.fromPosition = move.toPosition;
+        deactivateMove.toPosition = move.fromPosition;
+        yield return StartCoroutine(CanvasManager.Move(deactivateMove, _rectTransform));
     }
 
     public IEnumerator ShowText(Sentence sentence)
@@ -117,10 +106,5 @@ public class DialogWindow : MonoBehaviour
             yield return null;
         }
         _isSkip = false;
-    }
-
-    public IEnumerator ShowChoice()
-    {
-        
     }
 }

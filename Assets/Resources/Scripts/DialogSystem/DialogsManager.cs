@@ -7,6 +7,7 @@ public class DialogsManager : MonoBehaviour
 {
     private static DialogsManager _instance;
     private DialogWindow _dialogWindow;
+    private ChoicesWindow _choicesWindow;
 
     private void Awake()
     {
@@ -16,6 +17,7 @@ public class DialogsManager : MonoBehaviour
     private void Start()
     {
         _dialogWindow = DialogWindow.GetInstance();
+        _choicesWindow = ChoicesWindow.GetInstance();
     }
 
     public static DialogsManager GetInstance()
@@ -29,11 +31,9 @@ public class DialogsManager : MonoBehaviour
         foreach (var sentence in dialog.sentences)
         {
             yield return StartCoroutine(_dialogWindow.ShowText(sentence));
-            if (sentence.choiceElements.Length != 0)
-            {
-                yield return StartCoroutine(_dialogWindow.ShowChoice());
-            }
         }
+        
+        yield return StartCoroutine(_choicesWindow.Activate(dialog.choices));
         
         yield return StartCoroutine(_dialogWindow.Deactivate());
     }
