@@ -69,6 +69,8 @@ public class DialogWindow : MonoBehaviour
     public IEnumerator Deactivate()
     {
         _isActive = false;
+        _isSkip = false;
+        _isWait = false;
         CanvasMove deactivateMove = move;
         deactivateMove.fromPosition = move.toPosition;
         deactivateMove.toPosition = move.fromPosition;

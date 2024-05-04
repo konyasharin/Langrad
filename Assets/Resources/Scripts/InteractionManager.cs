@@ -36,7 +36,7 @@ public class InteractionManager : MonoBehaviour
 
     private void ChangeActiveEntity()
     {
-        if (_entitiesToInteract.Count == 0)
+        if (_entitiesToInteract.Count == 0 || Player.GetInstance().moveIsBlock)
         {
             _entity = null;
             Destroy(_keyObject);
@@ -107,10 +107,11 @@ public class InteractionManager : MonoBehaviour
 
     private IEnumerator Interact()
     {
-        yield return StartCoroutine(_entity.Interact());
-        if (!_entity.GetInteractIsAvailable())
+        Entity cachedEntity = _entity;
+        yield return _entity.Interact();
+        if (!cachedEntity.GetInteractIsAvailable())
         {
-            RemoveEntityToInteract(_entity);
+            RemoveEntityToInteract(cachedEntity);
         }
     }
 }

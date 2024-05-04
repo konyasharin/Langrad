@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public abstract class Entity : MonoBehaviour
 {
-    protected EntityTypes EntityType;
+    protected EntityType EntityType;
     [SerializeField] private GameObject keyObject;
     protected KeyCode KeyToInteract;
     protected bool InteractIsAvailable;
@@ -29,7 +29,7 @@ public abstract class Entity : MonoBehaviour
     {
         switch (EntityType)
         {
-            case EntityTypes.Character:
+            case EntityType.Character:
                 yield return StartCoroutine(GetComponent<Character>().StartDialog());
                 break;
         }

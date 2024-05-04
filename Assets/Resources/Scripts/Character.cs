@@ -8,11 +8,9 @@ public class Character : Entity
     [SerializeField]
     private string characterName;
     [SerializeField] private Dialog[] dialogs;
-    private DialogsManager _dialogsManager;
     private void Start()
     {
-        EntityType = EntityTypes.Character;
-        _dialogsManager = DialogsManager.GetInstance();
+        EntityType = EntityType.Character;
         KeyToInteract = KeyCode.F;
         CheckInteractIsAvailable();
     }
@@ -21,7 +19,7 @@ public class Character : Entity
     {
         foreach (var dialog in dialogs)
         {
-            if (dialog.dialogStatus == DialogStatuses.Unblock)
+            if (dialog.dialogStatus == DialogStatus.Unblock)
             {
                 InteractIsAvailable = true;
                 break;
@@ -35,10 +33,10 @@ public class Character : Entity
     {
         for (int i = 0; i < dialogs.Length; i++)
         {
-            if (dialogs[i].dialogStatus == DialogStatuses.Unblock)
+            if (dialogs[i].dialogStatus == DialogStatus.Unblock)
             {
-                yield return StartCoroutine(_dialogsManager.StartDialog(dialogs[i]));
-                dialogs[i].dialogStatus = DialogStatuses.Completed;
+                yield return StartCoroutine(DialogsManager.Instance.StartDialog(dialogs[i]));
+                dialogs[i].dialogStatus = DialogStatus.Completed;
                 break;
             }
         }

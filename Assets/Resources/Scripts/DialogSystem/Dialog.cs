@@ -3,7 +3,7 @@ using System;
 [Serializable]
 public struct Dialog
 {
-    public DialogStatuses dialogStatus;
+    public DialogStatus dialogStatus;
     public Sentence[] sentences;
     public Choice[] choices;
 }

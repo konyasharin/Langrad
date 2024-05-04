@@ -9,6 +9,8 @@ public class Player : MonoBehaviour
     private Animator _animatorController;
     private SpriteRenderer _spriteRenderer;
     private static Player _instance;
+    [HideInInspector] 
+    public bool moveIsBlock = false;
 
     public static Player GetInstance()
     {
@@ -28,7 +30,7 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.Confined;
         _animatorController = GetComponent<Animator>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
     }
@@ -38,24 +40,31 @@ public class Player : MonoBehaviour
     {
         float speedX = Input.GetAxis("Horizontal");
         float speedY = Input.GetAxis("Vertical");
-        transform.position = new Vector2(speedX * speed * Time.deltaTime + transform.position.x, 
-            speedY * speed * Time.deltaTime + transform.position.y);
-        if (Math.Abs(speedX) > 0 || Math.Abs(speedY) > 0)
+        if (!moveIsBlock)
         {
-            _animatorController.SetBool("isRun", true);
+            transform.position = new Vector2(speedX * speed * Time.deltaTime + transform.position.x, 
+                speedY * speed * Time.deltaTime + transform.position.y);
+            if (Math.Abs(speedX) > 0 || Math.Abs(speedY) > 0)
+            {
+                _animatorController.SetBool("isRun", true);
+            }
+            else
+            {
+                _animatorController.SetBool("isRun", false);
+            }
+
+            if (speedX < 0)
+            {
+                _spriteRenderer.flipX = false;
+            }
+            else if (speedX > 0)
+            {
+                _spriteRenderer.flipX = true;
+            }
         }
         else
         {
             _animatorController.SetBool("isRun", false);
-        }
-
-        if (speedX < 0)
-        {
-            _spriteRenderer.flipX = false;
-        }
-        else if (speedX > 0)
-        {
-            _spriteRenderer.flipX = true;
         }
     }
 }

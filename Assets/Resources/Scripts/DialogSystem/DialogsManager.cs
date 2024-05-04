@@ -6,8 +6,12 @@ using UnityEngine;
 public class DialogsManager : MonoBehaviour
 {
     private static DialogsManager _instance;
+    public static DialogsManager Instance { get; }
     private DialogWindow _dialogWindow;
     private ChoicesWindow _choicesWindow;
+    private Player _player;
+    private Dictionary<PlotInfluence, int> _plotInfluences;
+    public Dictionary<PlotInfluence, int> PlotInfluences { get; }
 
     private void Awake()
     {
@@ -18,23 +22,36 @@ public class DialogsManager : MonoBehaviour
     {
         _dialogWindow = DialogWindow.GetInstance();
         _choicesWindow = ChoicesWindow.GetInstance();
-    }
-
-    public static DialogsManager GetInstance()
-    {
-        return _instance;
+        _player = Player.GetInstance();
+        _plotInfluences = SaveLoadManager.LoadGame().PlotInfluences;
     }
 
     public IEnumerator StartDialog(Dialog dialog)
     {
-        yield return StartCoroutine(_dialogWindow.Activate());
+        _player.moveIsBlock = true;
+        yield return _dialogWindow.Activate();
         foreach (var sentence in dialog.sentences)
         {
-            yield return StartCoroutine(_dialogWindow.ShowText(sentence));
+            yield return _dialogWindow.ShowText(sentence);
         }
+
+        if (dialog.choices.Length != 0)
+        {
+            yield return _choicesWindow.Activate(dialog.choices);
         
-        yield return StartCoroutine(_choicesWindow.Activate(dialog.choices));
-        
-        yield return StartCoroutine(_dialogWindow.Deactivate());
+            while (_choicesWindow.GetIsActive())
+            {
+                yield return null;
+            }
+        }
+        yield return _dialogWindow.Deactivate();
+        _player.moveIsBlock = false;
+    }
+
+    public void ChangePlotInfluence(PlotInfluence plotInfluence, int countInfluence)
+    {
+        _plotInfluences[plotInfluence] += countInfluence;
+        Debug.Log(_plotInfluences[plotInfluence]);
+        SaveLoadManager.SaveGame();
     }
 }

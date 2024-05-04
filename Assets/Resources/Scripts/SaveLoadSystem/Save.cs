@@ -6,7 +6,9 @@ using UnityEngine;
 [Serializable]
 public class Save
 {
-    private Dictionary<string, DialogStatuses> _dialogs;
+    private Dictionary<string, DialogStatus> _dialogs;
+    private Dictionary<PlotInfluence, int> _plotInfluences;
+    public Dictionary<PlotInfluence, int> PlotInfluences { get; }
 
     public void SaveDialogs(Dialog[] dialogs)
     {
@@ -14,5 +16,10 @@ public class Save
         {
             _dialogs.Add("Vova", dialog.dialogStatus);   
         }
+    }
+
+    public void SavePlotInfluences(Dictionary<PlotInfluence, int> plotInfluences)
+    {
+        _plotInfluences = new Dictionary<PlotInfluence, int>(plotInfluences);
     }
 }

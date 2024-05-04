@@ -1,9 +1,9 @@
 using System;
+using UnityEngine.Events;
 
 [Serializable]
 public struct Choice
 {
-    public PlotInfluences plotInfluence;
-    public int influenceCount;
     public string text;
+    public UnityEvent choiceEvent;
 }

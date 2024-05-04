@@ -5,33 +5,45 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
-public class SaveLoadManager : MonoBehaviour
+public static class SaveLoadManager
 {
-    private string _filePath;
-    [SerializeField]
-    private Dialog[] dialogs;
+    private static readonly string _filePath = Application.persistentDataPath + "save.save";
+    private static Dialog[] dialogs = Array.Empty<Dialog>();
 
-    private void Start()
-    {
-        _filePath = Application.persistentDataPath + "save.save";
-    }
-
-    public void SaveGame()
+    public static void SaveGame()
     {
         BinaryFormatter bf = new BinaryFormatter();
         FileStream fs = new FileStream(_filePath, FileMode.Create);
         Save save = new Save();
         save.SaveDialogs(dialogs);
+        save.SavePlotInfluences(DialogsManager.Instance.PlotInfluences);
         bf.Serialize(fs, save);
         fs.Close();
     }
 
-    public void LoadGame()
+    public static Save LoadGame()
     {
-        if (!File.Exists(_filePath)) return;
+        Save save;
+        if (!File.Exists(_filePath))
+        {
+            save = new Save();
+            InitializeSaveData(save);
+            return save;
+        }
         BinaryFormatter bf = new BinaryFormatter();
         FileStream fs = new FileStream(_filePath, FileMode.Open);
-        Save save = (Save)bf.Deserialize(fs);
+        save = (Save)bf.Deserialize(fs);
         fs.Close();
+        return save;
+    }
+
+    private static void InitializeSaveData(Save save)
+    {
+        save.SavePlotInfluences(new Dictionary<PlotInfluence, int>()
+        {
+            { PlotInfluence.Family, 0 },
+            { PlotInfluence.Balance, 0 },
+            { PlotInfluence.State, 0 },
+        });
     }
 }
