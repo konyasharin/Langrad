@@ -2598,7 +2598,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   choiceButton: {fileID: 8356013382617490333, guid: 5fdecbee7d2c022478915645ba9c922e, type: 3}
-  _showTime: 0.453
+  showTime: 0.502
 --- !u!1 &704440498
 GameObject:
   m_ObjectHideFlags: 0
@@ -2704,15 +2704,18 @@ MonoBehaviour:
     - name: "\u0412\u043E\u0432\u0430\u043D"
       text: "\u0442\u0435\u0441\u0442 \u0442\u0435\u0441\u0442 \u0442\u0435\u0441\u0442\u043F\u0440\u0432\u0432\u043F\u0432\u043F\u0432\u0430\u043F\u0432\u043F\u0432\u0430\u043F\u0432\u043F\u0432\u043F\u0432"
     choices:
-    - plotInfluence: 0
-      influenceCount: 1
-      text: 1123
-    - plotInfluence: 0
-      influenceCount: 1
-      text: 1123
-    - plotInfluence: 0
-      influenceCount: 1
-      text: 1123
+    - text: 1123
+      choiceEvent:
+        m_PersistentCalls:
+          m_Calls: []
+    - text: 1123
+      choiceEvent:
+        m_PersistentCalls:
+          m_Calls: []
+    - text: 1123
+      choiceEvent:
+        m_PersistentCalls:
+          m_Calls: []
   - dialogStatus: 0
     sentences:
     - name: "\u041A\u043E\u043B\u044F"
@@ -8361,6 +8364,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2
+  moveIsBlock: 0
 --- !u!95 &1612950178
 Animator:
   serializedVersion: 5
