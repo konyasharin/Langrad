@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class ChoicesWindow : MonoBehaviour
 {
-    private static ChoicesWindow _instance;
+    public static ChoicesWindow Instance { get; private set; }
     [SerializeField] private Button choiceButton;
     
     [Range(0f, 1f)]
@@ -18,10 +18,6 @@ public class ChoicesWindow : MonoBehaviour
     private bool _isActive = false;
     private bool _isWait = false;
     private readonly List<Button> _choiceButtons = new List<Button>();
-    public static ChoicesWindow GetInstance()
-    {
-        return _instance;
-    }
 
     public bool GetIsActive()
     {
@@ -30,7 +26,7 @@ public class ChoicesWindow : MonoBehaviour
 
     private void Awake()
     {
-        _instance = this;
+        Instance = this;
     }
 
     public IEnumerator Activate(Choice[] choices)
@@ -96,7 +92,10 @@ public class ChoicesWindow : MonoBehaviour
         if (_isWait)
         {
             _isWait = false;
-            choice.choiceEvent.Invoke();
+            foreach (var plotInfluence in choice.plotInfluences)
+            {
+               DialogsManager.Instance.ChangePlotInfluence(plotInfluence.plotInfluenceType, plotInfluence.countPlotInfluence);
+            }
             StartCoroutine(Deactivate());   
         }
     }

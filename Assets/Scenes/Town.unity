@@ -2697,31 +2697,8 @@ MonoBehaviour:
   keyObject: {fileID: 4525869564229892376, guid: 33585472f5db69142ae420ed64279613, type: 3}
   characterName: "\u0412\u043E\u0432\u0447\u0438\u043A"
   dialogs:
-  - dialogStatus: 1
-    sentences:
-    - name: "\u041A\u043E\u043B\u044F"
-      text: "\u0442\u0435\u0441\u0442 \u0442\u0435\u0441\u0442 \u0442\u0435\u0441\u0442"
-    - name: "\u0412\u043E\u0432\u0430\u043D"
-      text: "\u0442\u0435\u0441\u0442 \u0442\u0435\u0441\u0442 \u0442\u0435\u0441\u0442\u043F\u0440\u0432\u0432\u043F\u0432\u043F\u0432\u0430\u043F\u0432\u043F\u0432\u0430\u043F\u0432\u043F\u0432\u043F\u0432"
-    choices:
-    - text: 1123
-      choiceEvent:
-        m_PersistentCalls:
-          m_Calls: []
-    - text: 1123
-      choiceEvent:
-        m_PersistentCalls:
-          m_Calls: []
-    - text: 1123
-      choiceEvent:
-        m_PersistentCalls:
-          m_Calls: []
   - dialogStatus: 0
-    sentences:
-    - name: "\u041A\u043E\u043B\u044F"
-      text: "\u0442\u0435\u0441\u0442 \u0442\u0435\u0441\u0442 \u0442\u0435\u0441\u0442\u043F\u0440\u0432\u0432\u043F\u0432\u043F\u0432\u0430\u043F\u0432\u043F\u0432\u0430\u043F\u0432\u043F\u0432\u043F\u0432"
-    - name: "\u0412\u043E\u0432\u0430\u043D"
-      text: "\u0412\u043E\u0432\u0430\u043D123"
+    sentences: []
     choices: []
 --- !u!95 &704440502
 Animator:

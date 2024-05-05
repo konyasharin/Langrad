@@ -7,8 +7,7 @@ using UnityEngine;
 public class Save
 {
     private Dictionary<string, DialogStatus> _dialogs;
-    private Dictionary<PlotInfluence, int> _plotInfluences;
-    public Dictionary<PlotInfluence, int> PlotInfluences { get; }
+    public Dictionary<PlotInfluenceType, int> PlotInfluences { get; private set; }
 
     public void SaveDialogs(Dialog[] dialogs)
     {
@@ -18,8 +17,8 @@ public class Save
         }
     }
 
-    public void SavePlotInfluences(Dictionary<PlotInfluence, int> plotInfluences)
+    public void SavePlotInfluences(Dictionary<PlotInfluenceType, int> plotInfluences)
     {
-        _plotInfluences = new Dictionary<PlotInfluence, int>(plotInfluences);
+        PlotInfluences = plotInfluences;
     }
 }

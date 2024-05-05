@@ -36,7 +36,7 @@ public class InteractionManager : MonoBehaviour
 
     private void ChangeActiveEntity()
     {
-        if (_entitiesToInteract.Count == 0 || Player.GetInstance().moveIsBlock)
+        if (_entitiesToInteract.Count == 0 || Player.Instance.moveIsBlock)
         {
             _entity = null;
             Destroy(_keyObject);
@@ -46,17 +46,17 @@ public class InteractionManager : MonoBehaviour
         float minDistance = 0;
         if (_entity == null)
         {
-            minDistance = Vector2.Distance(_entitiesToInteract[0].transform.position, Player.GetInstance().transform.position);
+            minDistance = Vector2.Distance(_entitiesToInteract[0].transform.position, Player.Instance.transform.position);
             _entity = _entitiesToInteract[0];
             isChange = true;
         }
         else
         {
-            minDistance = Vector2.Distance(_entity.transform.position, Player.GetInstance().transform.position);
+            minDistance = Vector2.Distance(_entity.transform.position, Player.Instance.transform.position);
         }
         for (int i = 0; i < _entitiesToInteract.Count; i++)
         {
-            float distance = Vector2.Distance(_entitiesToInteract[i].transform.position, Player.GetInstance().transform.position);
+            float distance = Vector2.Distance(_entitiesToInteract[i].transform.position, Player.Instance.transform.position);
             if (distance < minDistance)
             {
                 minDistance = distance;

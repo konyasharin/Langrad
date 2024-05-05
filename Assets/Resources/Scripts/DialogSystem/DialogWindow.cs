@@ -8,7 +8,7 @@ using Object = UnityEngine.Object;
 
 public class DialogWindow : MonoBehaviour
 {
-    private static DialogWindow _instance;
+    public static DialogWindow Instance { get; private set; }
     [SerializeField] private TMP_Text tmpTextField;
     [SerializeField] private TMP_Text tmpNameField;
     [SerializeField] private CanvasMove move;
@@ -29,15 +29,10 @@ public class DialogWindow : MonoBehaviour
     [Range(0.05f, 0.1f)]
     [SerializeField]
     private float speedText;
-
-    public static DialogWindow GetInstance()
-    {
-        return _instance;
-    }
     
     private void Awake()
     {
-        _instance = this;
+        Instance = this;
     }
     
     private void Start()

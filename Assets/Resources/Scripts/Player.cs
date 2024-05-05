@@ -8,14 +8,9 @@ public class Player : MonoBehaviour
     [Min(0.1f)] public float speed = 1f;
     private Animator _animatorController;
     private SpriteRenderer _spriteRenderer;
-    private static Player _instance;
+    public static Player Instance { get; private set; }
     [HideInInspector] 
     public bool moveIsBlock = false;
-
-    public static Player GetInstance()
-    {
-        return _instance;
-    }
     
     private void OnDrawGizmos()
     {
@@ -25,7 +20,7 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        _instance = this;
+        Instance = this;
     }
 
     private void Start()

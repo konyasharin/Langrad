@@ -39,11 +39,11 @@ public static class SaveLoadManager
 
     private static void InitializeSaveData(Save save)
     {
-        save.SavePlotInfluences(new Dictionary<PlotInfluence, int>()
+        save.SavePlotInfluences(new Dictionary<PlotInfluenceType, int>()
         {
-            { PlotInfluence.Family, 0 },
-            { PlotInfluence.Balance, 0 },
-            { PlotInfluence.State, 0 },
+            { PlotInfluenceType.Family, 0 },
+            { PlotInfluenceType.Balance, 0 },
+            { PlotInfluenceType.State, 0 },
         });
     }
 }

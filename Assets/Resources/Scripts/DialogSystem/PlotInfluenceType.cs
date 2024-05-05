@@ -1,4 +1,4 @@
-public enum PlotInfluence
+public enum PlotInfluenceType
 {
     Family,
     Balance,

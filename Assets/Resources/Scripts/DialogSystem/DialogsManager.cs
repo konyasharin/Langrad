@@ -5,25 +5,23 @@ using UnityEngine;
 
 public class DialogsManager : MonoBehaviour
 {
-    private static DialogsManager _instance;
-    public static DialogsManager Instance { get; }
+    public static DialogsManager Instance { get; private set; }
     private DialogWindow _dialogWindow;
     private ChoicesWindow _choicesWindow;
     private Player _player;
-    private Dictionary<PlotInfluence, int> _plotInfluences;
-    public Dictionary<PlotInfluence, int> PlotInfluences { get; }
+    public Dictionary<PlotInfluenceType, int> PlotInfluences { get; private set; }
 
     private void Awake()
     {
-        _instance = this;
+        Instance = this;
     }
 
     private void Start()
     {
-        _dialogWindow = DialogWindow.GetInstance();
-        _choicesWindow = ChoicesWindow.GetInstance();
-        _player = Player.GetInstance();
-        _plotInfluences = SaveLoadManager.LoadGame().PlotInfluences;
+        _dialogWindow = DialogWindow.Instance;
+        _choicesWindow = ChoicesWindow.Instance;
+        _player = Player.Instance;
+        PlotInfluences = SaveLoadManager.LoadGame().PlotInfluences;
     }
 
     public IEnumerator StartDialog(Dialog dialog)
@@ -48,10 +46,9 @@ public class DialogsManager : MonoBehaviour
         _player.moveIsBlock = false;
     }
 
-    public void ChangePlotInfluence(PlotInfluence plotInfluence, int countInfluence)
+    public void ChangePlotInfluence(PlotInfluenceType plotInfluenceType, int countInfluence)
     {
-        _plotInfluences[plotInfluence] += countInfluence;
-        Debug.Log(_plotInfluences[plotInfluence]);
+        PlotInfluences[plotInfluenceType] += countInfluence;
         SaveLoadManager.SaveGame();
     }
 }
