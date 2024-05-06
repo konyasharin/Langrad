@@ -13,7 +13,7 @@ public class Save
     {
         foreach (var dialog in dialogs)
         {
-            _dialogs.Add("Vova", dialog.dialogStatus);   
+            _dialogs.Add("Vova", dialog.status);   
         }
     }
 

@@ -28,7 +28,7 @@ public class DialogsManager : MonoBehaviour
     {
         _player.moveIsBlock = true;
         yield return _dialogWindow.Activate();
-        foreach (var sentence in dialog.sentences)
+        foreach (var sentence in dialog.scriptableObject.sentences)
         {
             yield return _dialogWindow.ShowText(sentence);
         }

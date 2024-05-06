@@ -94,7 +94,7 @@ public class ChoicesWindow : MonoBehaviour
             _isWait = false;
             foreach (var plotInfluence in choice.plotInfluences)
             {
-               DialogsManager.Instance.ChangePlotInfluence(plotInfluence.plotInfluenceType, plotInfluence.countPlotInfluence);
+               DialogsManager.Instance.ChangePlotInfluence(plotInfluence.type, plotInfluence.count);
             }
             StartCoroutine(Deactivate());   
         }

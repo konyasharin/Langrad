@@ -19,7 +19,7 @@ public class Character : Entity
     {
         foreach (var dialog in dialogs)
         {
-            if (dialog.dialogStatus == DialogStatus.Unblock)
+            if (dialog.status == DialogStatus.Unblock)
             {
                 InteractIsAvailable = true;
                 break;
@@ -33,10 +33,10 @@ public class Character : Entity
     {
         for (int i = 0; i < dialogs.Length; i++)
         {
-            if (dialogs[i].dialogStatus == DialogStatus.Unblock)
+            if (dialogs[i].status == DialogStatus.Unblock)
             {
                 yield return StartCoroutine(DialogsManager.Instance.StartDialog(dialogs[i]));
-                dialogs[i].dialogStatus = DialogStatus.Completed;
+                dialogs[i].status = DialogStatus.Completed;
                 break;
             }
         }

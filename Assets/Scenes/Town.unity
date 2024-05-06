@@ -389,7 +389,6 @@ GameObject:
   m_Component:
   - component: {fileID: 82438245}
   - component: {fileID: 82438244}
-  - component: {fileID: 82438246}
   m_Layer: 0
   m_Name: DialogsManager
   m_TagString: Untagged
@@ -424,18 +423,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &82438246
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 82438243}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b79e2bccc703dc048b1e727c9a89a7e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &130369412
 GameObject:
   m_ObjectHideFlags: 0
@@ -2697,9 +2684,8 @@ MonoBehaviour:
   keyObject: {fileID: 4525869564229892376, guid: 33585472f5db69142ae420ed64279613, type: 3}
   characterName: "\u0412\u043E\u0432\u0447\u0438\u043A"
   dialogs:
-  - dialogStatus: 0
-    sentences: []
-    choices: []
+  - status: 1
+    scriptableObject: {fileID: 11400000, guid: 6c7dea31db20a3741b23f2aa0e7d611f, type: 2}
 --- !u!95 &704440502
 Animator:
   serializedVersion: 5
@@ -3154,21 +3140,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   keyObject: {fileID: 4525869564229892376, guid: 33585472f5db69142ae420ed64279613, type: 3}
   characterName: "\u0412\u043E\u0432\u0447\u0438\u043A"
-  dialogs:
-  - dialogStatus: 1
-    sentences:
-    - name: "\u041A\u043E\u043B\u044F"
-      text: "\u0442\u0435\u0441\u0442 \u0442\u0435\u0441\u0442 \u0442\u0435\u0441\u0442"
-    - name: "\u0412\u043E\u0432\u0430\u043D"
-      text: "\u0442\u0435\u0441\u0442 \u0442\u0435\u0441\u0442 \u0442\u0435\u0441\u0442\u043F\u0440\u0432\u0432\u043F\u0432\u043F\u0432\u0430\u043F\u0432\u043F\u0432\u0430\u043F\u0432\u043F\u0432\u043F\u0432"
-    choices: []
-  - dialogStatus: 0
-    sentences:
-    - name: "\u041A\u043E\u043B\u044F"
-      text: "\u0442\u0435\u0441\u0442 \u0442\u0435\u0441\u0442 \u0442\u0435\u0441\u0442\u043F\u0440\u0432\u0432\u043F\u0432\u043F\u0432\u0430\u043F\u0432\u043F\u0432\u0430\u043F\u0432\u043F\u0432\u043F\u0432"
-    - name: "\u0412\u043E\u0432\u0430\u043D"
-      text: "\u0412\u043E\u0432\u0430\u043D123"
-    choices: []
+  dialogs: []
 --- !u!1 &1124855829
 GameObject:
   m_ObjectHideFlags: 0
