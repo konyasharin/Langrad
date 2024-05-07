@@ -2684,8 +2684,18 @@ MonoBehaviour:
   keyObject: {fileID: 4525869564229892376, guid: 33585472f5db69142ae420ed64279613, type: 3}
   characterName: "\u0412\u043E\u0432\u0447\u0438\u043A"
   dialogs:
-  - status: 1
-    scriptableObject: {fileID: 11400000, guid: 6c7dea31db20a3741b23f2aa0e7d611f, type: 2}
+  - status: 0
+    scriptableObject: {fileID: 0}
+    choices:
+    - text: 
+      plotInfluences: []
+      dialogToggles:
+      - character: {fileID: 0}
+        dialogName: 
+      - character: {fileID: 0}
+        dialogName: 
+      - character: {fileID: 0}
+        dialogName: 
 --- !u!95 &704440502
 Animator:
   serializedVersion: 5

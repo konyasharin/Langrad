@@ -2,12 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Character : Entity
 {
     [SerializeField]
     private string characterName;
-    [SerializeField] private Dialog[] dialogs;
+    [field: SerializeField] public Dialog[] Dialogs { get; private set; }
     private void Start()
     {
         EntityType = EntityType.Character;
@@ -17,7 +18,7 @@ public class Character : Entity
 
     private void CheckInteractIsAvailable()
     {
-        foreach (var dialog in dialogs)
+        foreach (var dialog in Dialogs)
         {
             if (dialog.status == DialogStatus.Unblock)
             {
@@ -31,12 +32,12 @@ public class Character : Entity
     
     public IEnumerator StartDialog()
     {
-        for (int i = 0; i < dialogs.Length; i++)
+        for (int i = 0; i < Dialogs.Length; i++)
         {
-            if (dialogs[i].status == DialogStatus.Unblock)
+            if (Dialogs[i].status == DialogStatus.Unblock)
             {
-                yield return StartCoroutine(DialogsManager.Instance.StartDialog(dialogs[i]));
-                dialogs[i].status = DialogStatus.Completed;
+                yield return StartCoroutine(DialogsManager.Instance.StartDialog(Dialogs[i]));
+                Dialogs[i].status = DialogStatus.Completed;
                 break;
             }
         }
