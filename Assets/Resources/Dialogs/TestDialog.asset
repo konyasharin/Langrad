@@ -18,8 +18,3 @@ MonoBehaviour:
   - name: "\u0412\u043E\u0432\u0447\u0438\u043A"
     text: 123 123 123 123 123 123 123 123 123 123 123 123 123 123123 123 123 123
       123 123 123 123 123 123 123 123 123 123
-  choices:
-  - text: 1
-    plotInfluences: []
-  - text: 2
-    plotInfluences: []

@@ -16,11 +16,11 @@ public class Character : Entity
         CheckInteractIsAvailable();
     }
 
-    private void CheckInteractIsAvailable()
+    public void CheckInteractIsAvailable()
     {
         foreach (var dialog in Dialogs)
         {
-            if (dialog.status == DialogStatus.Unblock)
+            if (dialog.status == DialogStatus.Unblock && dialog.scriptableObject != null)
             {
                 InteractIsAvailable = true;
                 break;

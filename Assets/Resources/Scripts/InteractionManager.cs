@@ -8,14 +8,15 @@ public class InteractionManager : MonoBehaviour
 {
     private Entity _entity;
     private GameObject _keyObject;
-    private readonly List<Entity> _entitiesToInteract = new List<Entity>();
+    private readonly List<Entity> _entitiesInInteractZone = new List<Entity>();
+    private List<Entity> _entitiesToInteract = new List<Entity>();
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         Entity newEntity = other.GetComponent<Entity>();
-        if (newEntity != null && newEntity.GetInteractIsAvailable())
+        if (newEntity != null)
         {
-            _entitiesToInteract.Add(newEntity);
+            _entitiesInInteractZone.Add(newEntity);
             ChangeActiveEntity();
         }
     }
@@ -30,12 +31,22 @@ public class InteractionManager : MonoBehaviour
         Entity deleteEntity = other.GetComponent<Entity>();
         if (deleteEntity != null)
         {
-            RemoveEntityToInteract(deleteEntity);
+            RemoveEntityFromList(_entitiesInInteractZone, deleteEntity);
+            RemoveEntityFromList(_entitiesToInteract, deleteEntity);
         }
     }
 
     private void ChangeActiveEntity()
     {
+        _entitiesToInteract = new List<Entity>();
+        foreach (var entity in _entitiesInInteractZone)
+        {
+            if (entity.GetInteractIsAvailable())
+            {
+                _entitiesToInteract.Add(entity);
+            }
+        }
+        
         if (_entitiesToInteract.Count == 0 || Player.Instance.moveIsBlock)
         {
             _entity = null;
@@ -89,20 +100,21 @@ public class InteractionManager : MonoBehaviour
         }
     }
 
-    private void RemoveEntityToInteract(Entity entity)
+    private void RemoveEntityFromList(List<Entity> entities, Entity entity)
     {
-        for (int i = 0; i < _entitiesToInteract.Count(); i++)
+        for (int i = 0; i < entities.Count(); i++)
         {
-            if (_entitiesToInteract[i] == entity)
+            if (entities[i] == entity)
             {
-                _entitiesToInteract.RemoveAt(i);
+                entities.RemoveAt(i);
                 if (entity == _entity)
                 {
                     _entity = null;
-                    ChangeActiveEntity();
                 }
+                break;
             }
         }
+        ChangeActiveEntity();
     }
 
     private IEnumerator Interact()
@@ -111,7 +123,7 @@ public class InteractionManager : MonoBehaviour
         yield return _entity.Interact();
         if (!cachedEntity.GetInteractIsAvailable())
         {
-            RemoveEntityToInteract(cachedEntity);
+            RemoveEntityFromList(_entitiesToInteract, cachedEntity);
         }
     }
 }

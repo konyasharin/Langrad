@@ -96,6 +96,19 @@ public class ChoicesWindow : MonoBehaviour
             {
                DialogsManager.Instance.ChangePlotInfluence(plotInfluence.type, plotInfluence.count);
             }
+
+            foreach (var dialogToggle in choice.dialogToggles)
+            {
+                for (int i = 0; i < dialogToggle.character.Dialogs.Length; i++)
+                {
+                    if (dialogToggle.character.Dialogs[i].scriptableObject.name == dialogToggle.dialogName)
+                    {
+                        dialogToggle.character.Dialogs[i].ToggleStatus(dialogToggle.newDialogStatus);
+                    }
+                }
+                dialogToggle.character.CheckInteractIsAvailable();
+            }
+            
             StartCoroutine(Deactivate());   
         }
     }

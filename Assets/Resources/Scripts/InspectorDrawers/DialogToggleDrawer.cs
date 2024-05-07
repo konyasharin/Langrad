@@ -12,6 +12,7 @@ public class DialogToggleDrawer : PropertyDrawer
         {
             SerializedProperty characterProperty = property.FindPropertyRelative("character");
             SerializedProperty dialogNameProperty = property.FindPropertyRelative("dialogName");
+            SerializedProperty newDialogStatusProperty = property.FindPropertyRelative("newDialogStatus");
             Character character = (Character)characterProperty.objectReferenceValue;
             EditorGUILayout.PropertyField(characterProperty, new GUIContent("Character"));
             if (character != null)
@@ -28,7 +29,8 @@ public class DialogToggleDrawer : PropertyDrawer
                 {
                     int index = 0;
                     index = EditorGUILayout.Popup("Dialog Name", index, dialogsNames.ToArray());
-                    dialogNameProperty.stringValue = dialogsNames[index];   
+                    dialogNameProperty.stringValue = dialogsNames[index];
+                    EditorGUILayout.PropertyField(newDialogStatusProperty);
                 }
                 else
                 {
