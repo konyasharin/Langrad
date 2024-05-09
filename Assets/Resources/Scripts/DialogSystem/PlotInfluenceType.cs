@@ -1,6 +1,9 @@
-public enum PlotInfluenceType
+namespace Resources.Scripts.DialogSystem
 {
-    Family,
-    Balance,
-    State,
+    public enum PlotInfluenceType
+    {
+        Family,
+        Balance,
+        State,
+    }
 }

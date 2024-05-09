@@ -1,46 +1,50 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
+using Resources.Scripts.DialogSystem;
 using UnityEngine;
-using UnityEngine.Serialization;
+using System.Linq;
 
-public class Character : Entity
+namespace Resources.Scripts
 {
-    [SerializeField]
-    private string characterName;
-    [field: SerializeField] public Dialog[] Dialogs { get; private set; }
-    private void Start()
+    public class Character : Entity
     {
-        EntityType = EntityType.Character;
-        KeyToInteract = KeyCode.F;
-        CheckInteractIsAvailable();
-    }
+        [field: SerializeField]
+        public string CharacterName { get; private set; }
+        [field: SerializeField] public Dialog[] Dialogs { get; private set; }
 
-    public void CheckInteractIsAvailable()
-    {
-        foreach (var dialog in Dialogs)
+        private void Start()
         {
-            if (dialog.status == DialogStatus.Unblock && dialog.scriptableObject != null)
-            {
-                InteractIsAvailable = true;
-                break;
-            }
-
-            InteractIsAvailable = false;
+            EntityType = EntityType.Character;
+            KeyToInteract = KeyCode.F;
+            CheckInteractIsAvailable();
         }
-    }
+
+        public void CheckInteractIsAvailable()
+        {
+            foreach (var dialog in Dialogs)
+            {
+                if (dialog.status == DialogStatus.Unblock && dialog.scriptableObject != null)
+                {
+                    InteractIsAvailable = true;
+                    break;
+                }
+
+                InteractIsAvailable = false;
+            }
+        }
     
-    public IEnumerator StartDialog()
-    {
-        for (int i = 0; i < Dialogs.Length; i++)
+        public IEnumerator StartDialog()
         {
-            if (Dialogs[i].status == DialogStatus.Unblock)
+            for (int i = 0; i < Dialogs.Length; i++)
             {
-                yield return StartCoroutine(DialogsManager.Instance.StartDialog(Dialogs[i]));
-                Dialogs[i].status = DialogStatus.Completed;
-                break;
+                if (Dialogs[i].status == DialogStatus.Unblock)
+                {
+                    yield return StartCoroutine(DialogsManager.Instance.StartDialog(Dialogs[i]));
+                    Dialogs[i].status = DialogStatus.Completed;
+                    break;
+                }
             }
+            CheckInteractIsAvailable();
         }
-        CheckInteractIsAvailable();
     }
 }

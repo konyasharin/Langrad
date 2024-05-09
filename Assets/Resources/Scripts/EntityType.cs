@@ -1,5 +1,8 @@
-public enum EntityType
+namespace Resources.Scripts
 {
-    Character,
-    Weapon
+    public enum EntityType
+    {
+        Character,
+        Weapon
+    }
 }

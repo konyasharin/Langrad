@@ -1,6 +1,9 @@
-public enum DialogStatus
+namespace Resources.Scripts.DialogSystem
 {
-    Block,
-    Unblock,
-    Completed
+    public enum DialogStatus
+    {
+        Block,
+        Unblock,
+        Completed
+    }
 }

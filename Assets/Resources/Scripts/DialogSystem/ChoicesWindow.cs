@@ -1,115 +1,122 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-public class ChoicesWindow : MonoBehaviour
+namespace Resources.Scripts.DialogSystem
 {
-    public static ChoicesWindow Instance { get; private set; }
-    [SerializeField] private Button choiceButton;
+    public class ChoicesWindow : MonoBehaviour
+    {
+        public static ChoicesWindow Instance { get; private set; }
+        [SerializeField] private Button choiceButton;
     
-    [Range(0f, 1f)]
-    [SerializeField] 
-    private float showTime;
+        [Range(0f, 1f)]
+        [SerializeField] 
+        private float showTime;
 
-    private bool _isActive = false;
-    private bool _isWait = false;
-    private readonly List<Button> _choiceButtons = new List<Button>();
+        private bool _isActive = false;
+        private bool _isWait = false;
+        private readonly List<Button> _choiceButtons = new List<Button>();
 
-    public bool GetIsActive()
-    {
-        return _isActive;
-    }
-
-    private void Awake()
-    {
-        Instance = this;
-    }
-
-    public IEnumerator Activate(Choice[] choices)
-    {
-        _isActive = true;
-        foreach (var choice in choices)
+        public bool GetIsActive()
         {
-            yield return StartCoroutine(ShowChoice(choice));
-        }
-        _isWait = true;
-    }
-    
-    public IEnumerator Deactivate()
-    {
-        for (int i = _choiceButtons.Count - 1; i >= 0; i--)
-        {
-            yield return HideChoice(_choiceButtons[i]);
+            return _isActive;
         }
 
-        _isActive = false;
-    }
-
-    private IEnumerator ShowChoice(Choice choice)
-    {
-        Button newButton = Instantiate(choiceButton, transform);
-        _choiceButtons.Add(newButton);
-        Color newButtonColor = newButton.image.color;
-        TMP_Text buttonText = newButton.GetComponentInChildren<TMP_Text>();
-        buttonText.text = choice.text;
-        newButton.onClick.AddListener(delegate { Choose(choice); });
-        newButtonColor.a = 0f;
-        buttonText.color = new Color(buttonText.color.r, buttonText.color.g, buttonText.color.b, newButtonColor.a);
-        newButton.image.color = newButtonColor;
-        float currentTime = 0;
-        while (currentTime < showTime)
+        private void Awake()
         {
-            currentTime += Time.deltaTime;
-            newButtonColor.a = Mathf.Clamp01(currentTime / showTime);
+            Instance = this;
+        }
+
+        public IEnumerator Activate(Choice[] choices)
+        {
+            _isActive = true;
+            foreach (var choice in choices)
+            {
+                yield return StartCoroutine(ShowChoice(choice));
+            }
+            _isWait = true;
+        }
+    
+        public IEnumerator Deactivate()
+        {
+            for (int i = _choiceButtons.Count - 1; i >= 0; i--)
+            {
+                yield return HideChoice(_choiceButtons[i]);
+            }
+
+            _isActive = false;
+        }
+
+        private IEnumerator ShowChoice(Choice choice)
+        {
+            Button newButton = Instantiate(choiceButton, transform);
+            _choiceButtons.Add(newButton);
+            Color newButtonColor = newButton.image.color;
+            TMP_Text buttonText = newButton.GetComponentInChildren<TMP_Text>();
+            buttonText.text = choice.text;
+            newButton.onClick.AddListener(delegate { Choose(choice); });
+            newButtonColor.a = 0f;
+            buttonText.color = new Color(buttonText.color.r, buttonText.color.g, buttonText.color.b, newButtonColor.a);
             newButton.image.color = newButtonColor;
-            buttonText.color = new Color(buttonText.color.r, buttonText.color.g, buttonText.color.b, newButtonColor.a);
-            yield return null;
-        }
-    }
-
-    private IEnumerator HideChoice(Button button)
-    {
-        Color newButtonColor = button.image.color;
-        TMP_Text buttonText = button.GetComponentInChildren<TMP_Text>();
-        float currentTime = 0;
-        while (currentTime < showTime)
-        {
-            currentTime += Time.deltaTime;
-            newButtonColor.a = Mathf.Clamp01((showTime - currentTime) / showTime);
-            button.image.color = newButtonColor;
-            buttonText.color = new Color(buttonText.color.r, buttonText.color.g, buttonText.color.b, newButtonColor.a);
-            yield return null;
-        }
-        Destroy(button);
-    }
-
-    private void Choose(Choice choice)
-    {
-        if (_isWait)
-        {
-            _isWait = false;
-            foreach (var plotInfluence in choice.plotInfluences)
+            float currentTime = 0;
+            while (currentTime < showTime)
             {
-               DialogsManager.Instance.ChangePlotInfluence(plotInfluence.type, plotInfluence.count);
+                currentTime += Time.deltaTime;
+                newButtonColor.a = Mathf.Clamp01(currentTime / showTime);
+                newButton.image.color = newButtonColor;
+                buttonText.color = new Color(buttonText.color.r, buttonText.color.g, buttonText.color.b, newButtonColor.a);
+                yield return null;
             }
+        }
 
-            foreach (var dialogToggle in choice.dialogToggles)
+        private IEnumerator HideChoice(Button button)
+        {
+            Color newButtonColor = button.image.color;
+            TMP_Text buttonText = button.GetComponentInChildren<TMP_Text>();
+            float currentTime = 0;
+            while (currentTime < showTime)
             {
-                for (int i = 0; i < dialogToggle.character.Dialogs.Length; i++)
+                currentTime += Time.deltaTime;
+                newButtonColor.a = Mathf.Clamp01((showTime - currentTime) / showTime);
+                button.image.color = newButtonColor;
+                buttonText.color = new Color(buttonText.color.r, buttonText.color.g, buttonText.color.b, newButtonColor.a);
+                yield return null;
+            }
+            Destroy(button);
+        }
+
+        private void Choose(Choice choice)
+        {
+            if (_isWait)
+            {
+                _isWait = false;
+                foreach (var plotInfluence in choice.plotInfluences)
                 {
-                    if (dialogToggle.character.Dialogs[i].scriptableObject.name == dialogToggle.dialogName)
-                    {
-                        dialogToggle.character.Dialogs[i].ToggleStatus(dialogToggle.newDialogStatus);
-                    }
+                    DialogsManager.Instance.ChangePlotInfluence(plotInfluence.type, plotInfluence.count);
                 }
-                dialogToggle.character.CheckInteractIsAvailable();
-            }
+                
+                foreach (var dialogToggle in choice.dialogToggles)
+                {
+                    bool isWarning = true;
+                    for (int i = 0; i < dialogToggle.character.Dialogs.Length; i++)
+                    {
+                        if (dialogToggle.character.Dialogs[i].scriptableObject.name == dialogToggle.dialogName)
+                        {
+                            isWarning = false;
+                            dialogToggle.character.Dialogs[i].ToggleStatus(dialogToggle.newDialogStatus);
+                        }
+                    }
+                    if (isWarning)
+                    {
+                        Debug.LogWarning($"Character with name '{dialogToggle.character.CharacterName}' doesn't have dialog with name {dialogToggle.dialogName}");
+                    }
+                    dialogToggle.character.CheckInteractIsAvailable();
+                }
             
-            StartCoroutine(Deactivate());   
+                StartCoroutine(Deactivate());   
+            }
         }
     }
 }
