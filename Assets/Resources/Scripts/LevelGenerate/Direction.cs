@@ -6,19 +6,8 @@ namespace Resources.Scripts.LevelGenerate
     /// B - bottom
     /// L - left
     /// </summary>
-    public enum Directions
+    public enum Direction
     {
-        TRBL,
-        TRB,
-        TRL,
-        TBL,
-        RBL,
-        TR,
-        TB,
-        TL,
-        RB,
-        RL,
-        BL,
         T,
         R,
         B,
