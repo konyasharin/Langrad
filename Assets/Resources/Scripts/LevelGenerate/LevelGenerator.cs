@@ -45,11 +45,32 @@ namespace Resources.Scripts.LevelGenerate
                 RoomControl startRoom = Instantiate(startRooms[randomIndex], new Vector3(70, -20, 0), Quaternion.identity);
                 startRoom.SpawnPassages(leftRightPassage, bottomTopPassage);
                 countSpawnedRooms += 1;
-                RoomControl[] newRooms = startRoom.SpawnRooms(rooms, countRooms, ref countSpawnedRooms);
-                foreach (var newRoom in newRooms)
+                int countEmptyPassages = 1;
+                RoomControl[] waitingRooms = startRoom.SpawnRooms(rooms, countRooms, ref countSpawnedRooms, ref countEmptyPassages);
+                int i = 0;
+                while (countSpawnedRooms != countRooms && i <= 10)
                 {
-                    newRoom.SpawnPassages(leftRightPassage, bottomTopPassage);
-                    newRoom.SpawnRooms(rooms, countRooms, ref countSpawnedRooms);
+                    countEmptyPassages = 0;
+                    List<RoomControl> newWaitingRooms = new List<RoomControl>();
+                    
+                    // Количество еще не заспавненных комнат/переходов в ожидающих комнатах;
+                    
+                    foreach (var waitingRoom in waitingRooms)
+                    {
+                        countEmptyPassages += waitingRoom.Directions.Length - 1;
+                    }
+                    
+                    foreach (var waitingRoom in waitingRooms)
+                    {
+                        waitingRoom.SpawnPassages(leftRightPassage, bottomTopPassage);
+                        foreach (var newWaitingRoom in waitingRoom.SpawnRooms(rooms, countRooms, ref countSpawnedRooms, ref countEmptyPassages))
+                        {
+                            newWaitingRooms.Add(newWaitingRoom);
+                        }
+                    }
+
+                    waitingRooms = newWaitingRooms.ToArray();
+                    i++;
                 }
             }
         }

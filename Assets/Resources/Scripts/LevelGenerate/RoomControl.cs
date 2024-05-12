@@ -11,6 +11,8 @@ namespace Resources.Scripts.LevelGenerate
         [field: SerializeField]
         public Direction[] Directions { get; private set; }
 
+        private Direction? _alreadySpawnDirection;
+
         private void Awake()
         {
             foreach (var spawnPoint in GetComponentsInChildren<SpawnPoint>())
@@ -44,6 +46,11 @@ namespace Resources.Scripts.LevelGenerate
         {
             foreach (var passageSpawnPoint in _passageSpawnPoints)
             {
+                if (passageSpawnPoint.Direction == _alreadySpawnDirection)
+                {
+                    continue;
+                }
+
                 if (passageSpawnPoint.Direction == Direction.Left || passageSpawnPoint.Direction == Direction.Right)
                 {
                     Instantiate(leftRightPassage, passageSpawnPoint.transform.position, Quaternion.identity);
@@ -52,34 +59,66 @@ namespace Resources.Scripts.LevelGenerate
                 {
                     Instantiate(bottomTopPassage, passageSpawnPoint.transform.position,
                         Quaternion.identity);
-                }
+                }   
             }
         }
 
-        public RoomControl[] SpawnRooms(RoomControl[] rooms, int countRooms, ref int countSpawnedRooms)
+        public RoomControl[] SpawnRooms(RoomControl[] rooms, int countRooms, ref int countSpawnedRooms, ref int countEmptyPassages)
         {
             List<RoomControl> newRooms = new List<RoomControl>();
             foreach (var roomSpawnPoint in _roomSpawnPoints)
             {
                 List<RoomControl> accessRooms = new List<RoomControl>();
+                
+                if (_alreadySpawnDirection == roomSpawnPoint.Direction)
+                { 
+                    continue;
+                }
+                
+                Direction requiredDirection;
+                switch (roomSpawnPoint.Direction)
+                {
+                    case Direction.Top:
+                        requiredDirection = Direction.Bottom;
+                        break;
+                    case Direction.Right:
+                        requiredDirection = Direction.Left;
+                        break;
+                    case Direction.Bottom:
+                        requiredDirection = Direction.Top;
+                        break;
+                    case Direction.Left:
+                        requiredDirection = Direction.Right;
+                        break;
+                    default:
+                        Debug.LogWarning("Room spawn point doesn't have direction");
+                        continue;
+                }
+                
                 foreach (var room in rooms)
                 {
-                    foreach (var directionsCombination in DirectionsOperations.GenerateDirectionsCombinations(countRooms - countSpawnedRooms))
+                    for (int i = 0; i <= Mathf.Clamp(countRooms - countSpawnedRooms, 1, 4); i++)
                     {
-                        if (room.Directions.SequenceEqual(directionsCombination))
+                        foreach (var directionsCombination in DirectionsOperations.GenerateDirectionsCombinations(i))
                         {
-                            accessRooms.Add(room);
-                        }
+                            if (room.Directions.SequenceEqual(directionsCombination) && room.Directions.Contains(requiredDirection) &&
+                                !(room.Directions.Length == 1 && countEmptyPassages == 1 && countRooms - countSpawnedRooms > 1))
+                            {
+                                accessRooms.Add(room);
+                            }
+                        }   
                     }
                 }
-
                 if (accessRooms.Count > 0)
                 {
-                    newRooms.Add(Instantiate(accessRooms[Random.Range(0, accessRooms.Count - 1)], roomSpawnPoint.transform.position, Quaternion.identity));
+                    newRooms.Add(Instantiate(accessRooms[Random.Range(0, accessRooms.Count)], roomSpawnPoint.transform.position, Quaternion.identity));
+                    newRooms[^1]._alreadySpawnDirection = requiredDirection;
                     countSpawnedRooms += newRooms[^1].Directions.Length - 1;
+                    Debug.Log(countSpawnedRooms);
+                    countEmptyPassages -= 1;
                 }
             }
-
+            
             return newRooms.ToArray();
         }
     }
