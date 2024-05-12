@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using JetBrains.Annotations;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -9,14 +10,17 @@ namespace Resources.Scripts.LevelGenerate
     public class LevelGenerator : MonoBehaviour
     {
         [SerializeField]
-        private GameObject[] roomsPrefabs;
-        [SerializeField]
-        private int countSpawnRooms;
-        
+        private RoomControl[] rooms;
+        [SerializeField, Min(5)]
+        private int countRooms;
+
         [Header("Passages")]
         [SerializeField]
         private GameObject bottomTopPassage;
-        [SerializeField] private GameObject leftRightPassage;
+        [SerializeField]
+        private GameObject leftRightPassage;
+
+        private int countSpawnedRooms = 0;
 
         private void Start()
         {
@@ -25,10 +29,10 @@ namespace Resources.Scripts.LevelGenerate
 
         private void Generate()
         {
-            List<GameObject> startRooms = new List<GameObject>();
+            List<RoomControl> startRooms = new List<RoomControl>();
             foreach (var direction in Enum.GetNames(typeof(Direction)))
             {
-                GameObject newRoom = GetRoomByDirections(new[] { Enum.Parse<Direction>(direction) });
+                RoomControl newRoom = GetRoomByDirections(new[] { Enum.Parse<Direction>(direction) });
                 if (newRoom != null)
                 {
                     startRooms.Add(newRoom);
@@ -38,53 +42,30 @@ namespace Resources.Scripts.LevelGenerate
             if (startRooms.Count > 0)
             {
                 int randomIndex = Random.Range(0, startRooms.Count);
-                Instantiate(startRooms[randomIndex], new Vector3(70, -20, 0), Quaternion.identity);
+                RoomControl startRoom = Instantiate(startRooms[randomIndex], new Vector3(70, -20, 0), Quaternion.identity);
+                startRoom.SpawnPassages(leftRightPassage, bottomTopPassage);
+                countSpawnedRooms += 1;
+                RoomControl[] newRooms = startRoom.SpawnRooms(rooms, countRooms, ref countSpawnedRooms);
+                foreach (var newRoom in newRooms)
+                {
+                    newRoom.SpawnPassages(leftRightPassage, bottomTopPassage);
+                    newRoom.SpawnRooms(rooms, countRooms, ref countSpawnedRooms);
+                }
             }
         }
 
         [CanBeNull]
-        private GameObject GetRoomByDirections(Direction[] directions)
+        private RoomControl GetRoomByDirections(Direction[] directions)
         {
-            foreach (var room in roomsPrefabs)
+            foreach (var room in rooms)
             {
-                string[] roomNameParts = room.name.Split("_");
-                if (roomNameParts.Length == 2 && CreateDirectionsString(directions) == roomNameParts[1])
+                if (room.Directions.SequenceEqual(directions))
                 {
                     return room;
                 }
             }
-            Debug.LogWarning($"elements of rooms array doesn't have next part in name: '{CreateDirectionsString(directions)}'");
+            Debug.LogWarning($"Elements of rooms array doesn't have room with this directions");
             return null;
-        }
-
-        private string CreateDirectionsString(Direction[] directions)
-        {
-            string directionsString = "";
-            Dictionary<string, int> directionsCount = new Dictionary<string, int>();
-
-            foreach (var direction in Enum.GetNames(typeof(Direction)))
-            {
-                directionsCount.Add(direction, 0);
-            }
-            
-            foreach (var direction in directions)
-            {
-                string directionString = Enum.GetName(typeof(Direction), direction);
-                if (directionString != null)
-                {
-                    directionsCount[directionString] += 1;
-                }
-            }
-
-            foreach (var key in directionsCount.Keys)
-            {
-                if (directionsCount[key] != 0)
-                {
-                    directionsString += key;
-                }
-            }
-            
-            return directionsString;
         }
     }
 }   

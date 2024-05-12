@@ -4138,8 +4138,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rooms:
-  - {fileID: 9198578206045698180, guid: fabb43ce16c95954f9c4e17e89be667e, type: 3}
+  - {fileID: 246880980356288400, guid: c6b76d8222f22294b970aaf0035cbb0e, type: 3}
   countSpawnRooms: 0
+  bottomTopPassage: {fileID: 6529252706165963757, guid: 1552279dba4057342bf5799b76f55be9, type: 3}
+  leftRightPassage: {fileID: 1282075067089193589, guid: f488296719ba59d428fcb34a49fa1111, type: 3}
 --- !u!212 &533709587
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -15645,6 +15647,25 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f32d751bb94bea47936e9b3a360c8e1, type: 3}
+--- !u!1 &1806038161 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3757394475527807316, guid: c6b76d8222f22294b970aaf0035cbb0e, type: 3}
+  m_PrefabInstance: {fileID: 6736766119735084266}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1806038163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1806038161}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e10ceb40f483cb4f8de0532635df862, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Direction>k__BackingField: 0
+  <SpawnPointType>k__BackingField: 1
 --- !u!1001 &1810651997
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16557,6 +16578,66 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f32d751bb94bea47936e9b3a360c8e1, type: 3}
+--- !u!1001 &6736766119735084266
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 421205180782144164, guid: c6b76d8222f22294b970aaf0035cbb0e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 421205180782144164, guid: c6b76d8222f22294b970aaf0035cbb0e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -54.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 421205180782144164, guid: c6b76d8222f22294b970aaf0035cbb0e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.7500083
+      objectReference: {fileID: 0}
+    - target: {fileID: 421205180782144164, guid: c6b76d8222f22294b970aaf0035cbb0e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 421205180782144164, guid: c6b76d8222f22294b970aaf0035cbb0e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 421205180782144164, guid: c6b76d8222f22294b970aaf0035cbb0e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 421205180782144164, guid: c6b76d8222f22294b970aaf0035cbb0e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 421205180782144164, guid: c6b76d8222f22294b970aaf0035cbb0e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 421205180782144164, guid: c6b76d8222f22294b970aaf0035cbb0e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 421205180782144164, guid: c6b76d8222f22294b970aaf0035cbb0e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1318606135329951068, guid: c6b76d8222f22294b970aaf0035cbb0e, type: 3}
+      propertyPath: m_Name
+      value: GrassRoom_T
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3757394475527807316, guid: c6b76d8222f22294b970aaf0035cbb0e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1806038163}
+  m_SourcePrefab: {fileID: 100100000, guid: c6b76d8222f22294b970aaf0035cbb0e, type: 3}
 --- !u!1001 &7609753778989650308
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16825,4 +16906,5 @@ SceneRoots:
   - {fileID: 1238919345}
   - {fileID: 1565722248}
   - {fileID: 8666279379796471666}
+  - {fileID: 6736766119735084266}
   - {fileID: 533709588}
