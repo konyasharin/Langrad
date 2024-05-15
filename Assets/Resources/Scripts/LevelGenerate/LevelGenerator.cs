@@ -53,7 +53,7 @@ namespace Resources.Scripts.LevelGenerate
                 startRoom.SpawnRooms();
                 WaitingRooms.Add(SpawnedRooms[^1]);
                 int i = 0;
-                while (SpawnedRooms.Count + WaitingRooms.Count != CountRooms && i <= 10)
+                while (SpawnedRooms.Count != CountRooms && i <= 10)
                 {
                     countEmptyPassages = 0;
                     List<Room> newWaitingRooms = new List<Room>();
@@ -75,13 +75,15 @@ namespace Resources.Scripts.LevelGenerate
                                 if (roomSpawnPoint.Direction != (replacedRoom ? replacedRoom.RequiredDirection : newWaitingRoom.RequiredDirection) &&
                                     IsBusyOtherRoomPoint(roomSpawnPoint, replacedRoom ? replacedRoom : newWaitingRoom))
                                 {
-                                    replacedRoom = DeleteDirection(roomSpawnPoint.Direction, replacedRoom == null ? newWaitingRoom : replacedRoom);
+                                    Room newReplacedRoom = DeleteDirection(roomSpawnPoint.Direction, replacedRoom == null ? newWaitingRoom : replacedRoom);
                                     
                                     for (int j = 0; j < SpawnedRooms.Count; j++)
                                     {
                                         if (SpawnedRooms[j] == (replacedRoom ? replacedRoom : newWaitingRoom))
                                         {
-                                            SpawnedRooms[i] = replacedRoom;
+                                            Debug.Log("RRRRRRRRRRRRRR!!!");
+                                            replacedRoom = newReplacedRoom;
+                                            SpawnedRooms[j] = replacedRoom;
                                             break;
                                         }
                                     }
@@ -99,6 +101,7 @@ namespace Resources.Scripts.LevelGenerate
                         }
                     }
                     WaitingRooms = newWaitingRooms;
+                    Debug.Log(SpawnedRooms.Count);
                     i++;
                 }
             }
