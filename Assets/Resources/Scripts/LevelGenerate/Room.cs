@@ -86,7 +86,9 @@ namespace Resources.Scripts.LevelGenerate
                     newRooms[^1].RequiredDirection = DirectionsOperations.GetOppositeDirection(roomSpawnPoint.Direction);
                     newRooms[^1].levelGenerator = levelGenerator;
                     levelGenerator.SpawnedRooms.Add(newRooms[^1]);
-                    levelGenerator.countEmptyPassages -= 1;
+                    levelGenerator.countEmptyPassages += newRooms[^1].Directions.Length - 2;
+                    Debug.Log(newRooms[^1].name);
+                    Debug.Log(levelGenerator.countEmptyPassages);
                 }
             }
             
@@ -99,14 +101,16 @@ namespace Resources.Scripts.LevelGenerate
             
             foreach (var room in levelGenerator.RoomsPrefabs)
             {
-                for (int i = 0; i <= Mathf.Clamp(levelGenerator.CountRooms - (levelGenerator.SpawnedRooms.Count + levelGenerator.WaitingRooms.Count), 1, 4); i++)
+                for (int i = 0; i <= Mathf.Clamp(levelGenerator.CountRooms - levelGenerator.SpawnedRooms.Count, 1, 4); i++)
                 {
                     foreach (var directionsCombination in DirectionsOperations.GenerateDirectionsCombinations(i))
                     {
                         if (room.Directions.SequenceEqual(directionsCombination) && 
                             room.Directions.Contains(requiredDirection) &&
                             !(room.Directions.Length == 1 && levelGenerator.countEmptyPassages == 1 &&
-                              levelGenerator.CountRooms - (levelGenerator.SpawnedRooms.Count + levelGenerator.WaitingRooms.Count) > 1))
+                              levelGenerator.CountRooms - levelGenerator.SpawnedRooms.Count > 1) &&
+                            !(levelGenerator.CountRooms - levelGenerator.SpawnedRooms.Count - room.Directions.Length < levelGenerator.countEmptyPassages - 1))
+                            // !(levelGenerator.countEmptyPassages + room.Directions.Length - 2 > levelGenerator.CountRooms - levelGenerator.SpawnedRooms.Count))
                         {
                             accessRooms.Add(room);
                         }

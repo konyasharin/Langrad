@@ -53,17 +53,11 @@ namespace Resources.Scripts.LevelGenerate
                 startRoom.SpawnRooms();
                 WaitingRooms.Add(SpawnedRooms[^1]);
                 int i = 0;
-                while (SpawnedRooms.Count != CountRooms && i <= 10)
+                while (SpawnedRooms.Count != CountRooms && i <= 1000)
                 {
-                    countEmptyPassages = 0;
                     List<Room> newWaitingRooms = new List<Room>();
                     
                     // Количество еще не заспавненных комнат/переходов в ожидающих комнатах;
-                    
-                    foreach (var waitingRoom in WaitingRooms)
-                    {
-                        countEmptyPassages += waitingRoom.Directions.Length - 1;
-                    }
                     
                     foreach (var waitingRoom in WaitingRooms)
                     {
@@ -149,14 +143,16 @@ namespace Resources.Scripts.LevelGenerate
                 }
                 newDirections.Add(direction);
             }
+            
             Room newRoom =  Instantiate(GetRoomByDirections(newDirections.ToArray()), room.transform.position, Quaternion.identity);
             newRoom.RequiredDirection = room.RequiredDirection;
             newRoom.levelGenerator = room.levelGenerator;
             Destroy(room.gameObject);
-            Debug.Log(room.name);
-            Debug.Log(newRoom.name);
-            Debug.Log(room.transform.position.x);
-            Debug.Log(room.transform.position.y);
+            countEmptyPassages -= 1;
+            // Debug.Log(room.name);
+            // Debug.Log(newRoom.name);
+            // Debug.Log(room.transform.position.x);
+            // Debug.Log(room.transform.position.y);
             return newRoom;
         }
     }
