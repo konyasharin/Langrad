@@ -25,5 +25,21 @@ namespace Resources.Scripts.LevelGenerate
 
             return Combinations.GenerateCombinations(countDirections, directions.ToArray());
         }
+        
+        public static Direction GetOppositeDirection(Direction direction){
+            switch (direction)
+            {
+                case Direction.Top:
+                    return Direction.Bottom;
+                case Direction.Right:
+                    return Direction.Left;
+                case Direction.Bottom:
+                    return Direction.Top;
+                case Direction.Left:
+                    return Direction.Right;
+                default:
+                    throw new ArgumentException("Opposite direction doesn't exist");
+            }
+        }
     }
 }
