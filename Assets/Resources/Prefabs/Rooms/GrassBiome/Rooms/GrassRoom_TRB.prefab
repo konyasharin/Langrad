@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3559537781719646740}
   - component: {fileID: 2678893200242473280}
+  - component: {fileID: 7304505860576552117}
   m_Layer: 0
   m_Name: GrassRoom_TRB
   m_TagString: Untagged
@@ -47,7 +48,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14cc7350eb612d1418c91d7969bbe0b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelGenerator: {fileID: 0}
   <Directions>k__BackingField: 000000000100000002000000
+--- !u!114 &7304505860576552117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 711551046715974853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2afb8f4a59f47740b32771591e48499, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sizeX: 10
+  sizeY: 6
 --- !u!1 &1614610223652807754
 GameObject:
   m_ObjectHideFlags: 0

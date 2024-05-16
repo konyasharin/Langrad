@@ -2,10 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
-using Unity.Mathematics;
+using Resources.Scripts.Enemies;
 using UnityEngine;
 using UnityEngine.Serialization;
-using Random = UnityEngine.Random;
 
 namespace Resources.Scripts.LevelGenerate
 {
@@ -15,16 +14,41 @@ namespace Resources.Scripts.LevelGenerate
         public Room[] RoomsPrefabs { get; private set; }
         [field: SerializeField, Min(5)]
         public int CountRooms { get; private set; }
-
-        [field: Header("Passages")]
         [field: SerializeField]
+        public GameObject[] EnemiesPrefabs { get; private set; }
+        
+        [field: SerializeField, Header("Passages")]
         public GameObject BottomTopPassage { get; private set; }
         [field: SerializeField]
         public GameObject LeftRightPassage { get; private set; }
+
+        [SerializeField, Space(5)] 
+        private int minSumSpawnPrices;
+        [SerializeField] 
+        private int maxSumSpawnPrices;
+        
+        public int SumSpawnPrices { get; private set; }
+        public Enemy[] Enemies { get; set; }
         public List<Room> SpawnedRooms { get; private set; } = new();
+        /// <summary>
+        /// Список комнат, от которых на текущей итерации генерации будут генерироваться следующие комнаты
+        /// </summary>
         public List<Room> WaitingRooms { get; private set; } = new();
+        /// <summary>
+        /// Количество еще пустых переходов между комнатами
+        /// (в этом проходе должна заспавниться хотя бы одна комната)
+        /// </summary>
         [HideInInspector]
         public int countEmptyPassages = 0;
+
+        private void Awake()
+        {
+            Enemies = new Enemy[EnemiesPrefabs.Length];
+            for (int i = 0; i < EnemiesPrefabs.Length; i++)
+            {
+                Enemies[i] = EnemiesPrefabs[i].GetComponent<Enemy>();
+            }
+        }
 
         private void Start()
         {
@@ -32,6 +56,16 @@ namespace Resources.Scripts.LevelGenerate
         }
 
         private void Generate()
+        {
+            SpawnRooms();
+            SumSpawnPrices = UnityEngine.Random.Range(minSumSpawnPrices, maxSumSpawnPrices + 1);
+            foreach (var room in SpawnedRooms)
+            {
+                room.SpawnEnemies();
+            }
+        }
+
+        private void SpawnRooms()
         {
             List<Room> startRooms = new List<Room>();
             foreach (var direction in Enum.GetNames(typeof(Direction)))
@@ -45,7 +79,7 @@ namespace Resources.Scripts.LevelGenerate
 
             if (startRooms.Count > 0)
             {
-                int randomIndex = Random.Range(0, startRooms.Count);
+                int randomIndex = UnityEngine.Random.Range(0, startRooms.Count);
                 Room startRoom = Instantiate(startRooms[randomIndex], new Vector3(70, -20, 0), Quaternion.identity);
                 SpawnedRooms.Add(startRoom);
                 countEmptyPassages = 1;
@@ -56,9 +90,6 @@ namespace Resources.Scripts.LevelGenerate
                 while (SpawnedRooms.Count != CountRooms && i <= 1000)
                 {
                     List<Room> newWaitingRooms = new List<Room>();
-                    
-                    // Количество еще не заспавненных комнат/переходов в ожидающих комнатах;
-                    
                     foreach (var waitingRoom in WaitingRooms)
                     {
                         foreach (var newWaitingRoom in waitingRoom.SpawnRooms())
@@ -66,6 +97,7 @@ namespace Resources.Scripts.LevelGenerate
                             Room replacedRoom = null;
                             foreach (var roomSpawnPoint in newWaitingRoom.RoomSpawnPoints)
                             {
+                                // Удаляем проход если в месте, где стоит roomSpawnPoint уже стоит другая точка
                                 if (roomSpawnPoint.Direction != (replacedRoom ? replacedRoom.RequiredDirection : newWaitingRoom.RequiredDirection) &&
                                     IsBusyOtherRoomPoint(roomSpawnPoint, replacedRoom ? replacedRoom : newWaitingRoom))
                                 {
@@ -75,7 +107,6 @@ namespace Resources.Scripts.LevelGenerate
                                     {
                                         if (SpawnedRooms[j] == (replacedRoom ? replacedRoom : newWaitingRoom))
                                         {
-                                            Debug.Log("RRRRRRRRRRRRRR!!!");
                                             replacedRoom = newReplacedRoom;
                                             SpawnedRooms[j] = replacedRoom;
                                             break;
@@ -84,14 +115,7 @@ namespace Resources.Scripts.LevelGenerate
                                 }
                             }
 
-                            if (replacedRoom != null)
-                            {
-                                newWaitingRooms.Add(replacedRoom);   
-                            }
-                            else
-                            {
-                                newWaitingRooms.Add(newWaitingRoom);
-                            }
+                            newWaitingRooms.Add(replacedRoom != null ? replacedRoom : newWaitingRoom);
                         }
                     }
                     WaitingRooms = newWaitingRooms;
@@ -149,10 +173,6 @@ namespace Resources.Scripts.LevelGenerate
             newRoom.levelGenerator = room.levelGenerator;
             Destroy(room.gameObject);
             countEmptyPassages -= 1;
-            // Debug.Log(room.name);
-            // Debug.Log(newRoom.name);
-            // Debug.Log(room.transform.position.x);
-            // Debug.Log(room.transform.position.y);
             return newRoom;
         }
     }

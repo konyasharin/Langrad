@@ -2558,8 +2558,12 @@ MonoBehaviour:
   - {fileID: -2411983543494359789, guid: fabb43ce16c95954f9c4e17e89be667e, type: 3}
   - {fileID: 3544641186477324216, guid: 3b8f7bed1af3b0b4aaddd6414e919cb8, type: 3}
   <CountRooms>k__BackingField: 15
+  <EnemiesPrefabs>k__BackingField:
+  - {fileID: 4675436010600313251, guid: ef09d4952619a6b4aa26044e24781f6d, type: 3}
   <BottomTopPassage>k__BackingField: {fileID: 6529252706165963757, guid: 1552279dba4057342bf5799b76f55be9, type: 3}
   <LeftRightPassage>k__BackingField: {fileID: 1282075067089193589, guid: f488296719ba59d428fcb34a49fa1111, type: 3}
+  minSumSpawnPrices: 5
+  maxSumSpawnPrices: 10
   countEmptyPassages: 0
 --- !u!212 &533709587
 SpriteRenderer:
