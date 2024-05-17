@@ -10,7 +10,7 @@ namespace Resources.Scripts.DialogSystem
         public static DialogsManager Instance { get; private set; }
         private DialogWindow _dialogWindow;
         private ChoicesWindow _choicesWindow;
-        private Player _player;
+        private Player.Player _player;
         public Dictionary<PlotInfluenceType, int> PlotInfluences { get; private set; }
 
         private void Awake()
@@ -22,7 +22,7 @@ namespace Resources.Scripts.DialogSystem
         {
             _dialogWindow = DialogWindow.Instance;
             _choicesWindow = ChoicesWindow.Instance;
-            _player = Player.Instance;
+            _player = Player.Player.Instance;
             PlotInfluences = SaveLoadManager.LoadGame().PlotInfluences;
         }
 

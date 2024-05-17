@@ -10,13 +10,13 @@ namespace Resources.Scripts.LevelGenerate
         private readonly List<SpawnPoint> _passageSpawnPoints = new();
         private SpawnArea _spawnArea;
         private readonly List<GameObject> _enemies = new();
-        
         [HideInInspector]
         public LevelGenerator levelGenerator;
         public List<SpawnPoint> RoomSpawnPoints { get; private set; } = new();
         [field: SerializeField]
         public Direction[] Directions { get; private set; }
         public Direction? RequiredDirection;
+        public RoomType roomType;
 
         private void Awake()
         {
@@ -59,11 +59,11 @@ namespace Resources.Scripts.LevelGenerate
 
                 if (passageSpawnPoint.Direction == Direction.Left || passageSpawnPoint.Direction == Direction.Right)
                 {
-                    Instantiate(levelGenerator.LeftRightPassage, passageSpawnPoint.transform.position, Quaternion.identity);
+                    Instantiate(levelGenerator.Level.leftRightPassage, passageSpawnPoint.transform.position, Quaternion.identity);
                 }
                 else
                 {
-                    Instantiate(levelGenerator.BottomTopPassage, passageSpawnPoint.transform.position,
+                    Instantiate(levelGenerator.Level.bottomTopPassage, passageSpawnPoint.transform.position,
                         Quaternion.identity);
                 }   
             }
@@ -100,9 +100,9 @@ namespace Resources.Scripts.LevelGenerate
         {
             List<Room> accessRooms = new List<Room>();
             
-            foreach (var room in levelGenerator.RoomsPrefabs)
+            foreach (var room in levelGenerator.Level.roomsPrefabs)
             {
-                for (int i = 0; i <= Mathf.Clamp(levelGenerator.CountRooms - levelGenerator.SpawnedRooms.Count, 1, 4); i++)
+                for (int i = 0; i <= Mathf.Clamp(levelGenerator.Level.countRooms - levelGenerator.SpawnedRooms.Count, 1, 4); i++)
                 {
                     foreach (var directionsCombination in DirectionsOperations.GenerateDirectionsCombinations(i))
                     {
@@ -119,8 +119,8 @@ namespace Resources.Scripts.LevelGenerate
                         if (room.Directions.SequenceEqual(directionsCombination) && 
                             room.Directions.Contains(requiredDirection) &&
                             !(room.Directions.Length == 1 && levelGenerator.countEmptyPassages == 1 &&
-                              levelGenerator.CountRooms - levelGenerator.SpawnedRooms.Count > 1) &&
-                            !(levelGenerator.CountRooms - levelGenerator.SpawnedRooms.Count - room.Directions.Length < levelGenerator.countEmptyPassages - 1))
+                              levelGenerator.Level.countRooms - levelGenerator.SpawnedRooms.Count > 1) &&
+                            !(levelGenerator.Level.countRooms - levelGenerator.SpawnedRooms.Count - room.Directions.Length < levelGenerator.countEmptyPassages - 1))
                         {
                             accessRooms.Add(room);
                         }
@@ -157,7 +157,7 @@ namespace Resources.Scripts.LevelGenerate
                 {
                     if (levelGenerator.Enemies[i] == randomEnemy)
                     {
-                        _enemies.Add(Instantiate(levelGenerator.EnemiesPrefabs[i], _spawnArea.GetRandomPosition(),
+                        _enemies.Add(Instantiate(levelGenerator.Level.enemiesPrefabs[i], _spawnArea.GetRandomPosition(),
                             Quaternion.identity));
                         break;
                     }

@@ -1,35 +1,17 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using JetBrains.Annotations;
 using Resources.Scripts.Enemies;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Resources.Scripts.LevelGenerate
 {
     public class LevelGenerator : MonoBehaviour
     {
         [field: SerializeField]
-        public Room[] RoomsPrefabs { get; private set; }
-        [field: SerializeField, Min(5)]
-        public int CountRooms { get; private set; }
-        [field: SerializeField]
-        public GameObject[] EnemiesPrefabs { get; private set; }
-        
-        [field: SerializeField, Header("Passages")]
-        public GameObject BottomTopPassage { get; private set; }
-        [field: SerializeField]
-        public GameObject LeftRightPassage { get; private set; }
-
-        [SerializeField, Space(5)] 
-        private int minSumSpawnPrices;
-        [SerializeField] 
-        private int maxSumSpawnPrices;
-        
+        public Level Level { get; private set; }
         public int SumSpawnPrices { get; private set; }
-        public Enemy[] Enemies { get; set; }
-        public List<Room> SpawnedRooms { get; private set; } = new();
+        public Enemy[] Enemies { get; private set; }
+        public List<Room> SpawnedRooms { get; } = new();
         /// <summary>
         /// Список комнат, от которых на текущей итерации генерации будут генерироваться следующие комнаты
         /// </summary>
@@ -39,14 +21,14 @@ namespace Resources.Scripts.LevelGenerate
         /// (в этом проходе должна заспавниться хотя бы одна комната)
         /// </summary>
         [HideInInspector]
-        public int countEmptyPassages = 0;
+        public int countEmptyPassages;
 
         private void Awake()
         {
-            Enemies = new Enemy[EnemiesPrefabs.Length];
-            for (int i = 0; i < EnemiesPrefabs.Length; i++)
+            Enemies = new Enemy[Level.enemiesPrefabs.Length];
+            for (int i = 0; i < Level.enemiesPrefabs.Length; i++)
             {
-                Enemies[i] = EnemiesPrefabs[i].GetComponent<Enemy>();
+                Enemies[i] = Level.enemiesPrefabs[i].GetComponent<Enemy>();
             }
         }
 
@@ -57,8 +39,9 @@ namespace Resources.Scripts.LevelGenerate
 
         private void Generate()
         {
+            RoomsManager.Instance.levelGenerator = this;
             SpawnRooms();
-            SumSpawnPrices = UnityEngine.Random.Range(minSumSpawnPrices, maxSumSpawnPrices + 1);
+            SumSpawnPrices = UnityEngine.Random.Range(Level.minSumSpawnPrices, Level.maxSumSpawnPrices + 1);
             foreach (var room in SpawnedRooms)
             {
                 room.SpawnEnemies();
@@ -70,7 +53,7 @@ namespace Resources.Scripts.LevelGenerate
             List<Room> startRooms = new List<Room>();
             foreach (var direction in Enum.GetNames(typeof(Direction)))
             {
-                Room newRoom = GetRoomByDirections(new[] { Enum.Parse<Direction>(direction) });
+                Room newRoom = RoomsManager.Instance.GetRoomByDirections(new[] { Enum.Parse<Direction>(direction) });
                 if (newRoom != null)
                 {
                     startRooms.Add(newRoom);
@@ -81,13 +64,15 @@ namespace Resources.Scripts.LevelGenerate
             {
                 int randomIndex = UnityEngine.Random.Range(0, startRooms.Count);
                 Room startRoom = Instantiate(startRooms[randomIndex], new Vector3(70, -20, 0), Quaternion.identity);
+                startRoom.roomType = RoomType.Start;
                 SpawnedRooms.Add(startRoom);
                 countEmptyPassages = 1;
                 startRoom.levelGenerator = this;
                 startRoom.SpawnRooms();
                 WaitingRooms.Add(SpawnedRooms[^1]);
+                
                 int i = 0;
-                while (SpawnedRooms.Count != CountRooms && i <= 1000)
+                while (SpawnedRooms.Count != Level.countRooms && i <= 1000)
                 {
                     List<Room> newWaitingRooms = new List<Room>();
                     foreach (var waitingRoom in WaitingRooms)
@@ -99,9 +84,9 @@ namespace Resources.Scripts.LevelGenerate
                             {
                                 // Удаляем проход если в месте, где стоит roomSpawnPoint уже стоит другая точка
                                 if (roomSpawnPoint.Direction != (replacedRoom ? replacedRoom.RequiredDirection : newWaitingRoom.RequiredDirection) &&
-                                    IsBusyOtherRoomPoint(roomSpawnPoint, replacedRoom ? replacedRoom : newWaitingRoom))
+                                    RoomsManager.Instance.IsBusyOtherRoomPoint(roomSpawnPoint, replacedRoom ? replacedRoom : newWaitingRoom))
                                 {
-                                    Room newReplacedRoom = DeleteDirection(roomSpawnPoint.Direction, replacedRoom == null ? newWaitingRoom : replacedRoom);
+                                    Room newReplacedRoom = RoomsManager.Instance.DeleteDirection(roomSpawnPoint.Direction, replacedRoom == null ? newWaitingRoom : replacedRoom);
                                     
                                     for (int j = 0; j < SpawnedRooms.Count; j++)
                                     {
@@ -122,58 +107,9 @@ namespace Resources.Scripts.LevelGenerate
                     Debug.Log(SpawnedRooms.Count);
                     i++;
                 }
-            }
-        }
 
-        [CanBeNull]
-        private Room GetRoomByDirections(Direction[] directions)
-        {
-            foreach (var room in RoomsPrefabs)
-            {
-                if (room.Directions.SequenceEqual(directions))
-                {
-                    return room;
-                }
+                SpawnedRooms[^1].roomType = RoomType.Exit;
             }
-            Debug.LogWarning($"Elements of rooms array doesn't have room with this directions");
-            return null;
-        }
-
-        private bool IsBusyOtherRoomPoint(SpawnPoint spawnPoint, Room excludedRoom)
-        {
-            foreach (var room in SpawnedRooms)
-            {
-                if (room == excludedRoom)
-                {
-                    continue;
-                }
-                
-                if (room.RoomSpawnPoints.Any(point => point.transform.position == spawnPoint.transform.position))
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-        
-        private Room DeleteDirection(Direction deleteDirection, Room room)
-        {
-            List<Direction> newDirections = new List<Direction>();
-            foreach (var direction in room.Directions)
-            {
-                if (direction == deleteDirection)
-                {
-                    continue;
-                }
-                newDirections.Add(direction);
-            }
-            
-            Room newRoom =  Instantiate(GetRoomByDirections(newDirections.ToArray()), room.transform.position, Quaternion.identity);
-            newRoom.RequiredDirection = room.RequiredDirection;
-            newRoom.levelGenerator = room.levelGenerator;
-            Destroy(room.gameObject);
-            countEmptyPassages -= 1;
-            return newRoom;
         }
     }
 }   
