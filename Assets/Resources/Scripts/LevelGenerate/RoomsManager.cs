@@ -62,10 +62,25 @@ namespace Resources.Scripts.LevelGenerate
             
             Room newRoom =  Instantiate(GetRoomByDirections(newDirections.ToArray()), room.transform.position, Quaternion.identity);
             newRoom.RequiredDirection = room.RequiredDirection;
+            newRoom.Type = room.Type;
             newRoom.levelGenerator = room.levelGenerator;
             Destroy(room.gameObject);
             levelGenerator.countEmptyPassages -= 1;
             return newRoom;
+        }
+
+        public Room[] GetRoomsByType(RoomType roomType)
+        {
+            List<Room> rooms = new List<Room>();
+            foreach (var room in levelGenerator.SpawnedRooms)
+            {
+                if (room.Type == roomType)
+                {
+                    rooms.Add(room);
+                }
+            }
+
+            return rooms.ToArray();
         }
     }
 }

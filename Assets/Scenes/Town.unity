@@ -2182,6 +2182,65 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &242152945
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 242152947}
+  - component: {fileID: 242152946}
+  - component: {fileID: 242152948}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &242152946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 242152945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98a273bb2d618cc43b24c945cb91781f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelGenerator: {fileID: 0}
+--- !u!4 &242152947
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 242152945}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 21.457634, y: 1.9802186, z: 0.0058877}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &242152948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 242152945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 470b0d6342a0dc04287c0e94be3c0522, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <PlayerPrefab>k__BackingField: {fileID: 3007232659459454814, guid: 078050557e643214f866acf5f6d5c02a, type: 3}
 --- !u!1 &341972355
 GameObject:
   m_ObjectHideFlags: 0
@@ -2449,30 +2508,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a628bad06525f34fa4adf77f5344240, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <RoomsPrefabs>k__BackingField:
-  - {fileID: 8060163171390453949, guid: 7321cb4f629c7874d96bacc2541d123f, type: 3}
-  - {fileID: 85891352363561717, guid: 6adeb68288bdde144984aeff6d53e0f4, type: 3}
-  - {fileID: 5693245486332914377, guid: 51dda85d7d43e9c4ca747420ef0100a7, type: 3}
-  - {fileID: 3334934023395740585, guid: 16f790a2a801ffc479487b839be088de, type: 3}
-  - {fileID: 7037807959855541760, guid: da5f629847a663e4885846c2fc82c0dd, type: 3}
-  - {fileID: 6726518404297524543, guid: 60b9c04a5ba21304e926d32f36dee03d, type: 3}
-  - {fileID: 3096344940585317844, guid: 595a2e54fd57bdd4ba77224c7d6c617d, type: 3}
-  - {fileID: 2785450078973435551, guid: c6b76d8222f22294b970aaf0035cbb0e, type: 3}
-  - {fileID: 6358036222618317807, guid: 26967ee0f8ffd8b43a36d726fc637237, type: 3}
-  - {fileID: 9165118330198350234, guid: 0ae794c9475f9b1448fbd80e9c0717af, type: 3}
-  - {fileID: 4985084129744437336, guid: e4f6b172e72be8845817d10c8f89630c, type: 3}
-  - {fileID: 8153741765250216295, guid: e965da770cdb84642967b244234b1e39, type: 3}
-  - {fileID: 2678893200242473280, guid: b0299a818848de141ba62050fe94a0b7, type: 3}
-  - {fileID: -2411983543494359789, guid: fabb43ce16c95954f9c4e17e89be667e, type: 3}
-  - {fileID: 3544641186477324216, guid: 3b8f7bed1af3b0b4aaddd6414e919cb8, type: 3}
-  <CountRooms>k__BackingField: 15
-  <EnemiesPrefabs>k__BackingField:
-  - {fileID: 4675436010600313251, guid: ef09d4952619a6b4aa26044e24781f6d, type: 3}
-  - {fileID: 4675436010600313251, guid: c0ffce4f11bb23d4a88d65e2e1e33758, type: 3}
-  <BottomTopPassage>k__BackingField: {fileID: 6529252706165963757, guid: 1552279dba4057342bf5799b76f55be9, type: 3}
-  <LeftRightPassage>k__BackingField: {fileID: 1282075067089193589, guid: f488296719ba59d428fcb34a49fa1111, type: 3}
-  minSumSpawnPrices: 30
-  maxSumSpawnPrices: 42
+  <Level>k__BackingField:
+    roomsPrefabs:
+    - {fileID: 8060163171390453949, guid: 7321cb4f629c7874d96bacc2541d123f, type: 3}
+    - {fileID: 85891352363561717, guid: 6adeb68288bdde144984aeff6d53e0f4, type: 3}
+    - {fileID: 5693245486332914377, guid: 51dda85d7d43e9c4ca747420ef0100a7, type: 3}
+    - {fileID: 3334934023395740585, guid: 16f790a2a801ffc479487b839be088de, type: 3}
+    - {fileID: 7037807959855541760, guid: da5f629847a663e4885846c2fc82c0dd, type: 3}
+    - {fileID: 6726518404297524543, guid: 60b9c04a5ba21304e926d32f36dee03d, type: 3}
+    - {fileID: 3096344940585317844, guid: 595a2e54fd57bdd4ba77224c7d6c617d, type: 3}
+    - {fileID: 2785450078973435551, guid: c6b76d8222f22294b970aaf0035cbb0e, type: 3}
+    - {fileID: 6358036222618317807, guid: 26967ee0f8ffd8b43a36d726fc637237, type: 3}
+    - {fileID: 9165118330198350234, guid: 0ae794c9475f9b1448fbd80e9c0717af, type: 3}
+    - {fileID: 4985084129744437336, guid: e4f6b172e72be8845817d10c8f89630c, type: 3}
+    - {fileID: 8153741765250216295, guid: e965da770cdb84642967b244234b1e39, type: 3}
+    - {fileID: 2678893200242473280, guid: b0299a818848de141ba62050fe94a0b7, type: 3}
+    - {fileID: -2411983543494359789, guid: fabb43ce16c95954f9c4e17e89be667e, type: 3}
+    - {fileID: 3544641186477324216, guid: 3b8f7bed1af3b0b4aaddd6414e919cb8, type: 3}
+    door: {fileID: 0}
+    countRooms: 15
+    enemiesPrefabs:
+    - {fileID: 4675436010600313251, guid: ef09d4952619a6b4aa26044e24781f6d, type: 3}
+    - {fileID: 4675436010600313251, guid: c0ffce4f11bb23d4a88d65e2e1e33758, type: 3}
+    bottomTopPassage: {fileID: 6529252706165963757, guid: 1552279dba4057342bf5799b76f55be9, type: 3}
+    leftRightPassage: {fileID: 1282075067089193589, guid: f488296719ba59d428fcb34a49fa1111, type: 3}
+    minSumSpawnPrices: 24
+    maxSumSpawnPrices: 37
   countEmptyPassages: 0
 --- !u!212 &533709587
 SpriteRenderer:
@@ -8310,3 +8371,4 @@ SceneRoots:
   - {fileID: 150221362}
   - {fileID: 82438245}
   - {fileID: 533709588}
+  - {fileID: 242152947}

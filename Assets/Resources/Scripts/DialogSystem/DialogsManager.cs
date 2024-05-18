@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Resources.Scripts.Actors.Player;
 using Resources.Scripts.SaveLoadSystem;
 using UnityEngine;
 
@@ -10,7 +11,7 @@ namespace Resources.Scripts.DialogSystem
         public static DialogsManager Instance { get; private set; }
         private DialogWindow _dialogWindow;
         private ChoicesWindow _choicesWindow;
-        private Player.Player _player;
+        private PlayerCharacter _playerCharacter;
         public Dictionary<PlotInfluenceType, int> PlotInfluences { get; private set; }
 
         private void Awake()
@@ -22,13 +23,13 @@ namespace Resources.Scripts.DialogSystem
         {
             _dialogWindow = DialogWindow.Instance;
             _choicesWindow = ChoicesWindow.Instance;
-            _player = Player.Player.Instance;
+            _playerCharacter = PlayerCharacter.Instance;
             PlotInfluences = SaveLoadManager.LoadGame().PlotInfluences;
         }
 
         public IEnumerator StartDialog(Dialog dialog)
         {
-            _player.moveIsBlock = true;
+            _playerCharacter.moveIsBlock = true;
             yield return _dialogWindow.Activate();
             foreach (var sentence in dialog.scriptableObject.sentences)
             {
@@ -45,7 +46,7 @@ namespace Resources.Scripts.DialogSystem
                 }
             }
             yield return _dialogWindow.Deactivate();
-            _player.moveIsBlock = false;
+            _playerCharacter.moveIsBlock = false;
         }
 
         public void ChangePlotInfluence(PlotInfluenceType plotInfluenceType, int countInfluence)

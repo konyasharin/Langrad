@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace Resources.Scripts.LevelGenerate
 {
@@ -39,6 +40,23 @@ namespace Resources.Scripts.LevelGenerate
                     return Direction.Right;
                 default:
                     throw new ArgumentException("Opposite direction doesn't exist");
+            }
+        }
+
+        public static Quaternion GetRotation(Direction direction)
+        {
+            switch (direction)
+            {
+                case Direction.Bottom:
+                    return Quaternion.Euler(0, 0, 0);
+                case Direction.Left:
+                    return Quaternion.Euler(0, 0, 90);
+                case Direction.Top:
+                    return Quaternion.Euler(0, 0, 180);
+                case Direction.Right:
+                    return Quaternion.Euler(0, 0, 270);
+                default:
+                    throw new ArgumentException("Rotation couldn't get");
             }
         }
     }

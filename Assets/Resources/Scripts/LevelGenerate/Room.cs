@@ -1,35 +1,45 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Resources.Scripts.Enemies;
+using Resources.Scripts.Actors.Enemies;
+using Resources.Scripts.Actors.Player;
 using UnityEngine;
 
 namespace Resources.Scripts.LevelGenerate
 {
+    [RequireComponent(typeof(Collider2D))]
     public class Room : MonoBehaviour
     {
         private readonly List<SpawnPoint> _passageSpawnPoints = new();
+        private readonly List<SpawnPoint> _doorSpawnPoints = new();
         private SpawnArea _spawnArea;
-        private readonly List<GameObject> _enemies = new();
+        private Collider2D _collider;
+        private readonly List<Enemy> _enemies = new();
         [HideInInspector]
         public LevelGenerator levelGenerator;
         public List<SpawnPoint> RoomSpawnPoints { get; private set; } = new();
         [field: SerializeField]
         public Direction[] Directions { get; private set; }
         public Direction? RequiredDirection;
-        public RoomType roomType;
-
+        public RoomType? Type;
+        
         private void Awake()
         {
             _spawnArea = GetComponentInChildren<SpawnArea>();
+            _collider = GetComponent<Collider2D>();
             foreach (var spawnPoint in GetComponentsInChildren<SpawnPoint>())
             {
-                if (spawnPoint.SpawnPointType == SpawnPointType.Passage)
+                switch (spawnPoint.SpawnPointType)
                 {
-                    _passageSpawnPoints.Add(spawnPoint);
-                }
-                else
-                {
-                    RoomSpawnPoints.Add(spawnPoint);
+                    case SpawnPointType.Door: 
+                        _doorSpawnPoints.Add(spawnPoint);
+                        break;
+                    case SpawnPointType.Passage:
+                        _passageSpawnPoints.Add(spawnPoint);
+                        break;
+                    case SpawnPointType.Room:
+                        RoomSpawnPoints.Add(spawnPoint);
+                        break;
                 }
             }
             
@@ -41,10 +51,12 @@ namespace Resources.Scripts.LevelGenerate
             {
                 Debug.LogWarning("Directions didn't choose");   
             }
-
-            if (_passageSpawnPoints.Count != Directions.Length || RoomSpawnPoints.Count != Directions.Length)
+            
+            if (_passageSpawnPoints.Count != Directions.Length || 
+                RoomSpawnPoints.Count != Directions.Length || 
+                _doorSpawnPoints.Count != Directions.Length)
             {
-                Debug.LogWarning("Counts of passage or room spawn points and directions doesn't match");
+                Debug.LogWarning("Counts of passage, room or door spawn points and directions doesn't match");
             }
         }
         
@@ -87,6 +99,10 @@ namespace Resources.Scripts.LevelGenerate
                     newRooms.Add(Instantiate(accessRooms[UnityEngine.Random.Range(0, accessRooms.Count)],
                         roomSpawnPoint.transform.position, Quaternion.identity));
                     newRooms[^1].RequiredDirection = DirectionsOperations.GetOppositeDirection(roomSpawnPoint.Direction);
+                    if (newRooms[^1].Type == null)
+                    {
+                        newRooms[^1].Type = RoomType.Common;
+                    }
                     newRooms[^1].levelGenerator = levelGenerator;
                     levelGenerator.SpawnedRooms.Add(newRooms[^1]);
                     levelGenerator.countEmptyPassages += newRooms[^1].Directions.Length - 2;
@@ -131,6 +147,34 @@ namespace Resources.Scripts.LevelGenerate
             return accessRooms;
         }
 
+        private void CloseRoom()
+        {
+            foreach (var spawnPoint in _doorSpawnPoints)
+            {
+                Instantiate(levelGenerator.Level.door, spawnPoint.transform.position,
+                    DirectionsOperations.GetRotation(spawnPoint.Direction));
+            }
+        }
+
+        private void OnTriggerStay2D(Collider2D other)
+        {
+            if (other.CompareTag("Player") && Type == RoomType.Common)
+            {
+                foreach (var corner in PlayerUtils.GetCorners())
+                {
+                    if (!_collider.bounds.Contains(corner))
+                    {
+                        return;
+                    }
+                }
+                CloseRoom();
+                foreach (var enemy in _enemies)
+                {
+                    enemy.moveIsBlock = false;
+                }
+            }
+        }
+
         public void SpawnEnemies()
         {
             int currentSumPrices = 0;
@@ -158,7 +202,7 @@ namespace Resources.Scripts.LevelGenerate
                     if (levelGenerator.Enemies[i] == randomEnemy)
                     {
                         _enemies.Add(Instantiate(levelGenerator.Level.enemiesPrefabs[i], _spawnArea.GetRandomPosition(),
-                            Quaternion.identity));
+                            Quaternion.identity).GetComponent<Enemy>());
                         break;
                     }
                 }

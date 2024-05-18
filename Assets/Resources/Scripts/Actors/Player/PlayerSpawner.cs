@@ -1,7 +1,6 @@
-using System;
 using UnityEngine;
 
-namespace Resources.Scripts.Player
+namespace Resources.Scripts.Actors.Player
 {
     public class PlayerSpawner : MonoBehaviour
     {
@@ -17,10 +16,11 @@ namespace Resources.Scripts.Player
 
         public void SpawnPlayer(Vector3 position)
         {
-            if (Player.Instance == null)
+            if (PlayerCharacter.Instance != null)
             {
-                Instantiate(PlayerPrefab, position, Quaternion.identity);
+                Destroy(PlayerCharacter.Instance.gameObject);
             }
+            Instantiate(PlayerPrefab, position, Quaternion.identity);
         }
     }
 }

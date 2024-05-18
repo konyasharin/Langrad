@@ -7,6 +7,7 @@ namespace Resources.Scripts.LevelGenerate
     public struct Level
     {
         public Room[] roomsPrefabs;
+        public GameObject door;
         [Min(5)]
         public int countRooms;
         public GameObject[] enemiesPrefabs;
