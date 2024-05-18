@@ -1,4 +1,5 @@
 using System;
+using Resources.Scripts.Entities;
 
 namespace Resources.Scripts.DialogSystem
 {

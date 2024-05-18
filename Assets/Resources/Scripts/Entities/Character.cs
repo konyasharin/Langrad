@@ -1,10 +1,8 @@
-using System;
 using System.Collections;
 using Resources.Scripts.DialogSystem;
 using UnityEngine;
-using System.Linq;
 
-namespace Resources.Scripts
+namespace Resources.Scripts.Entities
 {
     public class Character : Entity
     {
@@ -14,8 +12,6 @@ namespace Resources.Scripts
 
         private void Start()
         {
-            EntityType = EntityType.Character;
-            KeyToInteract = KeyCode.F;
             CheckInteractIsAvailable();
         }
 
@@ -33,7 +29,12 @@ namespace Resources.Scripts
             }
         }
     
-        public IEnumerator StartDialog()
+        public override void Interact()
+        {
+            StartCoroutine(StartDialog());
+        }
+
+        private IEnumerator StartDialog()
         {
             for (int i = 0; i < Dialogs.Length; i++)
             {
