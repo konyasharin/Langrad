@@ -33,12 +33,7 @@ namespace Resources.Scripts.LevelGenerate
             }
         }
 
-        private void Start()
-        {
-            Generate();
-        }
-
-        private void Generate()
+        public void Generate()
         {
             RoomsManager.Instance.levelGenerator = this;
             SpawnRooms();

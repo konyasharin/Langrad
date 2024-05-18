@@ -51,9 +51,10 @@ namespace Resources.Scripts.Actors.Enemies
 
         protected override void Attack()
         {
+            Animator.SetTrigger(AnimAttack);
             if (GetDistanceToPlayer() <= distanceAttack)
             {
-                Animator.SetTrigger(AnimAttack);
+                PlayerCharacter.Instance.TakeDamage(damage);
             }
 
             StartCoroutine(WaitCooldown());

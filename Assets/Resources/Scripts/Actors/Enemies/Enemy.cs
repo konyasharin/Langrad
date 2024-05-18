@@ -8,6 +8,7 @@ namespace Resources.Scripts.Actors.Enemies
     public abstract class Enemy : Actor
     {
         [field: SerializeField] public int SpawnPrice { get; set; }
+        [SerializeField, Min(1)] protected int damage;
         [SerializeField, Min(0.1f)] protected float distanceAttack;
         [SerializeField, Min(0.1f)] protected float cooldownAttack;
         protected bool IsAttack = false;

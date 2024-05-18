@@ -98,10 +98,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4b3c9bc7ff75a945842014ad20cfb70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 12
+  <Health>k__BackingField: 0
   <Speed>k__BackingField: 1
   moveIsBlock: 0
   <SpawnPrice>k__BackingField: 12
+  damage: 1
   distanceAttack: 1.5
   cooldownAttack: 0
   timeWaitAttack: 0

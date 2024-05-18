@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Resources.Scripts.Actors.Player
 {
@@ -9,6 +10,7 @@ namespace Resources.Scripts.Actors.Player
         private static readonly int IsRun = Animator.StringToHash("isRun");
         public static PlayerCharacter Instance { get; private set; }
         public Collider2D Collider { get; private set; }
+        public UnityEvent OnTakeDamage { get; private set; } = new UnityEvent();
     
         private void OnDrawGizmos()
         {
@@ -64,6 +66,24 @@ namespace Resources.Scripts.Actors.Player
             else if (speedX > 0)
             {
                 SpriteRenderer.flipX = true;
+            }
+        }
+
+        public void TakeDamage(int damage)
+        {
+            if (damage > 0)
+            {
+                if (Armor - damage >= 0)
+                {
+                    Armor -= damage;
+                }
+                else
+                {
+                    damage -= Armor;
+                    Health -= damage;
+                    Armor = 0;
+                }
+                OnTakeDamage.Invoke();
             }
         }
     }

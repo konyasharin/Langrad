@@ -203,7 +203,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e12cd8d176afac4e8916c6842bf9061, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Speed>k__BackingField: 2
+  <Health>k__BackingField: 10
+  <Armor>k__BackingField: 5
+  <Speed>k__BackingField: 5
   moveIsBlock: 0
 --- !u!50 &296972581405064359
 Rigidbody2D:

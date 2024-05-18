@@ -9,6 +9,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Town.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Scenes/Level.unity
+    path: Assets/Scenes/GrassBiome.unity
     guid: 6abd04f0c35a24847923f09fc0f24d07
   m_configObjects: {}

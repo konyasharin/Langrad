@@ -6,8 +6,10 @@ namespace Resources.Scripts.Actors
     [RequireComponent(typeof(Animator), typeof(SpriteRenderer))]
     public abstract class Actor : MonoBehaviour
     {
-        [SerializeField] 
-        protected int health;
+        [field: SerializeField, Min(1)] 
+        public int Health { get; protected set; }
+        [field: SerializeField, Min(0)] 
+        public int Armor { get; protected set; }
         [field: Min(0.1f), SerializeField]
         public float Speed { get; protected set; }
         protected Animator Animator;
