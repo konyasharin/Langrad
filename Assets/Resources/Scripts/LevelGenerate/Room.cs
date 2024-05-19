@@ -15,6 +15,7 @@ namespace Resources.Scripts.LevelGenerate
         private readonly List<SpawnPoint> _doorSpawnPoints = new();
         private SpawnArea _spawnArea;
         private Collider2D _collider;
+        private bool _isAlreadyClosed = false;
         private readonly List<Enemy> _enemies = new();
         [HideInInspector]
         public LevelGenerator levelGenerator;
@@ -150,6 +151,7 @@ namespace Resources.Scripts.LevelGenerate
 
         private void CloseRoom()
         {
+            _isAlreadyClosed = true;
             foreach (var spawnPoint in _doorSpawnPoints)
             {
                 Instantiate(levelGenerator.Level.door, spawnPoint.transform.position,
@@ -159,7 +161,7 @@ namespace Resources.Scripts.LevelGenerate
 
         private void OnTriggerStay2D(Collider2D other)
         {
-            if (other.CompareTag("Player") && Type == RoomType.Common)
+            if (!_isAlreadyClosed && other.CompareTag("Player") && Type == RoomType.Common)
             {
                 foreach (var corner in PlayerUtils.GetCorners())
                 {

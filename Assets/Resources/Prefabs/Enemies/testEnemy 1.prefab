@@ -99,6 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Health>k__BackingField: 0
+  <Armor>k__BackingField: 0
   <Speed>k__BackingField: 1
   moveIsBlock: 0
   <SpawnPrice>k__BackingField: 12

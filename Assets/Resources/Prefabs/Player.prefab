@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7628062885571517647}
   - component: {fileID: 677549906707381725}
   - component: {fileID: 7612562403268217459}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: InteractionTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 2666421470963427796}
   - component: {fileID: 296972581405064359}
   - component: {fileID: 7728217441751793956}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -219,8 +219,8 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
+  m_Mass: 10
+  m_LinearDrag: 1
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -280,7 +280,7 @@ GameObject:
   - component: {fileID: 9034718237626100727}
   - component: {fileID: 2710943303887177475}
   - component: {fileID: 3016069402418925627}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
