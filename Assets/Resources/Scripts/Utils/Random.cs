@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Resources.Scripts
+namespace Resources.Scripts.Utils
 {
     public static class Random
     {

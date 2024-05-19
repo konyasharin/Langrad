@@ -1,12 +1,9 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Resources.Scripts.Actors.Player;
-using Resources.Scripts.Entities;
 using UnityEngine;
 
-namespace Resources.Scripts
+namespace Resources.Scripts.Entities
 {
     public class InteractionManager : MonoBehaviour
     {

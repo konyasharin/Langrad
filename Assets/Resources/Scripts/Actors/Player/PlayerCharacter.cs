@@ -10,7 +10,8 @@ namespace Resources.Scripts.Actors.Player
         private static readonly int IsRun = Animator.StringToHash("isRun");
         public static PlayerCharacter Instance { get; private set; }
         public Collider2D Collider { get; private set; }
-        public UnityEvent OnTakeDamage { get; private set; } = new UnityEvent();
+        public UnityEvent OnTakeDamage { get; private set; } = new();
+        public UnityEvent OnDeath { get; private set; } = new();
     
         private void OnDrawGizmos()
         {
@@ -85,6 +86,17 @@ namespace Resources.Scripts.Actors.Player
                 }
                 OnTakeDamage.Invoke();
             }
+
+            if (Health <= 0)
+            {
+                Death();
+            }
+        }
+
+        private void Death()
+        {
+            OnDeath.Invoke();
+            Time.timeScale = 0;
         }
     }
 }

@@ -379,50 +379,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!1 &82438243
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 82438245}
-  - component: {fileID: 82438244}
-  m_Layer: 0
-  m_Name: DialogsManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &82438244
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 82438243}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 169e1133b3e574b44b70720140e5c000, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &82438245
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 82438243}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.441735, y: 0.26350185, z: -0.60013056}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &130369412
 GameObject:
   m_ObjectHideFlags: 0
@@ -2191,8 +2147,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 242152947}
-  - component: {fileID: 242152946}
-  - component: {fileID: 242152948}
+  - component: {fileID: 242152949}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2200,19 +2155,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &242152946
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 242152945}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98a273bb2d618cc43b24c945cb91781f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  levelGenerator: {fileID: 0}
 --- !u!4 &242152947
 Transform:
   m_ObjectHideFlags: 0
@@ -2228,7 +2170,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &242152948
+--- !u!114 &242152949
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2237,10 +2179,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 242152945}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 470b0d6342a0dc04287c0e94be3c0522, type: 3}
+  m_Script: {fileID: 11500000, guid: 169e1133b3e574b44b70720140e5c000, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <PlayerPrefab>k__BackingField: {fileID: 3007232659459454814, guid: 078050557e643214f866acf5f6d5c02a, type: 3}
 --- !u!1 &341972355
 GameObject:
   m_ObjectHideFlags: 0
@@ -2488,6 +2429,8 @@ GameObject:
   m_Component:
   - component: {fileID: 533709588}
   - component: {fileID: 533709587}
+  - component: {fileID: 533709589}
+  - component: {fileID: 533709590}
   m_Layer: 0
   m_Name: Green Portal Sprite Sheet_0
   m_TagString: Untagged
@@ -2562,6 +2505,56 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &533709589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 533709585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1eac4edcc404fa84093cbc9f527465e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <KeyObject>k__BackingField: {fileID: 4525869564229892376, guid: 33585472f5db69142ae420ed64279613, type: 3}
+  <KeyToInteract>k__BackingField: 102
+  sceneIndex: 2
+--- !u!70 &533709590
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 533709585}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.029342651, y: -0.05868578}
+  m_Size: {x: 1.1197128, y: 1.8826284}
+  m_Direction: 0
 --- !u!1 &696675801
 GameObject:
   m_ObjectHideFlags: 0
@@ -2732,7 +2725,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 700f685ac69c138408b2e72f158b3a23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  keyObject: {fileID: 4525869564229892376, guid: 33585472f5db69142ae420ed64279613, type: 3}
+  <KeyObject>k__BackingField: {fileID: 4525869564229892376, guid: 33585472f5db69142ae420ed64279613, type: 3}
+  <KeyToInteract>k__BackingField: 102
   <CharacterName>k__BackingField: 123
   <Dialogs>k__BackingField:
   - status: 1
@@ -2745,7 +2739,7 @@ MonoBehaviour:
       dialogToggles:
       - character: {fileID: 971807691}
         dialogName: TestDialog
-        newDialogStatus: 0
+        newDialogStatus: 1
 --- !u!95 &704440502
 Animator:
   serializedVersion: 5
@@ -3198,7 +3192,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 700f685ac69c138408b2e72f158b3a23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  keyObject: {fileID: 4525869564229892376, guid: 33585472f5db69142ae420ed64279613, type: 3}
+  <KeyObject>k__BackingField: {fileID: 4525869564229892376, guid: 33585472f5db69142ae420ed64279613, type: 3}
+  <KeyToInteract>k__BackingField: 102
   <CharacterName>k__BackingField: 12
   <Dialogs>k__BackingField:
   - status: 0
@@ -8386,7 +8381,6 @@ SceneRoots:
   - {fileID: 341972359}
   - {fileID: 1801121776}
   - {fileID: 150221362}
-  - {fileID: 82438245}
   - {fileID: 533709588}
   - {fileID: 242152947}
   - {fileID: 1504492451}

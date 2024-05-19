@@ -1,4 +1,5 @@
 using System;
+using Resources.Scripts.Canvas;
 using Resources.Scripts.Canvas.Bars;
 using Resources.Scripts.LevelGenerate;
 using UnityEngine;
@@ -20,6 +21,7 @@ namespace Resources.Scripts.Bootstraps
             _levelGenerator.Generate();
             HealthBar.Instance.Initialize();
             ArmorBar.Instance.Initialize();
+            DeathWindow.Instance.Initialize();
         }
     }
 }

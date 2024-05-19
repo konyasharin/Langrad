@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Resources.Scripts
+namespace Resources.Scripts.Utils
 {
     public static class Combinations
     {

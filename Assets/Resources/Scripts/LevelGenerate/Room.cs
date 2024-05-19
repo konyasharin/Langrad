@@ -4,6 +4,7 @@ using System.Linq;
 using Resources.Scripts.Actors.Enemies;
 using Resources.Scripts.Actors.Player;
 using UnityEngine;
+using Random = Resources.Scripts.Utils.Random;
 
 namespace Resources.Scripts.LevelGenerate
 {
