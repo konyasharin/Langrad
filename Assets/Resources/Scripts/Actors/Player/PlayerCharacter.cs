@@ -4,12 +4,10 @@ using UnityEngine.Events;
 
 namespace Resources.Scripts.Actors.Player
 {
-    [RequireComponent(typeof(Collider2D))]
     public class PlayerCharacter : Actor
     {
         private static readonly int IsRun = Animator.StringToHash("isRun");
         public static PlayerCharacter Instance { get; private set; }
-        public Collider2D Collider { get; private set; }
         public UnityEvent OnTakeDamage { get; private set; } = new();
         public UnityEvent OnDeath { get; private set; } = new();
     
@@ -23,7 +21,6 @@ namespace Resources.Scripts.Actors.Player
         {
             base.Awake();
             Instance = this;
-            Collider = GetComponent<Collider2D>();
         }
 
         private void Start()
@@ -48,9 +45,7 @@ namespace Resources.Scripts.Actors.Player
         {
             float speedX = Input.GetAxis("Horizontal");
             float speedY = Input.GetAxis("Vertical");
-            var position = transform.position;
-            transform.position = new Vector2(speedX * Speed * Time.deltaTime + position.x, 
-                speedY * Speed * Time.deltaTime + position.y);
+            Rb.velocity = new Vector2(speedX * Speed, speedY * Speed);
             if (Math.Abs(speedX) > 0 || Math.Abs(speedY) > 0)
             {
                 Animator.SetBool(IsRun, true);

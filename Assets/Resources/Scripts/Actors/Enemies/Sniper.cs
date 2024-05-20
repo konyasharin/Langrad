@@ -63,20 +63,22 @@ namespace Resources.Scripts.Actors.Enemies
 
         protected override void Move()
         {
-            StartCoroutine(WaitStopMove(GetMoveDirection()));
+            StartCoroutine(WaitStopCooldown(GetMoveDirection()));
         }
 
-        private IEnumerator WaitStopMove(Vector2 direction)
+        private IEnumerator WaitStopCooldown(Vector2 direction)
         {
-            float traveledDistance = 0;
-            while (IsCooldown && traveledDistance < distanceRun)
+            Rb.velocity = new Vector2(direction.x * Speed, direction.y * Speed);
+            while (IsCooldown)
             {
-                transform.position = new Vector2(transform.position.x + direction.x * Speed * Time.deltaTime, 
-                    transform.position.y + direction.y * Speed * Time.deltaTime);
-                traveledDistance +=
-                    new Vector2(direction.x * Speed * Time.deltaTime, direction.y * Speed * Time.deltaTime).magnitude;
+                if (Rb.velocity.magnitude == 0)
+                {
+                    Animator.SetBool(IsRun, false);
+                }
                 yield return new WaitForSeconds(Time.deltaTime);
             }
+
+            Rb.velocity = Vector2.zero;
             Animator.SetBool(IsRun, false);
         }
 

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using Resources.Scripts.Actors.Player;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Resources.Scripts.Actors.Enemies
 {
@@ -13,6 +14,7 @@ namespace Resources.Scripts.Actors.Enemies
         [SerializeField, Min(0.1f)] protected float cooldownAttack;
         protected bool IsAttack = false;
         protected bool IsCooldown = false;
+        protected UnityEvent OnEndCooldown = new();
 
         protected override void Awake()
         {
