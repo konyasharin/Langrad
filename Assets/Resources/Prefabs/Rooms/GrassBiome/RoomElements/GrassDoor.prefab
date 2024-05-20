@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7476437944702559970}
   - component: {fileID: 8395255152028652658}
   - component: {fileID: 4999366230674843425}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GrassDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
