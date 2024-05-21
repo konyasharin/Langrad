@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Resources.Scripts.Canvas
+namespace Resources.Scripts.UI
 {
     public class MenuManager : MonoBehaviour
     {

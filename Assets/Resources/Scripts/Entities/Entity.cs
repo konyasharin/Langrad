@@ -13,5 +13,15 @@ namespace Resources.Scripts.Entities
         public bool InteractIsAvailable { get; protected set; }
 
         public abstract void Interact();
+        
+        private void Start()
+        {
+            CheckInteractIsAvailable();
+        }
+
+        public virtual void CheckInteractIsAvailable()
+        {
+            InteractIsAvailable = true;
+        }
     }
 }

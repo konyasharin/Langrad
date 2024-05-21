@@ -1,4 +1,5 @@
 using System;
+using Resources.Scripts.Entities;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -6,16 +7,10 @@ namespace Resources.Scripts.Actors.Player
 {
     public class PlayerCharacter : Actor
     {
-        private static readonly int IsRun = Animator.StringToHash("isRun");
+        private static readonly int SpeedAnim = Animator.StringToHash("Speed");
         public static PlayerCharacter Instance { get; private set; }
         public UnityEvent OnTakeDamage { get; private set; } = new();
         public UnityEvent OnDeath { get; private set; } = new();
-    
-        private void OnDrawGizmos()
-        {
-            Gizmos.color = Color.blue;
-            Gizmos.DrawWireSphere(transform.position, 1.5f);
-        }
 
         protected override void Awake()
         {
@@ -35,10 +30,7 @@ namespace Resources.Scripts.Actors.Player
             {
                 Move();   
             }
-            else
-            {
-                Animator.SetBool(IsRun, false);
-            }
+            Animator.SetFloat(SpeedAnim, Rb.velocity.magnitude);
         }
 
         protected override void Move()
@@ -46,14 +38,6 @@ namespace Resources.Scripts.Actors.Player
             float speedX = Input.GetAxis("Horizontal");
             float speedY = Input.GetAxis("Vertical");
             Rb.velocity = new Vector2(speedX * Speed, speedY * Speed);
-            if (Math.Abs(speedX) > 0 || Math.Abs(speedY) > 0)
-            {
-                Animator.SetBool(IsRun, true);
-            }
-            else
-            {
-                Animator.SetBool(IsRun, false);
-            }
 
             if (speedX < 0)
             {

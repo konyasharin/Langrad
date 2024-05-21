@@ -1,9 +1,8 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Resources.Scripts.Canvas.Bars
+namespace Resources.Scripts.UI.Bars
 {
     [RequireComponent(typeof(Image))]
     public abstract class Bar : MonoBehaviour

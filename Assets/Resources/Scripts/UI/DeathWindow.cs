@@ -1,9 +1,8 @@
-using System;
 using Resources.Scripts.Actors.Player;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Resources.Scripts.Canvas
+namespace Resources.Scripts.UI
 {
     public class DeathWindow : MonoBehaviour
     {

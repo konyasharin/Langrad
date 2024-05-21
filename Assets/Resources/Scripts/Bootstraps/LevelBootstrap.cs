@@ -1,7 +1,8 @@
 using System;
-using Resources.Scripts.Canvas;
-using Resources.Scripts.Canvas.Bars;
 using Resources.Scripts.LevelGenerate;
+using Resources.Scripts.UI;
+using Resources.Scripts.UI.Bars;
+using Resources.Scripts.UI.Inventory;
 using UnityEngine;
 
 namespace Resources.Scripts.Bootstraps
@@ -22,6 +23,7 @@ namespace Resources.Scripts.Bootstraps
             HealthBar.Instance.Initialize();
             ArmorBar.Instance.Initialize();
             DeathWindow.Instance.Initialize();
+            QuickAccessInventoryDisplay.Instance.Initialize();
         }
     }
 }

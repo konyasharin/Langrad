@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Resources.Scripts.Canvas
+namespace Resources.Scripts.UI
 {
     [Serializable]
     public struct CanvasMove

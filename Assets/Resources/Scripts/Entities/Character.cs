@@ -10,12 +10,7 @@ namespace Resources.Scripts.Entities
         public string CharacterName { get; private set; }
         [field: SerializeField] public Dialog[] Dialogs { get; private set; }
 
-        private void Start()
-        {
-            CheckInteractIsAvailable();
-        }
-
-        public void CheckInteractIsAvailable()
+        public override void CheckInteractIsAvailable()
         {
             foreach (var dialog in Dialogs)
             {

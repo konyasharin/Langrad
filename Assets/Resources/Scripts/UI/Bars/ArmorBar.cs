@@ -2,7 +2,7 @@ using System.Collections;
 using Resources.Scripts.Actors.Player;
 using UnityEngine;
 
-namespace Resources.Scripts.Canvas.Bars
+namespace Resources.Scripts.UI.Bars
 {
     public class ArmorBar : Bar
     {

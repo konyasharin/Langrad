@@ -1,5 +1,5 @@
 using System.Collections;
-using Resources.Scripts.Canvas;
+using Resources.Scripts.UI;
 using TMPro;
 using UnityEngine;
 

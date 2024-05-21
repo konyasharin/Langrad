@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Resources.Scripts.Actors.Player;
@@ -5,13 +6,29 @@ using UnityEngine;
 
 namespace Resources.Scripts.Entities
 {
+    [RequireComponent(typeof(CircleCollider2D))]
     public class InteractionManager : MonoBehaviour
     {
         private Entity _entityToInteract;
         private GameObject _keyObject;
         private readonly List<Entity> _entitiesInInteractZone = new();
         private List<Entity> _entitiesToInteract = new();
+        [SerializeField, Min(0.1f)]
+        private float interactionRadius;
+        private CircleCollider2D _collider;
 
+        private void Awake()
+        {
+            _collider = GetComponent<CircleCollider2D>();
+            _collider.radius = interactionRadius;
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.blue;
+            Gizmos.DrawWireSphere(transform.position, interactionRadius);
+        }
+        
         private void OnTriggerEnter2D(Collider2D other)
         {
             Entity newEntity = other.GetComponent<Entity>();

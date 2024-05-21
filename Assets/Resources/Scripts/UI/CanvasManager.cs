@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace Resources.Scripts.Canvas
+namespace Resources.Scripts.UI
 {
     public static class CanvasManager
     {
