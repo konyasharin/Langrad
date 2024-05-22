@@ -1,4 +1,4 @@
-using Resources.Scripts.Entities.Items;
+using Resources.Scripts.Entities;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -23,7 +23,7 @@ namespace Resources.Scripts.InventorySystem
         {
             foreach (var slot in Slots)
             {
-                if (slot.item == null)
+                if (slot.Item == null)
                 {
                     return false;
                 }
@@ -31,14 +31,26 @@ namespace Resources.Scripts.InventorySystem
 
             return true;
         }
+
+        protected void CleanSlot(int slotIndex)
+        {
+            if (slotIndex < 0 || slotIndex >= CountSlots)
+            {
+                Debug.LogWarning("Slot number doesn't exist");
+                return;
+            }
+
+            Slots[slotIndex].Item = null;
+            OnChangeInventory.Invoke();
+        }
         
-        public void TryTakeItem(Item item)
+        public void TryTakeItem(PickUpItem pickUpItem)
         {
             foreach (var slot in Slots)
             {
                 if (!slot.IsBusy())
                 {
-                    slot.item = item;
+                    slot.Item = pickUpItem.Item;
                     OnChangeInventory.Invoke();
                     return;
                 }

@@ -18,7 +18,7 @@ namespace Resources.Scripts.UI.Bars
         public override void Initialize()
         {
             MaxValue = PlayerCharacter.Instance.Health;
-            PlayerCharacter.Instance.OnTakeDamage.AddListener(UpdateValue);
+            PlayerCharacter.Instance.OnUpdateHealth.AddListener(UpdateValue);
         }
 
         protected override IEnumerator AnimateUpdateValue()

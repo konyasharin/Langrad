@@ -1,14 +1,15 @@
-using Resources.Scripts.Entities.Items;
+using Resources.Scripts.Entities;
+using Resources.Scripts.Items;
 
 namespace Resources.Scripts.InventorySystem
 {
     public class InventorySlot
     {
-        public Item item;
+        public Item Item;
 
         public bool IsBusy()
         {
-            if (item == null)
+            if (Item == null)
             {
                 return false;
             }

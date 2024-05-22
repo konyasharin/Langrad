@@ -1,4 +1,3 @@
-using Resources.Scripts.Entities.Items;
 using UnityEngine;
 
 namespace Resources.Scripts.InventorySystem

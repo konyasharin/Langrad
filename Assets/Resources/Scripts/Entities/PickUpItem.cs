@@ -1,12 +1,14 @@
-using System;
 using Resources.Scripts.InventorySystem;
+using Resources.Scripts.Items;
 using UnityEngine;
 
-namespace Resources.Scripts.Entities.Items
+namespace Resources.Scripts.Entities
 {
-    public abstract class Item : Entity
+    public class PickUpItem : Entity
     {
         public SpriteRenderer SpriteRenderer { get; private set; }
+        [field: SerializeField]
+        public Item Item { get; private set; }
 
         private void Awake()
         {

@@ -1,4 +1,3 @@
-using System;
 using Resources.Scripts.InventorySystem;
 using UnityEngine;
 using UnityEngine.UI;
@@ -32,7 +31,7 @@ namespace Resources.Scripts.UI.Inventory
                 if (QuickAccessInventory.Instance.Slots[i].IsBusy())
                 {
                     itemPlaces[i].color = Color.white;
-                    itemPlaces[i].sprite = QuickAccessInventory.Instance.Slots[i].item.SpriteRenderer.sprite;
+                    itemPlaces[i].sprite = QuickAccessInventory.Instance.Slots[i].Item.sprite;
                 }
                 else
                 {

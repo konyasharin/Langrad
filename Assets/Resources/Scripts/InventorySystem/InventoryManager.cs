@@ -1,5 +1,4 @@
-using System;
-using Resources.Scripts.Entities.Items;
+using Resources.Scripts.Entities;
 using UnityEngine;
 
 namespace Resources.Scripts.InventorySystem
@@ -13,17 +12,17 @@ namespace Resources.Scripts.InventorySystem
             Instance = this;
         }
 
-        public void TryTakeItem(Item item)
+        public void TryTakeItem(PickUpItem pickUpItem)
         {
             if (!QuickAccessInventory.Instance.IsFull())
             {
-                QuickAccessInventory.Instance.TryTakeItem(item);
-                Destroy(item.gameObject);
+                QuickAccessInventory.Instance.TryTakeItem(pickUpItem);
+                Destroy(pickUpItem.gameObject);
             } 
             else if (!Inventory.Instance.IsFull())
             {
-                Inventory.Instance.TryTakeItem(item);
-                Destroy(item.gameObject);
+                Inventory.Instance.TryTakeItem(pickUpItem);
+                Destroy(pickUpItem.gameObject);
             }
         }
     }
