@@ -31,5 +31,7 @@ namespace Resources.Scripts.Actors
         }
 
         protected abstract void Move();
+        public abstract void TakeDamage(int damage);
+        protected abstract void Death();
     }
 }

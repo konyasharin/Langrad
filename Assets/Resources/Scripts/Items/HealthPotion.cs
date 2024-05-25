@@ -1,16 +1,21 @@
 using Resources.Scripts.Actors.Player;
+using Resources.Scripts.ItemsData;
 using UnityEngine;
 
 namespace Resources.Scripts.Items
 {
-    [CreateAssetMenu(fileName = "NewHealthPotion", menuName = "Game/Item/HealthPotion")]
     public class HealthPotion : Item
     {
-        [SerializeField, Min(1)] private int healValue;
+        public HealthPotionData Data { get; set; }
+
+        public HealthPotion(HealthPotionData data)
+        {
+            Data = data;
+        }
         
         public override void Use()
         {
-            PlayerCharacter.Instance.Heal(healValue);
+            PlayerCharacter.Instance.Heal(Data.HealValue);
         }
     }
 }

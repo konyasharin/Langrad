@@ -7,34 +7,31 @@ namespace Resources.Scripts.Bullets
 {
     [RequireComponent(typeof(Collider2D), typeof(Rigidbody2D), 
         typeof(Animator))]
-    public class Bullet : MonoBehaviour
+    public abstract class Bullet : MonoBehaviour
     {
         [SerializeField]
         protected float speed;
         [HideInInspector]
         public int damage;
 
-        private Rigidbody2D _rb;
+        protected Rigidbody2D Rb;
         private Animator _animator;
         private static readonly int DestroyAnimTrigger = Animator.StringToHash("Destroy");
 
         private void Awake()
         {
-            _rb = GetComponent<Rigidbody2D>();
+            Rb = GetComponent<Rigidbody2D>();
             _animator = GetComponent<Animator>();
         }
 
         private void Start()
         {
-            _rb.velocity = (PlayerCharacter.Instance.transform.position - transform.position) * speed;
+            CalculateVelocity();
         }
 
         private void OnCollisionEnter2D(Collision2D other)
         {
-            if (other.collider.CompareTag("Player"))
-            {
-                PlayerCharacter.Instance.TakeDamage(damage);
-            }
+            HandleBulletHit(other);
             _animator.SetTrigger(DestroyAnimTrigger);
         }
 
@@ -42,5 +39,8 @@ namespace Resources.Scripts.Bullets
         {
             Destroy(gameObject);
         }
+
+        protected abstract void CalculateVelocity();
+        protected abstract void HandleBulletHit(Collision2D other);
     }
 }

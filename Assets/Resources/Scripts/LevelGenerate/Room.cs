@@ -16,7 +16,7 @@ namespace Resources.Scripts.LevelGenerate
         private SpawnArea _spawnArea;
         private Collider2D _collider;
         private bool _isAlreadyClosed = false;
-        private readonly List<Enemy> _enemies = new();
+        public List<Enemy> Enemies { get; private set; } = new();
         [HideInInspector]
         public LevelGenerator levelGenerator;
         public List<SpawnPoint> RoomSpawnPoints { get; private set; } = new();
@@ -24,6 +24,7 @@ namespace Resources.Scripts.LevelGenerate
         public Direction[] Directions { get; private set; }
         public Direction? RequiredDirection;
         public RoomType? Type;
+        public RoomStatus? Status;
         
         private void Awake()
         {
@@ -101,9 +102,10 @@ namespace Resources.Scripts.LevelGenerate
                     newRooms.Add(Instantiate(accessRooms[UnityEngine.Random.Range(0, accessRooms.Count)],
                         roomSpawnPoint.transform.position, Quaternion.identity));
                     newRooms[^1].RequiredDirection = DirectionsOperations.GetOppositeDirection(roomSpawnPoint.Direction);
-                    if (newRooms[^1].Type == null)
+                    if (newRooms[^1].Type == null || newRooms[^1].Status == null)
                     {
                         newRooms[^1].Type = RoomType.Common;
+                        newRooms[^1].Status = RoomStatus.Waiting;
                     }
                     newRooms[^1].levelGenerator = levelGenerator;
                     levelGenerator.SpawnedRooms.Add(newRooms[^1]);
@@ -171,7 +173,8 @@ namespace Resources.Scripts.LevelGenerate
                     }
                 }
                 CloseRoom();
-                foreach (var enemy in _enemies)
+                Status = RoomStatus.Active;
+                foreach (var enemy in Enemies)
                 {
                     enemy.moveIsBlock = false;
                 }
@@ -204,7 +207,7 @@ namespace Resources.Scripts.LevelGenerate
                 {
                     if (levelGenerator.Enemies[i] == randomEnemy)
                     {
-                        _enemies.Add(Instantiate(levelGenerator.Level.enemiesPrefabs[i], _spawnArea.GetRandomPosition(),
+                        Enemies.Add(Instantiate(levelGenerator.Level.enemiesPrefabs[i], _spawnArea.GetRandomPosition(),
                             Quaternion.identity).GetComponent<Enemy>());
                         break;
                     }

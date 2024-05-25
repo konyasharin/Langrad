@@ -51,7 +51,7 @@ namespace Resources.Scripts.Actors.Player
             }
         }
 
-        public void TakeDamage(int damage)
+        public override void TakeDamage(int damage)
         {
             if (damage > 0)
             {
@@ -90,7 +90,7 @@ namespace Resources.Scripts.Actors.Player
             }
         }
 
-        private void Death()
+        protected override void Death()
         {
             OnDeath.Invoke();
             Time.timeScale = 0;

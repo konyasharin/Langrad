@@ -31,7 +31,7 @@ namespace Resources.Scripts.UI.Inventory
                 if (QuickAccessInventory.Instance.Slots[i].IsBusy())
                 {
                     itemPlaces[i].color = Color.white;
-                    itemPlaces[i].sprite = QuickAccessInventory.Instance.Slots[i].Item.sprite;
+                    itemPlaces[i].sprite = QuickAccessInventory.Instance.Slots[i].Item.Sprite;
                 }
                 else
                 {

@@ -1,5 +1,7 @@
 using Resources.Scripts.Entities;
 using Resources.Scripts.Items;
+using Resources.Scripts.ItemsData;
+using UnityEngine;
 
 namespace Resources.Scripts.InventorySystem
 {
@@ -16,7 +18,5 @@ namespace Resources.Scripts.InventorySystem
 
             return true;
         }
-    
-    
     }
 }

@@ -145,4 +145,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <KeyObject>k__BackingField: {fileID: 4525869564229892376, guid: 33585472f5db69142ae420ed64279613, type: 3}
   <KeyToInteract>k__BackingField: 102
-  <Item>k__BackingField: {fileID: 11400000, guid: 75b1826ae4b308a49ac105b4ea626374, type: 2}
+  <Type>k__BackingField: 0
+  <Data>k__BackingField: {fileID: 11400000, guid: 75b1826ae4b308a49ac105b4ea626374, type: 2}

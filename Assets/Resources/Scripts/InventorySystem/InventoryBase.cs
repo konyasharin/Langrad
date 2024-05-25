@@ -1,4 +1,5 @@
 using Resources.Scripts.Entities;
+using Resources.Scripts.Items;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -39,18 +40,19 @@ namespace Resources.Scripts.InventorySystem
                 Debug.LogWarning("Slot number doesn't exist");
                 return;
             }
-
+            
             Slots[slotIndex].Item = null;
             OnChangeInventory.Invoke();
         }
         
         public void TryTakeItem(PickUpItem pickUpItem)
         {
+            ItemsFactory factory = new ItemsFactory();
             foreach (var slot in Slots)
             {
                 if (!slot.IsBusy())
                 {
-                    slot.Item = pickUpItem.Item;
+                    slot.Item = factory.CreateItem(pickUpItem);
                     OnChangeInventory.Invoke();
                     return;
                 }

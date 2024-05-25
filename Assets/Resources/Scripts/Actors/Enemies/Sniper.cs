@@ -54,7 +54,7 @@ namespace Resources.Scripts.Actors.Enemies
         protected override void Attack()
         {
             Bullet bullet = Instantiate(bulletPrefab, bulletSpawnTransform.transform.position, Quaternion.identity).GetComponent<Bullet>();
-            bullet.damage = damage;
+            bullet.damage = attackPower;
             IsAttack = false;
             StartCoroutine(Cooldown());
             Animator.SetBool(IsRun, true);

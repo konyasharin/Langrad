@@ -82,5 +82,19 @@ namespace Resources.Scripts.LevelGenerate
 
             return rooms.ToArray();
         }
+
+        [CanBeNull]
+        public Room GetActiveRoom()
+        {
+            foreach (var room in levelGenerator.SpawnedRooms)
+            {
+                if (room.Status == RoomStatus.Active)
+                {
+                    return room;
+                }
+            }
+
+            return null;
+        }
     }
 }

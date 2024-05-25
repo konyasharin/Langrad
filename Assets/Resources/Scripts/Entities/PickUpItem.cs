@@ -1,5 +1,6 @@
 using Resources.Scripts.InventorySystem;
 using Resources.Scripts.Items;
+using Resources.Scripts.ItemsData;
 using UnityEngine;
 
 namespace Resources.Scripts.Entities
@@ -8,7 +9,9 @@ namespace Resources.Scripts.Entities
     {
         public SpriteRenderer SpriteRenderer { get; private set; }
         [field: SerializeField]
-        public Item Item { get; private set; }
+        public ItemType Type { get; private set; }
+        [field: SerializeField]
+        public ItemData Data { get; private set; }
 
         private void Awake()
         {

@@ -54,7 +54,7 @@ namespace Resources.Scripts.Actors.Enemies
             Animator.SetTrigger(AnimAttack);
             if (GetDistanceToPlayer() <= distanceAttack)
             {
-                PlayerCharacter.Instance.TakeDamage(damage);
+                PlayerCharacter.Instance.TakeDamage(attackPower);
             }
 
             StartCoroutine(WaitCooldown());

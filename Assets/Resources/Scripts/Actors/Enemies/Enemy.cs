@@ -3,13 +3,14 @@ using System.Collections;
 using Resources.Scripts.Actors.Player;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace Resources.Scripts.Actors.Enemies
 {
     public abstract class Enemy : Actor
     {
         [field: SerializeField] public int SpawnPrice { get; set; }
-        [SerializeField, Min(1)] protected int damage;
+        [SerializeField, Min(1)] protected int attackPower;
         [SerializeField, Min(0.1f)] protected float distanceAttack;
         [SerializeField, Min(0.1f)] protected float cooldownAttack;
         protected bool IsAttack = false;
@@ -46,6 +47,28 @@ namespace Resources.Scripts.Actors.Enemies
         protected IEnumerator WaitAnimationEnd()
         {
             yield return new WaitForSeconds(Animator.GetCurrentAnimatorStateInfo(0).length);
+        }
+
+        public override void TakeDamage(int damage)
+        {
+            if (Health - damage <= 0)
+            {
+                Health = 0;
+            }
+            else
+            {
+                Health -= damage;
+            }
+
+            if (Health <= 0)
+            {
+                Death();
+            }
+        }
+
+        protected override void Death()
+        {
+            Destroy(gameObject);
         }
     }
 }

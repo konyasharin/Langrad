@@ -1,12 +1,13 @@
+using System;
+using Resources.Scripts.ItemsData;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Resources.Scripts.Items
 {
-    public abstract class Item: ScriptableObject
+    public abstract class Item
     {
-        public new string name;
-        [SerializeField]
-        public Sprite sprite;
+        public Sprite Sprite;
         public abstract void Use();
     }
 }

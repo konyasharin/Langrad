@@ -158,7 +158,7 @@ MonoBehaviour:
   <Speed>k__BackingField: 3
   moveIsBlock: 0
   <SpawnPrice>k__BackingField: 1
-  damage: 4
+  attackPower: 6
   distanceAttack: 5
   cooldownAttack: 3
   bulletPrefab: {fileID: 7575896723659850985, guid: 0b8a133370d988341a108bd2d17f6a9f, type: 3}
