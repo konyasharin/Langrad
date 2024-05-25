@@ -1,4 +1,5 @@
 using System.Collections;
+using Resources.Scripts.Actors.Player;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,19 +8,19 @@ namespace Resources.Scripts.UI.Bars
     [RequireComponent(typeof(Image))]
     public abstract class Bar : MonoBehaviour
     {
-        protected Image Image { get; private set; }
-        protected float MaxValue;
+        private Image _image;
+        private float _maxValue;
         [field: SerializeField, Min(0.1f)]
         protected float AnimateSpeed { get; private set; }
         private Coroutine _activeAnimate;
 
         protected virtual void Awake()
         {
-            Image = GetComponent<Image>();
-            Image.fillAmount = 1;
+            _image = GetComponent<Image>();
+            _image.fillAmount = 1;
         }
 
-        protected void UpdateValue()
+        private void UpdateValue()
         {
             if (_activeAnimate != null)
             {
@@ -29,7 +30,24 @@ namespace Resources.Scripts.UI.Bars
             _activeAnimate = StartCoroutine(AnimateUpdateValue());
         }
         
-        protected abstract IEnumerator AnimateUpdateValue();
-        public abstract void Initialize();
+        private IEnumerator AnimateUpdateValue()
+        {
+            float currentTime = 0f;
+            float newValue = GetValue() / _maxValue;
+            while (currentTime < AnimateSpeed)
+            {
+                _image.fillAmount = Mathf.Lerp(_image.fillAmount, newValue, currentTime / AnimateSpeed);
+                currentTime += Time.deltaTime;
+                yield return new WaitForSeconds(Time.deltaTime);
+            }
+        }
+        
+        public void Initialize()
+        {
+            _maxValue = GetValue();
+            PlayerCharacter.Instance.OnUpdateStat.AddListener(UpdateValue);
+        }
+
+        protected abstract float GetValue();
     }
 }

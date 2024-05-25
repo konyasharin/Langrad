@@ -1,21 +1,20 @@
 using Resources.Scripts.Actors.Player;
 using Resources.Scripts.ItemsData;
-using UnityEngine;
 
 namespace Resources.Scripts.Items
 {
     public class HealthPotion : Item
     {
-        public HealthPotionData Data { get; set; }
+        private readonly HealthPotionData _data;
 
         public HealthPotion(HealthPotionData data)
         {
-            Data = data;
+            _data = data;
         }
         
         public override void Use()
         {
-            PlayerCharacter.Instance.Heal(Data.HealValue);
+            PlayerCharacter.Instance.Heal(_data.HealValue);
         }
     }
 }

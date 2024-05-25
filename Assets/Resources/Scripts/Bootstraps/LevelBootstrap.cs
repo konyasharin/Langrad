@@ -22,6 +22,7 @@ namespace Resources.Scripts.Bootstraps
             _levelGenerator.Generate();
             HealthBar.Instance.Initialize();
             ArmorBar.Instance.Initialize();
+            ManaBar.Instance.Initialize();
             DeathWindow.Instance.Initialize();
             QuickAccessInventoryDisplay.Instance.Initialize();
         }

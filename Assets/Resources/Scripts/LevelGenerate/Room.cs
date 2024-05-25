@@ -15,11 +15,11 @@ namespace Resources.Scripts.LevelGenerate
         private readonly List<SpawnPoint> _doorSpawnPoints = new();
         private SpawnArea _spawnArea;
         private Collider2D _collider;
-        private bool _isAlreadyClosed = false;
         public List<Enemy> Enemies { get; private set; } = new();
         [HideInInspector]
         public LevelGenerator levelGenerator;
         public List<SpawnPoint> RoomSpawnPoints { get; private set; } = new();
+        private List<GameObject> _doors = new();
         [field: SerializeField]
         public Direction[] Directions { get; private set; }
         public Direction? RequiredDirection;
@@ -153,17 +153,42 @@ namespace Resources.Scripts.LevelGenerate
 
         private void CloseRoom()
         {
-            _isAlreadyClosed = true;
             foreach (var spawnPoint in _doorSpawnPoints)
             {
-                Instantiate(levelGenerator.Level.door, spawnPoint.transform.position,
-                    DirectionsOperations.GetRotation(spawnPoint.Direction));
+                _doors.Add(Instantiate(levelGenerator.Level.door, spawnPoint.transform.position,
+                    DirectionsOperations.GetRotation(spawnPoint.Direction)));
+            }
+        }
+
+        private void OpenRoom()
+        {
+            foreach (var door in _doors)
+            {
+                Destroy(door);
+            }
+
+            Status = RoomStatus.Completed;
+        }
+
+        private void ChangeEnemiesList(Enemy removeEnemy)
+        {
+            for (int i = 0; i < Enemies.Count; i++)
+            {
+                if (Enemies[i] == removeEnemy)
+                {
+                    Enemies.RemoveAt(i);
+                }
+            }
+
+            if (Enemies.Count == 0)
+            {
+                OpenRoom();
             }
         }
 
         private void OnTriggerStay2D(Collider2D other)
         {
-            if (!_isAlreadyClosed && other.CompareTag("Player") && Type == RoomType.Common)
+            if (Status != RoomStatus.Completed && other.CompareTag("Player") && Type == RoomType.Common)
             {
                 foreach (var corner in PlayerUtils.GetCorners())
                 {
@@ -177,6 +202,7 @@ namespace Resources.Scripts.LevelGenerate
                 foreach (var enemy in Enemies)
                 {
                     enemy.moveIsBlock = false;
+                    enemy.OnDeath.AddListener(ChangeEnemiesList);
                 }
             }
         }

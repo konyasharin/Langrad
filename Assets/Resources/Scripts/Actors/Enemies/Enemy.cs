@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using Resources.Scripts.Actors.Player;
+using Resources.Scripts.LevelGenerate;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
@@ -16,6 +17,7 @@ namespace Resources.Scripts.Actors.Enemies
         protected bool IsAttack = false;
         protected bool IsCooldown = false;
         protected UnityEvent OnEndCooldown = new();
+        public UnityEvent<Enemy> OnDeath { get; private set; } = new();
 
         protected override void Awake()
         {
@@ -68,6 +70,7 @@ namespace Resources.Scripts.Actors.Enemies
 
         protected override void Death()
         {
+            OnDeath.Invoke(this);
             Destroy(gameObject);
         }
     }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Resources.Scripts.Actors.Enemies;
 using Resources.Scripts.Actors.Player;
+using Resources.Scripts.Spawners;
 using UnityEngine;
 
 namespace Resources.Scripts.LevelGenerate

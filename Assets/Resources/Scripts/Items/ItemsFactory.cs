@@ -1,5 +1,7 @@
 using Resources.Scripts.Entities;
+using Resources.Scripts.Items.MagicScrolls;
 using Resources.Scripts.ItemsData;
+using Resources.Scripts.ItemsData.MagicScrolls;
 using UnityEngine;
 
 namespace Resources.Scripts.Items
@@ -13,6 +15,10 @@ namespace Resources.Scripts.Items
             {
                 case ItemType.HealthPotion:
                     item =  new HealthPotion(pickUpItem.Data as HealthPotionData);
+                    break;
+                case ItemType.MagicScroll:
+                    MSFactory factory = new MSFactory();
+                    item = factory.CreateMagicScroll(pickUpItem.Data as MSData);
                     break;
             }
 

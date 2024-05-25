@@ -8,6 +8,7 @@ namespace Resources.Scripts.LevelGenerate
     {
         public Room[] roomsPrefabs;
         public GameObject door;
+        public GameObject portal;
         [Min(3)]
         public int countRooms;
         public GameObject[] enemiesPrefabs;

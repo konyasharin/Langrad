@@ -191,6 +191,7 @@ MonoBehaviour:
   <Armor>k__BackingField: 10
   <Speed>k__BackingField: 3
   moveIsBlock: 0
+  <Mana>k__BackingField: 10
 --- !u!114 &-7326655257477828624
 MonoBehaviour:
   m_ObjectHideFlags: 0

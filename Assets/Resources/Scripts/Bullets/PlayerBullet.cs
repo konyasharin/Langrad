@@ -38,6 +38,8 @@ namespace Resources.Scripts.Bullets
                         nearestEnemy = activeRoom.Enemies[i];
                     }
                 }
+
+                return nearestEnemy;
             }
 
             return null;

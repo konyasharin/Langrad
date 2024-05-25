@@ -9,8 +9,10 @@ namespace Resources.Scripts.Actors.Player
     {
         private static readonly int SpeedAnim = Animator.StringToHash("Speed");
         public static PlayerCharacter Instance { get; private set; }
-        public UnityEvent OnUpdateHealth { get; private set; } = new();
+        public UnityEvent OnUpdateStat { get; private set; } = new();
         public UnityEvent OnDeath { get; private set; } = new();
+        [field: SerializeField]
+        public int Mana { get; private set; }
         private int _maxHealth;
 
         protected override void Awake()
@@ -65,7 +67,7 @@ namespace Resources.Scripts.Actors.Player
                     Health -= damage;
                     Armor = 0;
                 }
-                OnUpdateHealth.Invoke();
+                OnUpdateStat.Invoke();
             }
 
             if (Health <= 0)
@@ -86,7 +88,23 @@ namespace Resources.Scripts.Actors.Player
                 {
                     Health += healValue;
                 }
-                OnUpdateHealth.Invoke();
+                OnUpdateStat.Invoke();
+            }
+        }
+
+        public void ChangeMana(int manaDelta)
+        {
+            if (manaDelta != 0)
+            {
+                if (Mana + manaDelta < 0)
+                {
+                    Mana = 0;
+                }
+                else
+                {
+                    Mana += manaDelta;
+                }
+                OnUpdateStat.Invoke();
             }
         }
 

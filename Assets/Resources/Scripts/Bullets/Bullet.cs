@@ -32,6 +32,7 @@ namespace Resources.Scripts.Bullets
         private void OnCollisionEnter2D(Collision2D other)
         {
             HandleBulletHit(other);
+            Rb.velocity = Vector2.zero;
             _animator.SetTrigger(DestroyAnimTrigger);
         }
 
