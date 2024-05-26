@@ -1,4 +1,5 @@
 using System;
+using Resources.Scripts.LevelGenerate.RoomScripts;
 using UnityEngine;
 
 namespace Resources.Scripts.LevelGenerate
@@ -6,7 +7,7 @@ namespace Resources.Scripts.LevelGenerate
     [Serializable]
     public struct Level
     {
-        public Room.Room[] roomsPrefabs;
+        public Room[] roomsPrefabs;
         public GameObject door;
         public GameObject portal;
         [Min(3)]

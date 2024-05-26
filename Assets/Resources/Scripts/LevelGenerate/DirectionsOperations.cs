@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Resources.Scripts.Utils;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Resources.Scripts.LevelGenerate
 {
@@ -26,6 +27,50 @@ namespace Resources.Scripts.LevelGenerate
             }
 
             return Combinations.GenerateCombinations(countDirections, directions.ToArray());
+        }
+
+        public static Direction[] GetDirections(Direction[] excludedDirections = null)
+        {
+            List<string> directionsNames = Enum.GetNames(typeof(Direction)).ToList();
+            if (excludedDirections != null)
+            {
+                for (int i = 0; i < directionsNames.Count; i++)
+                {
+                    foreach (var excludedDirection in excludedDirections)
+                    {
+                        if (directionsNames[i] == Enum.GetName(typeof(Direction), excludedDirection))
+                        {
+                            directionsNames.RemoveAt(i);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            foreach (var dir in excludedDirections)
+            {
+                Debug.Log(dir);
+            }
+            Debug.Log("------");
+            
+            foreach (var dir in directionsNames)
+            {
+                Debug.Log(dir);
+            }
+
+            Direction[] directions = new Direction[directionsNames.Count];
+            for (int i = 0; i < directionsNames.Count; i++)
+            {
+                directions[i] = Enum.Parse<Direction>(directionsNames[i]);
+            }
+            
+            return directions;
+        }
+
+        public static Direction GetRandomDirection(Direction[] excludedDirections = null)
+        {
+            Direction[] directions = GetDirections(excludedDirections);
+            return directions[UnityEngine.Random.Range(0, directions.Length)];
         }
         
         public static Direction GetOppositeDirection(Direction direction){

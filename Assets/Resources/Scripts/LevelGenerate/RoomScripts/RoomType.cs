@@ -1,4 +1,4 @@
-namespace Resources.Scripts.LevelGenerate.Room
+namespace Resources.Scripts.LevelGenerate.RoomScripts
 {
     public enum RoomType
     {

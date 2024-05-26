@@ -5,7 +5,7 @@ using Resources.Scripts.Actors.Player;
 using UnityEngine;
 using Random = Resources.Scripts.Utils.Random;
 
-namespace Resources.Scripts.LevelGenerate.Room
+namespace Resources.Scripts.LevelGenerate.RoomScripts
 {
     [RequireComponent(typeof(Collider2D))]
     public class Room : MonoBehaviour
@@ -61,12 +61,20 @@ namespace Resources.Scripts.LevelGenerate.Room
                 Debug.LogWarning("Counts of passage, room or door spawn points and directions doesn't match");
             }
         }
+
+        public void Initialize(Direction? requiredDirection, RoomType? type, LevelGenerator generator)
+        {
+            RequiredDirection = requiredDirection;
+            Type = type;
+            levelGenerator = generator;
+        }
         
         private void SpawnPassages()
         {
             foreach (var passageSpawnPoint in _passageSpawnPoints)
             {
-                if (passageSpawnPoint.Direction == RequiredDirection)
+                if (passageSpawnPoint.Direction == RequiredDirection || 
+                    RoomSpawnPoints.Any(point => point.Direction == passageSpawnPoint.Direction && RoomsManager.Instance.IsBusyOtherRoomPoint(point, this)))
                 {
                     continue;
                 }
@@ -89,8 +97,7 @@ namespace Resources.Scripts.LevelGenerate.Room
             List<Room> newRooms = new List<Room>();
             foreach (var roomSpawnPoint in RoomSpawnPoints)
             {
-                
-                if (RequiredDirection == roomSpawnPoint.Direction)
+                if (RequiredDirection == roomSpawnPoint.Direction || RoomsManager.Instance.IsBusyOtherRoomPoint(roomSpawnPoint, this))
                 { 
                     continue;
                 }

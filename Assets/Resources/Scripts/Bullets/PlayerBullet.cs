@@ -4,7 +4,7 @@ using JetBrains.Annotations;
 using Resources.Scripts.Actors.Enemies;
 using Resources.Scripts.Actors.Player;
 using Resources.Scripts.LevelGenerate;
-using Resources.Scripts.LevelGenerate.Room;
+using Resources.Scripts.LevelGenerate.RoomScripts;
 using UnityEngine;
 
 namespace Resources.Scripts.Bullets

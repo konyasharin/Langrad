@@ -1,7 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
-using Resources.Scripts.LevelGenerate.Room;
+using Resources.Scripts.LevelGenerate.RoomScripts;
 using UnityEngine;
 
 namespace Resources.Scripts.LevelGenerate
@@ -18,20 +19,33 @@ namespace Resources.Scripts.LevelGenerate
         }
     
         [CanBeNull]
-        public Room.Room GetRoomByDirections(Direction[] directions)
+        public Room GetRoomByDirections(Direction[] directions)
         {
             foreach (var room in levelGenerator.Level.roomsPrefabs)
             {
-                if (room.Directions.SequenceEqual(directions))
+                if (room.Directions.Length == directions.Length)
                 {
-                    return room;
+                    bool isSuitable = true;
+                    foreach (var direction in directions)
+                    {
+                        if (!room.Directions.Contains(direction))
+                        {
+                            isSuitable = false;
+                            break;
+                        }
+                    }
+
+                    if (isSuitable)
+                    {
+                        return room;
+                    }   
                 }
             }
             Debug.LogWarning($"Elements of rooms array doesn't have room with this directions");
             return null;
         }
     
-        public bool IsBusyOtherRoomPoint(SpawnPoint spawnPoint, Room.Room excludedRoom)
+        public bool IsBusyOtherRoomPoint(SpawnPoint spawnPoint, Room excludedRoom)
         {
             foreach (var room in levelGenerator.SpawnedRooms)
             {
@@ -48,7 +62,7 @@ namespace Resources.Scripts.LevelGenerate
             return false;
         }
     
-        public Room.Room DeleteDirection(Direction deleteDirection, Room.Room room)
+        public Room DeleteDirection(Direction deleteDirection, Room room)
         {
             List<Direction> newDirections = new List<Direction>();
             foreach (var direction in room.Directions)
@@ -60,7 +74,7 @@ namespace Resources.Scripts.LevelGenerate
                 newDirections.Add(direction);
             }
             
-            Room.Room newRoom =  Instantiate(GetRoomByDirections(newDirections.ToArray()), room.transform.position, Quaternion.identity);
+            Room newRoom =  Instantiate(GetRoomByDirections(newDirections.ToArray()), room.transform.position, Quaternion.identity);
             newRoom.RequiredDirection = room.RequiredDirection;
             newRoom.Type = room.Type;
             newRoom.levelGenerator = room.levelGenerator;
@@ -68,10 +82,52 @@ namespace Resources.Scripts.LevelGenerate
             levelGenerator.countEmptyPassages -= 1;
             return newRoom;
         }
-
-        public Room.Room[] GetRoomsByType(RoomType roomType)
+        
+        public int? SearchExpandableRoomIndex()
         {
-            List<Room.Room> rooms = new List<Room.Room>();
+            for (int i = 0; i < levelGenerator.SpawnedRooms.Count; i++)
+            {
+                Room room = levelGenerator.SpawnedRooms[i];
+                if (room.Type == RoomType.Common && room.Directions.Length != 4)
+                {
+                    return i;
+                }
+            }
+
+            return null;
+        }
+
+        [CanBeNull]
+        public Room AddRandomDirection(Room room)
+        {
+            List<Direction> newDirections = new List<Direction>();
+            foreach (var direction in room.Directions)
+            {
+                newDirections.Add(direction);
+            }
+
+            Direction newDirection = DirectionsOperations.GetRandomDirection(room.Directions);
+            newDirections.Add(newDirection);
+
+            Direction[] cachedOldDirections = room.Directions; 
+            Room newRoom = Instantiate(GetRoomByDirections(newDirections.ToArray()), room.transform.position, Quaternion.identity);
+            Destroy(room.gameObject);
+            levelGenerator.countEmptyPassages += 1;
+
+            if (IsBusyOtherRoomPoint(newRoom.RoomSpawnPoints.Find(point => point.Direction == newDirection), room))
+            {
+                Destroy(newRoom.gameObject);
+                newRoom = Instantiate(GetRoomByDirections(cachedOldDirections), newRoom.transform.position, Quaternion.identity);
+                levelGenerator.countEmptyPassages -= 1;
+            }
+            newRoom.Initialize(room.RequiredDirection, room.Type, room.levelGenerator);
+            
+            return newRoom;
+        }
+
+        public Room[] GetRoomsByType(RoomType roomType)
+        {
+            List<Room> rooms = new List<Room>();
             foreach (var room in levelGenerator.SpawnedRooms)
             {
                 if (room.Type == roomType)
@@ -84,7 +140,7 @@ namespace Resources.Scripts.LevelGenerate
         }
 
         [CanBeNull]
-        public Room.Room GetActiveRoom()
+        public Room GetActiveRoom()
         {
             foreach (var room in levelGenerator.SpawnedRooms)
             {
