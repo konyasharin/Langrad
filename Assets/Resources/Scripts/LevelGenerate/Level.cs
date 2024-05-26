@@ -6,7 +6,7 @@ namespace Resources.Scripts.LevelGenerate
     [Serializable]
     public struct Level
     {
-        public Room[] roomsPrefabs;
+        public Room.Room[] roomsPrefabs;
         public GameObject door;
         public GameObject portal;
         [Min(3)]

@@ -36,8 +36,11 @@ namespace Resources.Scripts.InventorySystem
             }
             if (Slots[slotIndex].IsBusy())
             {
-                Slots[slotIndex].Item.Use();
-                CleanSlot(slotIndex);
+                if (Slots[slotIndex].Item.IsActivationAvailable())
+                {
+                    Slots[slotIndex].Item.Use();
+                    CleanSlot(slotIndex);   
+                }
             }
         }
     }

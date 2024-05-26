@@ -1,7 +1,6 @@
-using Resources.Scripts.Actors.Player;
 using UnityEngine;
 
-namespace Resources.Scripts.ItemsData
+namespace Resources.Scripts.Data.ItemsData
 {
     [CreateAssetMenu(fileName = "NewHealthPotion", menuName = "Game/Items/HealthPotion")]
     public class HealthPotionData : ItemData

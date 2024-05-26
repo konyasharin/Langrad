@@ -7,7 +7,6 @@ namespace Resources.Scripts.Actors.Player
 {
     public class PlayerCharacter : Actor
     {
-        private static readonly int SpeedAnim = Animator.StringToHash("Speed");
         public static PlayerCharacter Instance { get; private set; }
         public UnityEvent OnUpdateStat { get; private set; } = new();
         public UnityEvent OnDeath { get; private set; } = new();
@@ -34,7 +33,6 @@ namespace Resources.Scripts.Actors.Player
             {
                 Move();   
             }
-            Animator.SetFloat(SpeedAnim, Rb.velocity.magnitude);
         }
 
         protected override void Move()

@@ -1,5 +1,5 @@
 using Resources.Scripts.Actors.Player;
-using Resources.Scripts.ItemsData;
+using Resources.Scripts.Data.ItemsData;
 
 namespace Resources.Scripts.Items
 {

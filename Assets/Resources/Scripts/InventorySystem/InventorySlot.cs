@@ -1,6 +1,5 @@
 using Resources.Scripts.Entities;
 using Resources.Scripts.Items;
-using Resources.Scripts.ItemsData;
 using UnityEngine;
 
 namespace Resources.Scripts.InventorySystem

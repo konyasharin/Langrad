@@ -15,10 +15,10 @@ namespace Resources.Scripts.Actors
         public int Armor { get; protected set; }
         [field: Min(0.1f), SerializeField]
         public float Speed { get; protected set; }
-        protected Animator Animator;
+        public Animator Animator { get; private set; }
         protected SpriteRenderer SpriteRenderer;
         public Collider2D Collider { get; private set; }
-        protected Rigidbody2D Rb;
+        public Rigidbody2D Rb { get; private set; }
         [HideInInspector] 
         public bool moveIsBlock = false;
 

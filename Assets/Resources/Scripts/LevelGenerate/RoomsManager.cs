@@ -1,7 +1,7 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
+using Resources.Scripts.LevelGenerate.Room;
 using UnityEngine;
 
 namespace Resources.Scripts.LevelGenerate
@@ -18,7 +18,7 @@ namespace Resources.Scripts.LevelGenerate
         }
     
         [CanBeNull]
-        public Room GetRoomByDirections(Direction[] directions)
+        public Room.Room GetRoomByDirections(Direction[] directions)
         {
             foreach (var room in levelGenerator.Level.roomsPrefabs)
             {
@@ -31,7 +31,7 @@ namespace Resources.Scripts.LevelGenerate
             return null;
         }
     
-        public bool IsBusyOtherRoomPoint(SpawnPoint spawnPoint, Room excludedRoom)
+        public bool IsBusyOtherRoomPoint(SpawnPoint spawnPoint, Room.Room excludedRoom)
         {
             foreach (var room in levelGenerator.SpawnedRooms)
             {
@@ -48,7 +48,7 @@ namespace Resources.Scripts.LevelGenerate
             return false;
         }
     
-        public Room DeleteDirection(Direction deleteDirection, Room room)
+        public Room.Room DeleteDirection(Direction deleteDirection, Room.Room room)
         {
             List<Direction> newDirections = new List<Direction>();
             foreach (var direction in room.Directions)
@@ -60,7 +60,7 @@ namespace Resources.Scripts.LevelGenerate
                 newDirections.Add(direction);
             }
             
-            Room newRoom =  Instantiate(GetRoomByDirections(newDirections.ToArray()), room.transform.position, Quaternion.identity);
+            Room.Room newRoom =  Instantiate(GetRoomByDirections(newDirections.ToArray()), room.transform.position, Quaternion.identity);
             newRoom.RequiredDirection = room.RequiredDirection;
             newRoom.Type = room.Type;
             newRoom.levelGenerator = room.levelGenerator;
@@ -69,9 +69,9 @@ namespace Resources.Scripts.LevelGenerate
             return newRoom;
         }
 
-        public Room[] GetRoomsByType(RoomType roomType)
+        public Room.Room[] GetRoomsByType(RoomType roomType)
         {
-            List<Room> rooms = new List<Room>();
+            List<Room.Room> rooms = new List<Room.Room>();
             foreach (var room in levelGenerator.SpawnedRooms)
             {
                 if (room.Type == roomType)
@@ -84,7 +84,7 @@ namespace Resources.Scripts.LevelGenerate
         }
 
         [CanBeNull]
-        public Room GetActiveRoom()
+        public Room.Room GetActiveRoom()
         {
             foreach (var room in levelGenerator.SpawnedRooms)
             {

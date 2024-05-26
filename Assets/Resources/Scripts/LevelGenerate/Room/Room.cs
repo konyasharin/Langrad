@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Resources.Scripts.Actors.Enemies;
@@ -6,7 +5,7 @@ using Resources.Scripts.Actors.Player;
 using UnityEngine;
 using Random = Resources.Scripts.Utils.Random;
 
-namespace Resources.Scripts.LevelGenerate
+namespace Resources.Scripts.LevelGenerate.Room
 {
     [RequireComponent(typeof(Collider2D))]
     public class Room : MonoBehaviour
@@ -19,7 +18,7 @@ namespace Resources.Scripts.LevelGenerate
         [HideInInspector]
         public LevelGenerator levelGenerator;
         public List<SpawnPoint> RoomSpawnPoints { get; private set; } = new();
-        private List<GameObject> _doors = new();
+        private readonly List<GameObject> _doors = new();
         [field: SerializeField]
         public Direction[] Directions { get; private set; }
         public Direction? RequiredDirection;
@@ -188,7 +187,7 @@ namespace Resources.Scripts.LevelGenerate
 
         private void OnTriggerStay2D(Collider2D other)
         {
-            if (Status != RoomStatus.Completed && other.CompareTag("Player") && Type == RoomType.Common)
+            if (Status == RoomStatus.Waiting && other.CompareTag("Player") && Type == RoomType.Common)
             {
                 foreach (var corner in PlayerUtils.GetCorners())
                 {
@@ -197,8 +196,8 @@ namespace Resources.Scripts.LevelGenerate
                         return;
                     }
                 }
-                CloseRoom();
                 Status = RoomStatus.Active;
+                CloseRoom();
                 foreach (var enemy in Enemies)
                 {
                     enemy.moveIsBlock = false;

@@ -4,6 +4,7 @@ using JetBrains.Annotations;
 using Resources.Scripts.Actors.Enemies;
 using Resources.Scripts.Actors.Player;
 using Resources.Scripts.LevelGenerate;
+using Resources.Scripts.LevelGenerate.Room;
 using UnityEngine;
 
 namespace Resources.Scripts.Bullets
@@ -53,7 +54,7 @@ namespace Resources.Scripts.Bullets
                 return nearestEnemy.transform.position - PlayerCharacter.Instance.transform.position;
             }
             
-            return Vector2.zero;
+            return PlayerCharacter.Instance.transform.up;
         }
     }
 }
