@@ -29,7 +29,7 @@ namespace Resources.Scripts.LevelGenerate
             return Combinations.GenerateCombinations(countDirections, directions.ToArray());
         }
 
-        public static Direction[] GetDirections(Direction[] excludedDirections = null)
+        private static Direction[] GetDirections(Direction[] excludedDirections = null)
         {
             List<string> directionsNames = Enum.GetNames(typeof(Direction)).ToList();
             if (excludedDirections != null)
@@ -45,17 +45,6 @@ namespace Resources.Scripts.LevelGenerate
                         }
                     }
                 }
-            }
-
-            foreach (var dir in excludedDirections)
-            {
-                Debug.Log(dir);
-            }
-            Debug.Log("------");
-            
-            foreach (var dir in directionsNames)
-            {
-                Debug.Log(dir);
             }
 
             Direction[] directions = new Direction[directionsNames.Count];

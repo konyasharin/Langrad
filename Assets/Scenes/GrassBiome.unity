@@ -458,7 +458,7 @@ MonoBehaviour:
     - {fileID: 3544641186477324216, guid: 3b8f7bed1af3b0b4aaddd6414e919cb8, type: 3}
     door: {fileID: 3968963430803310393, guid: 45c1a51d817a4164094a7a44fd2f073f, type: 3}
     portal: {fileID: 724571218303248251, guid: d0df3075f24206f45b897119470c79b6, type: 3}
-    countRooms: 1000
+    countRooms: 50
     enemiesPrefabs:
     - {fileID: 4675436010600313251, guid: ef09d4952619a6b4aa26044e24781f6d, type: 3}
     - {fileID: 4675436010600313251, guid: c0ffce4f11bb23d4a88d65e2e1e33758, type: 3}

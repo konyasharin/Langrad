@@ -26,6 +26,7 @@ namespace Resources.Scripts.UI
 
         public void GoToTown()
         {
+            Time.timeScale = 1;
             SceneManager.LoadScene(1);
         }
     }

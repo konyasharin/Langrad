@@ -12,7 +12,7 @@ namespace Resources.Scripts.Actors.Player
         private static readonly int MagicAttackHash = Animator.StringToHash("MagicAttack");
         private PlayerCharacter _playerCharacter;
 
-        private void Awake()
+        private void Start()
         {
             _playerCharacter = PlayerCharacter.Instance;
             Instance = this;
