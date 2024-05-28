@@ -194,6 +194,8 @@ MonoBehaviour:
   <Speed>k__BackingField: 3
   moveIsBlock: 0
   <Mana>k__BackingField: 10
+  speedX: 0
+  speedY: 0
 --- !u!114 &-7326655257477828624
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,7 +208,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8562008435005c418a1749f3368861c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <CountSlots>k__BackingField: 4
+  <CountSlots>k__BackingField: 8
 --- !u!114 &-9007344347734239598
 MonoBehaviour:
   m_ObjectHideFlags: 0

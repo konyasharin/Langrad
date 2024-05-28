@@ -77,7 +77,7 @@ namespace Resources.Scripts.LevelGenerate
                 WaitingRooms.Add(SpawnedRooms[^1]);
                 
                 int i = 0;
-                while (SpawnedRooms.Count != Level.countRooms && i <= 1000)
+                while (SpawnedRooms.Count < Level.countRooms && i <= 1000)
                 {
                     List<Room> newWaitingRooms = new List<Room>();
                     foreach (var waitingRoom in WaitingRooms)
@@ -109,14 +109,20 @@ namespace Resources.Scripts.LevelGenerate
                         }
                     }
                     WaitingRooms = newWaitingRooms;
-                    if (WaitingRooms.Count == 0 && SpawnedRooms.Count != Level.countRooms)
+                    if (WaitingRooms.Count == 0 && SpawnedRooms.Count < Level.countRooms)
                     {
-                        int? expandableRoomIndex = RoomsManager.Instance.SearchExpandableRoomIndex();
-                        if (expandableRoomIndex != null)
+                        for (int j = 0; j < SpawnedRooms.Count; j++)
                         {
-                            Room newRoom = RoomsManager.Instance.AddRandomDirection(SpawnedRooms[expandableRoomIndex.Value]);
-                            WaitingRooms.Add(newRoom);
-                            SpawnedRooms[expandableRoomIndex.Value] = newRoom;
+                            if (RoomsManager.Instance.IsExpandableRoom(SpawnedRooms[i]))
+                            {
+                                (Room newRoom, bool isReplaced) = RoomsManager.Instance.AddRandomDirection(SpawnedRooms[i]);
+                                if (isReplaced)
+                                {
+                                    WaitingRooms.Add(newRoom);
+                                    SpawnedRooms[i] = newRoom;   
+                                    break;
+                                }
+                            }
                         }
                     }
                     

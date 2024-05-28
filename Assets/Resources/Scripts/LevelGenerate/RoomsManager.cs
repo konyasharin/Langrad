@@ -83,22 +83,17 @@ namespace Resources.Scripts.LevelGenerate
             return newRoom;
         }
         
-        public int? SearchExpandableRoomIndex()
+        public bool IsExpandableRoom(Room room)
         {
-            for (int i = 0; i < levelGenerator.SpawnedRooms.Count; i++)
+            if (room.Type == RoomType.Common && room.Directions.Length != 4)
             {
-                Room room = levelGenerator.SpawnedRooms[i];
-                if (room.Type == RoomType.Common && room.Directions.Length != 4)
-                {
-                    return i;
-                }
+                return true;
             }
 
-            return null;
+            return false;
         }
-
-        [CanBeNull]
-        public Room AddRandomDirection(Room room)
+        
+        public (Room, bool) AddRandomDirection(Room room)
         {
             List<Direction> newDirections = new List<Direction>();
             foreach (var direction in room.Directions)
@@ -112,17 +107,17 @@ namespace Resources.Scripts.LevelGenerate
             Direction[] cachedOldDirections = room.Directions; 
             Room newRoom = Instantiate(GetRoomByDirections(newDirections.ToArray()), room.transform.position, Quaternion.identity);
             Destroy(room.gameObject);
-            levelGenerator.countEmptyPassages += 1;
 
             if (IsBusyOtherRoomPoint(newRoom.RoomSpawnPoints.Find(point => point.Direction == newDirection), room))
             {
                 Destroy(newRoom.gameObject);
                 newRoom = Instantiate(GetRoomByDirections(cachedOldDirections), newRoom.transform.position, Quaternion.identity);
-                levelGenerator.countEmptyPassages -= 1;
+                return (newRoom, false);
             }
+            levelGenerator.countEmptyPassages += 1;
             newRoom.Initialize(room.RequiredDirection, room.Type, room.levelGenerator);
             
-            return newRoom;
+            return (newRoom, true);
         }
 
         public Room[] GetRoomsByType(RoomType roomType)

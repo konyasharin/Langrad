@@ -1,12 +1,14 @@
+using Resources.Scripts.InventorySystem;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Resources.Scripts.UI.Inventory
+namespace Resources.Scripts.UI.Inventory.Slots
 {
-    public class SlotDisplay : MonoBehaviour
+    public abstract class SlotDisplayBase : MonoBehaviour
     {
         [field: SerializeField]
         public Image ItemPlace { get; private set; }
+        public InventorySlot Slot;
 
         public void Clear()
         {
@@ -14,10 +16,10 @@ namespace Resources.Scripts.UI.Inventory
             ItemPlace.sprite = null;
         }
 
-        public void Fill(Sprite newSprite)
+        public void Fill()
         {
             ItemPlace.color = Color.white;
-            ItemPlace.sprite = newSprite;
+            ItemPlace.sprite = Slot.Item.Sprite;
         }
     }
 }

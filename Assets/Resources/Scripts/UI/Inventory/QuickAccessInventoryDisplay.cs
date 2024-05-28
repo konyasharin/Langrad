@@ -1,14 +1,15 @@
 using Resources.Scripts.InventorySystem;
+using Resources.Scripts.UI.Inventory.Slots;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Resources.Scripts.UI.Inventory
 {
-    public class QuickAccessInventoryDisplay : InventoryDisplayBase
+    public class QuickAccessInventoryDisplay : InventoryDisplayBase<QuickAccessSlotDisplay>
     {
         public static QuickAccessInventoryDisplay Instance;
         [field: SerializeField]
-        protected override SlotDisplay[] SlotsDisplays { get; set; }
+        protected override QuickAccessSlotDisplay[] SlotsDisplays { get; set; }
         protected override InventoryBase Inventory { get; set; }
 
         private void Awake()
