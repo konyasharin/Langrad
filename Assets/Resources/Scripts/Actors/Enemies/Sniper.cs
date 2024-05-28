@@ -21,7 +21,7 @@ namespace Resources.Scripts.Actors.Enemies
 
         private void Update()
         {
-            if (!IsCooldown && !IsAttack)
+            if (!IsCooldown && !IsAttack && !moveIsBlock)
             {
                 Animator.SetBool(IsRun, false);
                 Aim();   

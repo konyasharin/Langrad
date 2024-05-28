@@ -13,6 +13,8 @@ namespace Resources.Scripts.Actors.Player
         [field: SerializeField]
         public int Mana { get; private set; }
         private int _maxHealth;
+        public float speedX;
+        public float speedY;
 
         protected override void Awake()
         {
@@ -33,12 +35,14 @@ namespace Resources.Scripts.Actors.Player
             {
                 Move();   
             }
+            else
+            {
+                Rb.velocity = Vector2.zero;
+            }
         }
 
         protected override void Move()
         {
-            float speedX = Input.GetAxis("Horizontal");
-            float speedY = Input.GetAxis("Vertical");
             Rb.velocity = new Vector2(speedX * Speed, speedY * Speed);
 
             if (speedX < 0)

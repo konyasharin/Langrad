@@ -9,6 +9,7 @@ namespace Resources.Scripts.Entities
     [RequireComponent(typeof(CircleCollider2D))]
     public class InteractionManager : MonoBehaviour
     {
+        public static InteractionManager Instance { get; private set; }
         private Entity _entityToInteract;
         private GameObject _keyObject;
         private readonly List<Entity> _entitiesInInteractZone = new();
@@ -19,6 +20,7 @@ namespace Resources.Scripts.Entities
 
         private void Awake()
         {
+            Instance = this;
             _collider = GetComponent<CircleCollider2D>();
             _collider.radius = interactionRadius;
         }
@@ -109,13 +111,10 @@ namespace Resources.Scripts.Entities
             _keyObject.transform.position = positionToSpawn;
         }
 
-        private void Update()
+        public void HandleKeyDown()
         {
             if (_entityToInteract == null) return;
-            if (Input.GetKeyDown(_entityToInteract.KeyToInteract))
-            {
-                _entityToInteract.Interact();
-            }
+            _entityToInteract.Interact();
         }
 
         private void RemoveEntityFromList(List<Entity> entities, Entity entity)

@@ -39,14 +39,14 @@ namespace Resources.Scripts.DialogSystem
             _rectTransform = GetComponent<RectTransform>();
         }
 
-        private void Update()
+        public void HandleKeyDown()
         {
-            if (_isActive && Input.GetKeyDown(KeyCode.Mouse0) && !_isSkip)
+            if (_isActive && !_isSkip)
             {
                 _isSkip = true;
             }
 
-            if (_isActive && _isWait && Input.GetKeyDown(KeyCode.Mouse0))
+            if (_isActive && _isWait)
             {
                 _isWait = false;
             }

@@ -16,9 +16,9 @@ namespace Resources.Scripts.Actors.Player
             Instance = this;
         }
 
-        private void Update()
+        public void HandleKeyDown()
         {
-            if (Input.GetKeyDown(KeyCode.E) && isWaitActivate)
+            if (isWaitActivate)
             {
                 isWaitActivate = false;
             }

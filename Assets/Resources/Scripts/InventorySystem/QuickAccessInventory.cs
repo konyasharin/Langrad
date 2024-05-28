@@ -8,7 +8,7 @@ namespace Resources.Scripts.InventorySystem
         public static QuickAccessInventory Instance;
         public override int CountSlots { get; protected set; } = 4;
         
-        private readonly KeyCode[] _keysToUse = { KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4 };
+        public KeyCode[] KeysToUse { get; private set; } = { KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4 };
 
         protected override void Awake()
         {
@@ -16,15 +16,9 @@ namespace Resources.Scripts.InventorySystem
             Instance = this;
         }
 
-        private void Update()
+        public void HandleKeyDown(int i)
         {
-            for (int i = 0; i < _keysToUse.Length; i++)
-            {
-                if (Input.GetKeyDown(_keysToUse[i]))
-                {
-                    UseItem(i);
-                }
-            }
+            UseItem(i);
         }
 
         private void UseItem(int slotIndex)

@@ -25,6 +25,7 @@ namespace Resources.Scripts.Bootstraps
             ManaBar.Instance.Initialize();
             DeathWindow.Instance.Initialize();
             QuickAccessInventoryDisplay.Instance.Initialize();
+            InventoryDisplay.Instance.Initialize();
         }
     }
 }
