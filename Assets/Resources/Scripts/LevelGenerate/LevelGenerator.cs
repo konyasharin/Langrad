@@ -49,6 +49,7 @@ namespace Resources.Scripts.LevelGenerate
             }
 
             Room startRoom = RoomsManager.Instance.GetRoomsByType(RoomType.Start)[0];
+            startRoom.SpawnItems(Level.startItemsPrefabs);
             PlayerSpawner.Instance.SpawnPlayer(startRoom.transform.position);
             Spawner.Instance.Spawn(Level.portal, SpawnedRooms[^1].transform.position);
         }

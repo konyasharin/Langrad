@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Resources.Scripts.Actors.Enemies;
 using Resources.Scripts.Actors.Player;
+using Resources.Scripts.Items;
 using UnityEngine;
 using Random = Resources.Scripts.Utils.Random;
 
@@ -120,6 +121,14 @@ namespace Resources.Scripts.LevelGenerate.RoomScripts
             }
             
             return newRooms.ToArray();
+        }
+
+        public void SpawnItems(GameObject[] itemsPrefabs)
+        {
+            foreach (var itemPrefab in itemsPrefabs)
+            {
+                Instantiate(itemPrefab, _spawnArea.GetRandomPosition(), Quaternion.identity);
+            }
         }
 
         private List<Room> GetAccessRooms(Direction requiredDirection)

@@ -10,6 +10,7 @@ namespace Resources.Scripts.LevelGenerate
         public Room[] roomsPrefabs;
         public GameObject door;
         public GameObject portal;
+        public GameObject[] startItemsPrefabs;
         [Range(3, 20)]
         public int countRooms;
         public GameObject[] enemiesPrefabs;

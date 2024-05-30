@@ -25,5 +25,25 @@ namespace Resources.Scripts.InventorySystem
                 Destroy(pickUpItem.gameObject);
             }
         }
+
+        public void MoveToQuickAccessSlot(InventorySlot from, InventorySlot to)
+        {
+            foreach (var slot in Inventory.Instance.Slots)
+            {
+                if (slot == from)
+                {
+                    foreach (var quickAccessSlot in QuickAccessInventory.Instance.Slots)
+                    {
+                        if (quickAccessSlot == to)
+                        {
+                            (slot.Item, quickAccessSlot.Item) = (quickAccessSlot.Item, slot.Item);
+                            Inventory.Instance.OnChangeInventory.Invoke();
+                            QuickAccessInventory.Instance.OnChangeInventory.Invoke();
+                            return;
+                        }
+                    }
+                }
+            }
+        }
     }
 }

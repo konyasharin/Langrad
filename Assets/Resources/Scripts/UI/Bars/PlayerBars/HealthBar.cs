@@ -1,10 +1,8 @@
-using System.Collections;
 using Resources.Scripts.Actors.Player;
-using UnityEngine;
 
-namespace Resources.Scripts.UI.Bars
+namespace Resources.Scripts.UI.Bars.PlayerBars
 {
-    public class HealthBar : Bar
+    public class HealthBar : PlayerBarBase
     {
         public static HealthBar Instance { get; private set; }
 

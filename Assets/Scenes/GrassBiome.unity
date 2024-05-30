@@ -512,23 +512,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Level>k__BackingField:
     roomsPrefabs:
-    - {fileID: 8060163171390453949, guid: 7321cb4f629c7874d96bacc2541d123f, type: 3}
+    - {fileID: 8043154542692268839, guid: 7321cb4f629c7874d96bacc2541d123f, type: 3}
     - {fileID: 85891352363561717, guid: 6adeb68288bdde144984aeff6d53e0f4, type: 3}
-    - {fileID: 5693245486332914377, guid: 51dda85d7d43e9c4ca747420ef0100a7, type: 3}
-    - {fileID: 3334934023395740585, guid: 16f790a2a801ffc479487b839be088de, type: 3}
-    - {fileID: 7037807959855541760, guid: da5f629847a663e4885846c2fc82c0dd, type: 3}
-    - {fileID: 6726518404297524543, guid: 60b9c04a5ba21304e926d32f36dee03d, type: 3}
-    - {fileID: 3096344940585317844, guid: 595a2e54fd57bdd4ba77224c7d6c617d, type: 3}
-    - {fileID: 2785450078973435551, guid: c6b76d8222f22294b970aaf0035cbb0e, type: 3}
-    - {fileID: 6358036222618317807, guid: 26967ee0f8ffd8b43a36d726fc637237, type: 3}
-    - {fileID: 9165118330198350234, guid: 0ae794c9475f9b1448fbd80e9c0717af, type: 3}
-    - {fileID: 4985084129744437336, guid: e4f6b172e72be8845817d10c8f89630c, type: 3}
-    - {fileID: 8153741765250216295, guid: e965da770cdb84642967b244234b1e39, type: 3}
-    - {fileID: 2678893200242473280, guid: b0299a818848de141ba62050fe94a0b7, type: 3}
-    - {fileID: -2411983543494359789, guid: fabb43ce16c95954f9c4e17e89be667e, type: 3}
-    - {fileID: 3544641186477324216, guid: 3b8f7bed1af3b0b4aaddd6414e919cb8, type: 3}
+    - {fileID: 6894468557837493630, guid: 51dda85d7d43e9c4ca747420ef0100a7, type: 3}
+    - {fileID: 757396022250243331, guid: 16f790a2a801ffc479487b839be088de, type: 3}
+    - {fileID: 6077509979013432485, guid: da5f629847a663e4885846c2fc82c0dd, type: 3}
+    - {fileID: 5644307782074088810, guid: 60b9c04a5ba21304e926d32f36dee03d, type: 3}
+    - {fileID: 228366675581600102, guid: 595a2e54fd57bdd4ba77224c7d6c617d, type: 3}
+    - {fileID: 8331377239293596440, guid: 0138bf59e92b7fd4e93b3c341a628011, type: 3}
+    - {fileID: 7852286094340594032, guid: 26967ee0f8ffd8b43a36d726fc637237, type: 3}
+    - {fileID: 6425653428835858746, guid: 0ae794c9475f9b1448fbd80e9c0717af, type: 3}
+    - {fileID: 5158307926931416841, guid: e4f6b172e72be8845817d10c8f89630c, type: 3}
+    - {fileID: 6063024019339344080, guid: e965da770cdb84642967b244234b1e39, type: 3}
+    - {fileID: 3921437387659196575, guid: b0299a818848de141ba62050fe94a0b7, type: 3}
+    - {fileID: 6427966373317241914, guid: fabb43ce16c95954f9c4e17e89be667e, type: 3}
+    - {fileID: 1550402852458244479, guid: 3b8f7bed1af3b0b4aaddd6414e919cb8, type: 3}
     door: {fileID: 3968963430803310393, guid: 45c1a51d817a4164094a7a44fd2f073f, type: 3}
     portal: {fileID: 724571218303248251, guid: d0df3075f24206f45b897119470c79b6, type: 3}
+    startItemsPrefabs:
+    - {fileID: 5419127148615452192, guid: af19e8e18c7bece4686d9a99ffcfdda5, type: 3}
+    - {fileID: 5419127148615452192, guid: af19e8e18c7bece4686d9a99ffcfdda5, type: 3}
+    - {fileID: 7312541670693853213, guid: 01ea3aa4e241c62489acab8029a562a8, type: 3}
+    - {fileID: 7312541670693853213, guid: 01ea3aa4e241c62489acab8029a562a8, type: 3}
     countRooms: 20
     enemiesPrefabs:
     - {fileID: 4675436010600313251, guid: ef09d4952619a6b4aa26044e24781f6d, type: 3}
@@ -2672,7 +2677,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2088136243
 MonoBehaviour:

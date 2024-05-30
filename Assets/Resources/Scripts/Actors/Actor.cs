@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Resources.Scripts.Actors
 {
@@ -11,8 +12,6 @@ namespace Resources.Scripts.Actors
     {
         [field: SerializeField, Min(1)] 
         public int Health { get; protected set; }
-        [field: SerializeField, Min(0)] 
-        public int Armor { get; protected set; }
         [field: Min(0.1f), SerializeField]
         public float Speed { get; protected set; }
         public Animator Animator { get; private set; }
@@ -21,6 +20,7 @@ namespace Resources.Scripts.Actors
         public Rigidbody2D Rb { get; private set; }
         [HideInInspector] 
         public bool moveIsBlock = false;
+        public UnityEvent OnUpdateStat { get; private set; } = new();
 
         protected virtual void Awake()
         {

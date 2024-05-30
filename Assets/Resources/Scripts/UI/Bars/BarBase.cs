@@ -6,21 +6,21 @@ using UnityEngine.UI;
 namespace Resources.Scripts.UI.Bars
 {
     [RequireComponent(typeof(Image))]
-    public abstract class Bar : MonoBehaviour
+    public abstract class BarBase : MonoBehaviour
     {
-        private Image _image;
-        private float _maxValue;
+        protected Image Image;
+        protected float MaxValue;
         [field: SerializeField, Min(0.1f)]
         protected float AnimateSpeed { get; private set; }
         private Coroutine _activeAnimate;
 
         protected virtual void Awake()
         {
-            _image = GetComponent<Image>();
-            _image.fillAmount = 1;
+            Image = GetComponent<Image>();
+            Image.fillAmount = 1;
         }
 
-        private void UpdateValue()
+        protected void UpdateValue()
         {
             if (_activeAnimate != null)
             {
@@ -33,19 +33,19 @@ namespace Resources.Scripts.UI.Bars
         private IEnumerator AnimateUpdateValue()
         {
             float currentTime = 0f;
-            float newValue = GetValue() / _maxValue;
+            float newValue = GetValue() / MaxValue;
             while (currentTime < AnimateSpeed)
             {
-                _image.fillAmount = Mathf.Lerp(_image.fillAmount, newValue, currentTime / AnimateSpeed);
+                Image.fillAmount = Mathf.Lerp(Image.fillAmount, newValue, currentTime / AnimateSpeed);
                 currentTime += Time.deltaTime;
+                UpdateVisual();
                 yield return new WaitForSeconds(Time.deltaTime);
             }
         }
-        
-        public void Initialize()
+
+        protected virtual void UpdateVisual()
         {
-            _maxValue = GetValue();
-            PlayerCharacter.Instance.OnUpdateStat.AddListener(UpdateValue);
+            
         }
 
         protected abstract float GetValue();

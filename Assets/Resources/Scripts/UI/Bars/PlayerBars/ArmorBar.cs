@@ -1,10 +1,8 @@
-using System.Collections;
 using Resources.Scripts.Actors.Player;
-using UnityEngine;
 
-namespace Resources.Scripts.UI.Bars
+namespace Resources.Scripts.UI.Bars.PlayerBars
 {
-    public class ArmorBar : Bar
+    public class ArmorBar : PlayerBarBase
     {
         public static ArmorBar Instance { get; private set; }
 

@@ -1,9 +1,8 @@
-using System.Collections;
 using Resources.Scripts.Actors.Player;
 
-namespace Resources.Scripts.UI.Bars
+namespace Resources.Scripts.UI.Bars.PlayerBars
 {
-    public class ManaBar : Bar
+    public class ManaBar : PlayerBarBase
     {
         public static ManaBar Instance;
 

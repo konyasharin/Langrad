@@ -1,3 +1,4 @@
+using Resources.Scripts.InventorySystem;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -7,7 +8,11 @@ namespace Resources.Scripts.UI.Inventory.Slots
     {
         public void OnDrop(PointerEventData eventData)
         {
-            Debug.Log(eventData.pointerDrag);
+            GameObject drag = eventData.pointerDrag;
+            if (drag != null)
+            {
+                InventoryManager.Instance.MoveToQuickAccessSlot(drag.GetComponent<SlotDisplay>().Slot, Slot);
+            }
         }
     }
 }

@@ -66,6 +66,7 @@ namespace Resources.Scripts.Actors.Enemies
             {
                 Death();
             }
+            OnUpdateStat.Invoke();
         }
 
         protected override void Death()

@@ -2,6 +2,7 @@ using System;
 using Resources.Scripts.LevelGenerate;
 using Resources.Scripts.UI;
 using Resources.Scripts.UI.Bars;
+using Resources.Scripts.UI.Bars.PlayerBars;
 using Resources.Scripts.UI.Inventory;
 using UnityEngine;
 

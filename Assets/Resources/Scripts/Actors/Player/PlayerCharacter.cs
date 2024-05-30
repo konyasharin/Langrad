@@ -8,12 +8,15 @@ namespace Resources.Scripts.Actors.Player
     public class PlayerCharacter : Actor
     {
         public static PlayerCharacter Instance { get; private set; }
-        public UnityEvent OnUpdateStat { get; private set; } = new();
         public UnityEvent OnDeath { get; private set; } = new();
         [field: SerializeField]
         public int Mana { get; private set; }
+        [field: SerializeField, Min(0)] 
+        public int Armor { get; protected set; }
         private int _maxHealth;
+        [HideInInspector]
         public float speedX;
+        [HideInInspector]
         public float speedY;
 
         protected override void Awake()
