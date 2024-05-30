@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: -7326655257477828624}
   - component: {fileID: -9007344347734239598}
   - component: {fileID: 5609036006457171522}
+  - component: {fileID: -5166236150740277212}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -190,10 +191,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Health>k__BackingField: 10
-  <Armor>k__BackingField: 10
   <Speed>k__BackingField: 3
   moveIsBlock: 0
-  <Mana>k__BackingField: 10
+  <Armor>k__BackingField: 10
   speedX: 0
   speedY: 0
 --- !u!114 &-7326655257477828624
@@ -233,6 +233,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45d4462d13df4d5fa4e23be5f8b13e23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-5166236150740277212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2560524446508501079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89dfce25508c4804ba5f691fbad7a3b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Mana>k__BackingField: 10
+  restoreValue: 1
+  restoreTime: 5
 --- !u!1 &4604889603485384198
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,7 +14,7 @@ namespace Resources.Scripts.UI.Bars.PlayerBars
 
         protected override float GetValue()
         {
-            return PlayerCharacter.Instance.Mana;
+            return ManaController.Instance.Mana;
         }
     }
 }

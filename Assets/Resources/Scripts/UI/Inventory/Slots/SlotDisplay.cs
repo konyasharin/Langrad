@@ -23,7 +23,7 @@ namespace Resources.Scripts.UI.Inventory.Slots
 
         public void OnBeginDrag(PointerEventData eventData)
         {
-            _dragSlot.Show(_rectTransform.anchoredPosition, ItemPlace.sprite);
+            _dragSlot.Show(_rectTransform.anchoredPosition, Slot);
         }
 
         public void OnDrag(PointerEventData eventData)

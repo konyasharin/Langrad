@@ -16,3 +16,4 @@ MonoBehaviour:
   inventoryActivateKey: 105
   skipDialogKey: 323
   entityInteractKey: 102
+  pauseActivateKey: 27

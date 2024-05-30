@@ -6,7 +6,7 @@ namespace Resources.Scripts.Actors.Player
 {
     public class MagicController : MonoBehaviour
     {
-        public static MagicController Instance;
+        public static MagicController Instance { get; private set; }
         private MagicScroll _currentMagicScroll;
         [HideInInspector]
         public bool isWaitActivate;

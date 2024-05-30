@@ -17,7 +17,7 @@ namespace Resources.Scripts.Items
 
         public override void Use()
         {
-            PlayerCharacter.Instance.ChangeMana(-_data.energyCosts);
+            ManaController.Instance.Change(-_data.energyCosts);
             AnimationsController.Instance.PrepareMagicAttack();
             MagicController.Instance.UpdateMagicScroll(this);
         }
@@ -30,7 +30,7 @@ namespace Resources.Scripts.Items
 
         public override bool IsActivationAvailable()
         {
-            if (PlayerCharacter.Instance.Mana - _data.energyCosts < 0)
+            if (ManaController.Instance.Mana - _data.energyCosts < 0)
             {
                 return false;
             }

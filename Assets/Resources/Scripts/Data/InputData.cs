@@ -9,5 +9,6 @@ namespace Resources.Scripts.Data
         public KeyCode inventoryActivateKey;
         public KeyCode skipDialogKey;
         public KeyCode entityInteractKey;
+        public KeyCode pauseActivateKey;
     }
 }

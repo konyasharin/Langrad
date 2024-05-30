@@ -9,8 +9,6 @@ namespace Resources.Scripts.Actors.Player
     {
         public static PlayerCharacter Instance { get; private set; }
         public UnityEvent OnDeath { get; private set; } = new();
-        [field: SerializeField]
-        public int Mana { get; private set; }
         [field: SerializeField, Min(0)] 
         public int Armor { get; protected set; }
         private int _maxHealth;
@@ -92,22 +90,6 @@ namespace Resources.Scripts.Actors.Player
                 else
                 {
                     Health += healValue;
-                }
-                OnUpdateStat.Invoke();
-            }
-        }
-
-        public void ChangeMana(int manaDelta)
-        {
-            if (manaDelta != 0)
-            {
-                if (Mana + manaDelta < 0)
-                {
-                    Mana = 0;
-                }
-                else
-                {
-                    Mana += manaDelta;
                 }
                 OnUpdateStat.Invoke();
             }

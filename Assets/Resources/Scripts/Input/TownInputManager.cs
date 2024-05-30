@@ -3,6 +3,7 @@ using Resources.Scripts.Data;
 using Resources.Scripts.DialogSystem;
 using Resources.Scripts.Entities;
 using Resources.Scripts.InventorySystem;
+using Resources.Scripts.UI;
 using UnityEngine;
 
 namespace Resources.Scripts.Input
@@ -16,6 +17,7 @@ namespace Resources.Scripts.Input
             CheckSkipDialog();
             CheckInteract();
             UpdatePlayerSpeed();
+            CheckActivatePause();
         }
 
         private void CheckSkipDialog()
@@ -38,6 +40,14 @@ namespace Resources.Scripts.Input
         {
             PlayerCharacter.Instance.speedX = UnityEngine.Input.GetAxis("Horizontal");
             PlayerCharacter.Instance.speedY = UnityEngine.Input.GetAxis("Vertical");
+        }
+
+        private void CheckActivatePause()
+        {
+            if (UnityEngine.Input.GetKeyDown(inputData.pauseActivateKey))
+            {
+                PauseMenu.Instance.gameObject.SetActive(!PauseMenu.Instance.gameObject.activeSelf);
+            }
         }
     }
 }
