@@ -1,10 +1,13 @@
 using System;
-using UnityEngine;
+using Resources.Scripts.Entities;
 
-[Serializable]
-public struct DialogToggle
+namespace Resources.Scripts.DialogSystem
 {
-    public Character character;
-    public string dialogName;
-    public DialogStatus newDialogStatus;
+    [Serializable]
+    public struct DialogToggle
+    {
+        public Character character;
+        public string dialogName;
+        public DialogStatus newDialogStatus;
+    }
 }
