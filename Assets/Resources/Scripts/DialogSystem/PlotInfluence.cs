@@ -1,8 +1,11 @@
 using System;
 
-[Serializable]
-public struct PlotInfluence
+namespace Resources.Scripts.DialogSystem
 {
-    public PlotInfluenceType plotInfluenceType;
-    public int countPlotInfluence;
+    [Serializable]
+    public struct PlotInfluence
+    {
+        public PlotInfluenceType type;
+        public int count;
+    }
 }

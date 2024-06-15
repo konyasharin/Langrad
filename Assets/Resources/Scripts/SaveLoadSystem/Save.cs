@@ -1,24 +1,26 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using Resources.Scripts.DialogSystem;
 
-[Serializable]
-public class Save
+namespace Resources.Scripts.SaveLoadSystem
 {
-    private Dictionary<string, DialogStatus> _dialogs;
-    public Dictionary<PlotInfluenceType, int> PlotInfluences { get; private set; }
-
-    public void SaveDialogs(Dialog[] dialogs)
+    [Serializable]
+    public class Save
     {
-        foreach (var dialog in dialogs)
+        private Dictionary<string, DialogStatus> _dialogs;
+        public Dictionary<PlotInfluenceType, int> PlotInfluences { get; private set; }
+
+        public void SaveDialogs(Dialog[] dialogs)
         {
-            _dialogs.Add("Vova", dialog.dialogStatus);   
+            foreach (var dialog in dialogs)
+            {
+                _dialogs.Add("Vova", dialog.status);   
+            }
         }
-    }
 
-    public void SavePlotInfluences(Dictionary<PlotInfluenceType, int> plotInfluences)
-    {
-        PlotInfluences = plotInfluences;
+        public void SavePlotInfluences(Dictionary<PlotInfluenceType, int> plotInfluences)
+        {
+            PlotInfluences = plotInfluences;
+        }
     }
 }

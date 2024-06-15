@@ -1,9 +1,17 @@
 using System;
 
-[Serializable]
-public struct Dialog
+namespace Resources.Scripts.DialogSystem
 {
-    public DialogStatus dialogStatus;
-    public Sentence[] sentences;
-    public Choice[] choices;
+    [Serializable]
+    public struct Dialog
+    {
+        public DialogStatus status;
+        public DialogScriptableObject scriptableObject;
+        public Choice[] choices;
+
+        public void ToggleStatus(DialogStatus newStatus)
+        {
+            this.status = newStatus;
+        }
+    }
 }
