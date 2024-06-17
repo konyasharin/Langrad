@@ -1,6 +1,6 @@
 using System.Collections;
 using Resources.Scripts.ServiceLocatorSystem;
-using Resources.Scripts.Services;
+using Resources.Scripts.ServiceLocatorSystem.Services;
 using Resources.Scripts.Utils;
 using UnityEngine;
 
@@ -25,8 +25,8 @@ namespace Resources.Scripts.Actors.Player.ManaSystem
         {
             while (Mana < _manaSettings.maxMana)
             {
-                Change(_manaSettings.restoreValue);
                 yield return new WaitForSeconds(_manaSettings.restoreTime);
+                Change(_manaSettings.restoreValue);
             }
         }
         

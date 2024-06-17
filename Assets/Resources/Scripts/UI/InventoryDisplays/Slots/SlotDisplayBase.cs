@@ -2,7 +2,7 @@ using Resources.Scripts.InventorySystem;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Resources.Scripts.UI.Inventory.Slots
+namespace Resources.Scripts.UI.InventoryDisplays.Slots
 {
     public abstract class SlotDisplayBase : MonoBehaviour
     {

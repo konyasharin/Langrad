@@ -14,7 +14,7 @@ namespace Resources.Scripts.Items
         private readonly Spawner _spawner = ServiceLocator.Instance.Get<Spawner>();
         private readonly PlayerCharacter _player = ServiceLocator.Instance.Get<PlayerCharacter>();
 
-        public MagicScroll(MSData data)
+        public MagicScroll(MSData data) : base(data)
         {
             _data = data;
         }

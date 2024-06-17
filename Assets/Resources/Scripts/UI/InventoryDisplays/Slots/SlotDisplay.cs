@@ -1,11 +1,9 @@
-using System;
 using Resources.Scripts.InventorySystem;
 using Resources.Scripts.ServiceLocatorSystem;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
-namespace Resources.Scripts.UI.Inventory.Slots
+namespace Resources.Scripts.UI.InventoryDisplays.Slots
 {
     public class SlotDisplay : SlotDisplayBase, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
@@ -21,7 +19,7 @@ namespace Resources.Scripts.UI.Inventory.Slots
         private void Start()
         {
             _dragSlot = TemporaryDragSlotDisplay.Instance;
-            _inventoryDisplay = ServiceLocator.Instance.Get<InventoryDisplay>();
+            _inventoryDisplay = ServiceLocator.Instance.Get<InventoryManager>().InventoryDisplay;
         }
 
         public void OnBeginDrag(PointerEventData eventData)

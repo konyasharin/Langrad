@@ -14,8 +14,6 @@ GameObject:
   - component: {fileID: 1748227932232871408}
   - component: {fileID: 4705472340381848972}
   - component: {fileID: 4255767224847939394}
-  - component: {fileID: -7326655257477828624}
-  - component: {fileID: -9007344347734239598}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -192,37 +190,12 @@ MonoBehaviour:
   moveIsBlock: 0
   manaSettings:
     maxMana: 10
-    restoreValue: 2
-    restoreTime: 1
+    restoreValue: 1
+    restoreTime: 1.5
   interactionManager: {fileID: 3744539827372441149}
   <Armor>k__BackingField: 10
   speedX: 0
   speedY: 0
---- !u!114 &-7326655257477828624
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2560524446508501079}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8562008435005c418a1749f3368861c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <CountSlots>k__BackingField: 8
---- !u!114 &-9007344347734239598
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2560524446508501079}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c2e7b700ab54b44794d763370e61e81, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4854386367080694671
 GameObject:
   m_ObjectHideFlags: 0

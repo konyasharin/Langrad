@@ -1,10 +1,9 @@
-using System;
 using Resources.Scripts.InventorySystem;
 using Resources.Scripts.ServiceLocatorSystem;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Resources.Scripts.UI.Inventory.Slots
+namespace Resources.Scripts.UI.InventoryDisplays.Slots
 {
     public class QuickAccessSlotDisplay : SlotDisplayBase, IDropHandler
     {

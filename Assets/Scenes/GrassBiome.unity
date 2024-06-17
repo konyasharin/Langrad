@@ -797,8 +797,6 @@ MonoBehaviour:
   armorBar: {fileID: 1177050031}
   manaBar: {fileID: 1529458066}
   deathWindow: {fileID: 1053235305}
-  quickAccessInventoryDisplay: {fileID: 2114846187}
-  inventoryDisplay: {fileID: 882105880}
   roomsManager: {fileID: 472388862}
   playerSpawner: {fileID: 1811341217}
   spawner: {fileID: 1732099328}
@@ -3328,6 +3326,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c367989a8a8081b4691d5d239de59f9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  countInventorySlots: 9
+  <InventoryDisplay>k__BackingField: {fileID: 882105880}
+  <QuickAccessInventoryDisplay>k__BackingField: {fileID: 2114846187}
 --- !u!1 &2114846185
 GameObject:
   m_ObjectHideFlags: 0
@@ -3380,7 +3381,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 637716d98d923c04eabec6eae42a15da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <SlotsDisplays>k__BackingField:
+  slotsDisplays:
   - {fileID: 1505233901}
   - {fileID: 506241927}
   - {fileID: 1274030501}

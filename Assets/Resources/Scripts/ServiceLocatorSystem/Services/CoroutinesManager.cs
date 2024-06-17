@@ -1,8 +1,7 @@
 using System.Collections;
-using Resources.Scripts.ServiceLocatorSystem;
 using UnityEngine;
 
-namespace Resources.Scripts.Services
+namespace Resources.Scripts.ServiceLocatorSystem.Services
 {
     public class CoroutinesManager : MonoBehaviour, IService
     {

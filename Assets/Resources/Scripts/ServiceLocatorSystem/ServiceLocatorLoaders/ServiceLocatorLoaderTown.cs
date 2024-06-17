@@ -2,7 +2,7 @@ using Resources.Scripts.Actors.Player;
 using Resources.Scripts.DialogSystem;
 using Resources.Scripts.Input;
 using Resources.Scripts.SaveLoadSystem;
-using Resources.Scripts.Services;
+using Resources.Scripts.ServiceLocatorSystem.Services;
 using Resources.Scripts.Utils;
 using UnityEngine;
 
@@ -21,8 +21,6 @@ namespace Resources.Scripts.ServiceLocatorSystem.ServiceLocatorLoaders
             ServiceLocator.Instance.Add(player);
             ServiceLocator.Instance.Add(dialogsManager);
             ServiceLocator.Instance.Add(townInputManager);
-            
-            ServiceLocator.Instance.Add(new SaveLoadManager());
         }
 
         protected override void InitializeServices()

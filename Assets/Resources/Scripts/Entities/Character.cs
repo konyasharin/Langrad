@@ -8,7 +8,7 @@ namespace Resources.Scripts.Entities
     public class Character : Entity
     {
         [field: SerializeField] public string CharacterName { get; private set; }
-        [field: SerializeField] public Dialog[] Dialogs { get; private set; }
+        [field: SerializeField] public DialogModel[] Dialogs { get; private set; }
 
         private DialogsManager _dialogsManager;
 
@@ -16,13 +16,18 @@ namespace Resources.Scripts.Entities
         {
             base.Start();
             _dialogsManager = ServiceLocator.Instance.Get<DialogsManager>();
+            
+            foreach (var dialog in Dialogs)
+            {
+                _dialogsManager.DialogsSaver.LoadDialog(dialog);
+            }
         }
 
         public override void CheckInteractIsAvailable()
         {
             foreach (var dialog in Dialogs)
             {
-                if (dialog.status == DialogStatus.Unblock && dialog.scriptableObject != null)
+                if (dialog.status == DialogStatus.Unblock && dialog.DialogScriptableObject != null)
                 {
                     InteractIsAvailable = true;
                     break;
@@ -44,7 +49,6 @@ namespace Resources.Scripts.Entities
                 if (Dialogs[i].status == DialogStatus.Unblock)
                 {
                     yield return StartCoroutine(_dialogsManager.StartDialog(Dialogs[i]));
-                    Dialogs[i].status = DialogStatus.Completed;
                     break;
                 }
             }

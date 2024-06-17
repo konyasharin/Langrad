@@ -1,16 +1,16 @@
-using System;
 using Resources.Scripts.InventorySystem;
 using Resources.Scripts.ServiceLocatorSystem;
-using Resources.Scripts.UI.Inventory.Slots;
+using Resources.Scripts.UI.InventoryDisplays.Slots;
 using UnityEngine;
-using UnityEngine.UI;
 
-namespace Resources.Scripts.UI.Inventory
+namespace Resources.Scripts.UI.InventoryDisplays
 {
-    public abstract class InventoryDisplayBase<T> : MonoBehaviour, IService where T : SlotDisplayBase
+    public abstract class InventoryDisplayBase<TS, TI> : MonoBehaviour 
+        where TS : SlotDisplayBase
+        where TI : Inventory
     {
-        protected abstract T[] SlotsDisplays { get; set; }
-        protected abstract InventoryBase Inventory { get; set; }
+        protected TS[] SlotsDisplays { get; set; }
+        protected TI Inventory { get; set; }
 
         protected void InitializeHandle()
         {
@@ -46,7 +46,5 @@ namespace Resources.Scripts.UI.Inventory
                 }
             }
         }
-
-        public abstract void Initialize();
     }
 }

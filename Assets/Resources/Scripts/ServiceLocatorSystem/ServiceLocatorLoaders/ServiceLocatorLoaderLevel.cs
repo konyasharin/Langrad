@@ -4,11 +4,11 @@ using Resources.Scripts.Input;
 using Resources.Scripts.InventorySystem;
 using Resources.Scripts.LevelGenerate;
 using Resources.Scripts.SaveLoadSystem;
-using Resources.Scripts.Services;
+using Resources.Scripts.ServiceLocatorSystem.Services;
 using Resources.Scripts.Spawners;
 using Resources.Scripts.UI;
 using Resources.Scripts.UI.Bars.PlayerBars;
-using Resources.Scripts.UI.Inventory;
+using Resources.Scripts.UI.InventoryDisplays;
 using Resources.Scripts.Utils;
 using UnityEngine;
 
@@ -21,8 +21,6 @@ namespace Resources.Scripts.ServiceLocatorSystem.ServiceLocatorLoaders
         [SerializeField] private ArmorBar armorBar;
         [SerializeField] private ManaBar manaBar;
         [SerializeField] private DeathWindow deathWindow;
-        [SerializeField] private QuickAccessInventoryDisplay quickAccessInventoryDisplay;
-        [SerializeField] private InventoryDisplay inventoryDisplay;
         [SerializeField] private RoomsManager roomsManager;
         [SerializeField] private PlayerSpawner playerSpawner;
         [SerializeField] private Spawner spawner;
@@ -38,8 +36,6 @@ namespace Resources.Scripts.ServiceLocatorSystem.ServiceLocatorLoaders
             ServiceLocator.Instance.Add(armorBar);
             ServiceLocator.Instance.Add(manaBar);
             ServiceLocator.Instance.Add(deathWindow);
-            ServiceLocator.Instance.Add(quickAccessInventoryDisplay);
-            ServiceLocator.Instance.Add(inventoryDisplay);
             ServiceLocator.Instance.Add(roomsManager);
             ServiceLocator.Instance.Add(playerSpawner);
             ServiceLocator.Instance.Add(spawner);
@@ -47,8 +43,6 @@ namespace Resources.Scripts.ServiceLocatorSystem.ServiceLocatorLoaders
             ServiceLocator.Instance.Add(dialogsManager);
             ServiceLocator.Instance.Add(inventoryManager);
             ServiceLocator.Instance.Add(levelInputManager);
-            
-            ServiceLocator.Instance.Add(new SaveLoadManager());
         }
 
         protected override void InitializeServices()
@@ -64,9 +58,8 @@ namespace Resources.Scripts.ServiceLocatorSystem.ServiceLocatorLoaders
             ServiceLocator.Instance.Get<ArmorBar>().Initialize();
             ServiceLocator.Instance.Get<ManaBar>().Initialize();
             ServiceLocator.Instance.Get<DeathWindow>().Initialize();
-            ServiceLocator.Instance.Get<QuickAccessInventoryDisplay>().Initialize();
-            ServiceLocator.Instance.Get<InventoryDisplay>().Initialize();
             ServiceLocator.Instance.Get<DialogsManager>().Initialize();
+            ServiceLocator.Instance.Get<InventoryManager>().Initialize();
             ServiceLocator.Instance.Get<LevelInputManager>().Initialize();
         }
     }

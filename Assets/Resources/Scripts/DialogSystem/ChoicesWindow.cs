@@ -101,10 +101,11 @@ namespace Resources.Scripts.DialogSystem
                     bool isWarning = true;
                     for (int i = 0; i < dialogToggle.character.Dialogs.Length; i++)
                     {
-                        if (dialogToggle.character.Dialogs[i].scriptableObject.name == dialogToggle.dialogName)
+                        if (dialogToggle.character.Dialogs[i].DialogScriptableObject.name == dialogToggle.dialogName)
                         {
                             isWarning = false;
-                            dialogToggle.character.Dialogs[i].ToggleStatus(dialogToggle.newDialogStatus);
+                            dialogToggle.character.Dialogs[i].status = dialogToggle.newDialogStatus;
+                            _dialogsManager.DialogsSaver.SaveDialog(dialogToggle.character.Dialogs[i]);
                         }
                     }
                     if (isWarning)

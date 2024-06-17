@@ -1,24 +1,44 @@
 using System;
+using Resources.Scripts.Items;
+using Resources.Scripts.ServiceLocatorSystem;
 using UnityEngine;
 
 namespace Resources.Scripts.InventorySystem
 {
-    public class QuickAccessInventory : InventoryBase
+    public class QuickAccessInventory : Inventory
     {
-        public static QuickAccessInventory Instance;
-        public override int CountSlots { get; protected set; } = 4;
-        
         public KeyCode[] KeysToUse { get; private set; } = { KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4 };
+        private Inventory _inventory;
 
-        protected override void Awake()
+        public QuickAccessInventory() : base(4)
         {
-            base.Awake();
-            Instance = this;
         }
 
+        public void Initialize()
+        {
+            _inventory = ServiceLocator.Instance.Get<InventoryManager>().Inventory;
+        }
+        
         public void HandleKeyDown(int i)
         {
             UseItem(i);
+        }
+
+        private void TryReplaceItem(int slotIndex)
+        {
+            InventorySlot[] slots = _inventory.Slots;
+            
+            for (int i = 0; i < slots.Length; i++)
+            {
+                if (slots[i].IsBusy() && slots[i].Item.Equals(Slots[slotIndex].Item))
+                {
+                    TryTakeItem(slots[i].Item);
+                    _inventory.CleanSlot(i);
+                    return;
+                }
+            }
+            
+            CleanSlot(slotIndex);
         }
 
         private void UseItem(int slotIndex)
@@ -33,7 +53,7 @@ namespace Resources.Scripts.InventorySystem
                 if (Slots[slotIndex].Item.IsActivationAvailable())
                 {
                     Slots[slotIndex].Item.Use();
-                    CleanSlot(slotIndex);   
+                    TryReplaceItem(slotIndex);
                 }
             }
         }

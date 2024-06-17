@@ -6716,9 +6716,9 @@ MonoBehaviour:
   <KeyToInteract>k__BackingField: 102
   <CharacterName>k__BackingField: "\u0411\u0440\u0430\u0442 \u0412\u043E\u0432\u0447\u0438\u043A\u0430"
   <Dialogs>k__BackingField:
-  - status: 1
-    scriptableObject: {fileID: 11400000, guid: a4a4e74d2bbfa5346b16e55061977c72, type: 2}
-    choices: []
+  - <Choices>k__BackingField: []
+    <DialogScriptableObject>k__BackingField: {fileID: 11400000, guid: 3f948a038fc0fd84786d73cd78145ce3, type: 2}
+    status: 0
 --- !u!95 &704440502
 Animator:
   serializedVersion: 5
@@ -6999,9 +6999,9 @@ MonoBehaviour:
   <KeyToInteract>k__BackingField: 102
   <CharacterName>k__BackingField: "\u0412\u043E\u0432\u0447\u0438\u043A"
   <Dialogs>k__BackingField:
-  - status: 1
-    scriptableObject: {fileID: 11400000, guid: 3f948a038fc0fd84786d73cd78145ce3, type: 2}
-    choices: []
+  - <Choices>k__BackingField: []
+    <DialogScriptableObject>k__BackingField: {fileID: 11400000, guid: a4a4e74d2bbfa5346b16e55061977c72, type: 2}
+    status: 1
 --- !u!114 &1293180830 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4255767224847939394, guid: 078050557e643214f866acf5f6d5c02a, type: 3}

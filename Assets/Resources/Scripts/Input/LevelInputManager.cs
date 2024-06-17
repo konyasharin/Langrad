@@ -1,7 +1,7 @@
 using Resources.Scripts.Actors.Player;
 using Resources.Scripts.InventorySystem;
 using Resources.Scripts.ServiceLocatorSystem;
-using Resources.Scripts.UI.Inventory;
+using Resources.Scripts.UI.InventoryDisplays;
 
 namespace Resources.Scripts.Input
 {
@@ -9,12 +9,14 @@ namespace Resources.Scripts.Input
     {
         private InventoryDisplay _inventoryDisplay;
         private MagicController _magicController;
+        private QuickAccessInventory _quickAccessInventory;
 
         public override void Initialize()
         {
             base.Initialize();
-            _inventoryDisplay = ServiceLocator.Instance.Get<InventoryDisplay>();
+            _inventoryDisplay = ServiceLocator.Instance.Get<InventoryManager>().InventoryDisplay;
             _magicController = ServiceLocator.Instance.Get<PlayerCharacter>().MagicController;
+            _quickAccessInventory = ServiceLocator.Instance.Get<InventoryManager>().QuickAccessInventory;
         }
 
         protected override void Update()
@@ -43,11 +45,11 @@ namespace Resources.Scripts.Input
 
         private void CheckUseQuickAccessInventory()
         {
-            for (int i = 0; i < QuickAccessInventory.Instance.KeysToUse.Length; i++)
+            for (int i = 0; i < _quickAccessInventory.KeysToUse.Length; i++)
             {
-                if (UnityEngine.Input.GetKeyDown(QuickAccessInventory.Instance.KeysToUse[i]))
+                if (UnityEngine.Input.GetKeyDown(_quickAccessInventory.KeysToUse[i]))
                 {
-                    QuickAccessInventory.Instance.HandleKeyDown(i);
+                    _quickAccessInventory.HandleKeyDown(i);
                 }
             }
         }

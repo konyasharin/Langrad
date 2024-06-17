@@ -7,9 +7,9 @@ namespace Resources.Scripts.Items
     public class HealthPotion : Item
     {
         private readonly HealthPotionData _data;
-        private PlayerCharacter _player = ServiceLocator.Instance.Get<PlayerCharacter>();
+        private readonly PlayerCharacter _player = ServiceLocator.Instance.Get<PlayerCharacter>();
 
-        public HealthPotion(HealthPotionData data)
+        public HealthPotion(HealthPotionData data) : base(data)
         {
             _data = data;
         }

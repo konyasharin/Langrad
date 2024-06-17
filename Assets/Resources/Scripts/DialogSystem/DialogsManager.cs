@@ -12,37 +12,41 @@ namespace Resources.Scripts.DialogSystem
         [field: SerializeField] public ChoicesWindow ChoicesWindow { get; private set; }
         [field: SerializeField] public DialogWindow DialogWindow { get; private set; }
         
+        public DialogsSaver DialogsSaver { get; private set; }
         public Dictionary<PlotInfluenceType, int> PlotInfluences { get; private set; }
         
         private PlayerCharacter _player;
-        private SaveLoadManager _saveLoadManager;
 
         public void Initialize()
         {
             _player = ServiceLocator.Instance.Get<PlayerCharacter>();
-            _saveLoadManager = ServiceLocator.Instance.Get<SaveLoadManager>();
             ChoicesWindow.Initialize();
-            PlotInfluences = _saveLoadManager.LoadGame().PlotInfluences;
+            DialogsSaver = new DialogsSaver();
+            // PlotInfluences = _saveLoadManager.LoadGame().PlotInfluences;
         }
 
-        public IEnumerator StartDialog(Dialog dialog)
+        public IEnumerator StartDialog(DialogModel dialog)
         {
             _player.moveIsBlock = true;
             yield return DialogWindow.Activate();
-            foreach (var sentence in dialog.scriptableObject.sentences)
+            foreach (var sentence in dialog.DialogScriptableObject.sentences)
             {
                 yield return DialogWindow.ShowText(sentence);
             }
 
-            if (dialog.choices.Length != 0)
+            if (dialog.Choices.Length != 0)
             {
-                yield return ChoicesWindow.Activate(dialog.choices);
+                yield return ChoicesWindow.Activate(dialog.Choices);
         
                 while (ChoicesWindow.GetIsActive())
                 {
                     yield return null;
                 }
             }
+            
+            dialog.status = DialogStatus.Completed;
+            DialogsSaver.SaveDialog(dialog);
+            
             yield return DialogWindow.Deactivate();
             _player.moveIsBlock = false;
         }
@@ -50,7 +54,7 @@ namespace Resources.Scripts.DialogSystem
         public void ChangePlotInfluence(PlotInfluenceType plotInfluenceType, int countInfluence)
         {
             PlotInfluences[plotInfluenceType] += countInfluence;
-            _saveLoadManager.SaveGame();
+            //_saveLoadManager.SaveGame();
         }
     }
 }
