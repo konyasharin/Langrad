@@ -1,48 +1,43 @@
 using System;
 using System.Collections;
+using Resources.Scripts.ServiceLocatorSystem;
 using UnityEngine;
 
 namespace Resources.Scripts.Actors.Player
 {
-    public class AnimationsController : MonoBehaviour
+    public class AnimationsController
     {
-        public static AnimationsController Instance { get; private set; }
         private static readonly int SpeedAnim = Animator.StringToHash("Speed");
         private static readonly int PrepareMagicAttackHash = Animator.StringToHash("PrepareMagicAttack");
         private static readonly int MagicAttackHash = Animator.StringToHash("MagicAttack");
-        private PlayerCharacter _playerCharacter;
+        private readonly PlayerCharacter _player = ServiceLocator.Instance.Get<PlayerCharacter>();
+        private MagicController _magicController;
 
-        private void Start()
+        public void Initialize(MagicController magicController)
         {
-            _playerCharacter = PlayerCharacter.Instance;
-            Instance = this;
+            _magicController = magicController;
         }
 
-        private void Update()
+        public void UpdateSpeed()
         {
-            SetSpeed(_playerCharacter.Rb.velocity.magnitude);
-        }
-
-        private void SetSpeed(float speed)
-        {
-            _playerCharacter.Animator.SetFloat(SpeedAnim, speed);
+            _player.Animator.SetFloat(SpeedAnim, _player.Rb.velocity.magnitude);
         }
 
         public void PrepareMagicAttack()
         {
-            _playerCharacter.Animator.SetTrigger(PrepareMagicAttackHash);
+            _player.Animator.SetTrigger(PrepareMagicAttackHash);
         }
 
         public IEnumerator WaitMagicAttack()
         {
-            MagicController.Instance.isWaitActivate = true;
-            while (MagicController.Instance.isWaitActivate)
+            _magicController.isWaitActivate = true;
+            while (_magicController.isWaitActivate)
             {
                 yield return new WaitForSeconds(Time.deltaTime);
             }
             
-            _playerCharacter.Animator.SetTrigger(MagicAttackHash);
-            MagicController.Instance.ActivateMagicScroll();
+            _player.Animator.SetTrigger(MagicAttackHash);
+            _magicController.ActivateMagicScroll();
         }
     }
 }

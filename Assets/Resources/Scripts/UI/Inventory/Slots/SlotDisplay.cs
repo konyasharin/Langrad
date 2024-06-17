@@ -1,5 +1,6 @@
 using System;
 using Resources.Scripts.InventorySystem;
+using Resources.Scripts.ServiceLocatorSystem;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -10,6 +11,7 @@ namespace Resources.Scripts.UI.Inventory.Slots
     {
         private TemporaryDragSlotDisplay _dragSlot;
         private RectTransform _rectTransform;
+        private InventoryDisplay _inventoryDisplay;
 
         private void Awake()
         {
@@ -19,6 +21,7 @@ namespace Resources.Scripts.UI.Inventory.Slots
         private void Start()
         {
             _dragSlot = TemporaryDragSlotDisplay.Instance;
+            _inventoryDisplay = ServiceLocator.Instance.Get<InventoryDisplay>();
         }
 
         public void OnBeginDrag(PointerEventData eventData)
@@ -28,7 +31,7 @@ namespace Resources.Scripts.UI.Inventory.Slots
 
         public void OnDrag(PointerEventData eventData)
         {
-            _dragSlot.ChangeRectTransform(eventData.delta / InventoryDisplay.Instance.Canvas.scaleFactor);
+            _dragSlot.ChangeRectTransform(eventData.delta / _inventoryDisplay.Canvas.scaleFactor);
         }
         
         public void OnEndDrag(PointerEventData eventData)

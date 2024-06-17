@@ -1,14 +1,18 @@
 using Resources.Scripts.Actors.Player;
+using Resources.Scripts.ServiceLocatorSystem;
 
 namespace Resources.Scripts.UI.Bars.PlayerBars
 {
     
-    public abstract class PlayerBarBase : BarBase
+    public abstract class PlayerBarBase : BarBase, IService
     {
+        protected PlayerCharacter Player;
+
         public void Initialize()
         {
+            Player = ServiceLocator.Instance.Get<PlayerCharacter>();
             MaxValue = GetValue();
-            PlayerCharacter.Instance.OnUpdateStat.AddListener(UpdateValue);
+            Player.OnUpdateStat.AddListener(UpdateValue);
         }
     }
 }

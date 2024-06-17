@@ -1,6 +1,8 @@
 using Resources.Scripts.Actors.Player;
+using Resources.Scripts.Actors.Player.ManaSystem;
 using Resources.Scripts.Bullets;
 using Resources.Scripts.Data.ItemsData;
+using Resources.Scripts.ServiceLocatorSystem;
 using Resources.Scripts.Spawners;
 using UnityEngine;
 
@@ -9,6 +11,8 @@ namespace Resources.Scripts.Items
     public class MagicScroll : Item
     {
         private readonly MSData _data;
+        private readonly Spawner _spawner = ServiceLocator.Instance.Get<Spawner>();
+        private readonly PlayerCharacter _player = ServiceLocator.Instance.Get<PlayerCharacter>();
 
         public MagicScroll(MSData data)
         {
@@ -17,20 +21,20 @@ namespace Resources.Scripts.Items
 
         public override void Use()
         {
-            ManaController.Instance.Change(-_data.energyCosts);
-            AnimationsController.Instance.PrepareMagicAttack();
-            MagicController.Instance.UpdateMagicScroll(this);
+            _player.ManaController.Change(-_data.energyCosts);
+            _player.AnimationsController.PrepareMagicAttack();
+            _player.MagicController.UpdateMagicScroll(this);
         }
 
         public void MagicActivate()
         {
-            GameObject fireBall = Spawner.Instance.Spawn(_data.magicData.prefab, MagicController.Instance.transform.position);
+            GameObject fireBall = _spawner.Spawn(_data.magicData.prefab, _player.transform.position);
             fireBall.GetComponent<Magic>().damage = _data.magicData.damage;
         }
 
         public override bool IsActivationAvailable()
         {
-            if (ManaController.Instance.Mana - _data.energyCosts < 0)
+            if (_player.ManaController.Mana - _data.energyCosts < 0)
             {
                 return false;
             }

@@ -1,26 +1,46 @@
 using System;
+using Resources.Scripts.Actors.Player.ManaSystem;
 using Resources.Scripts.Entities;
+using Resources.Scripts.ServiceLocatorSystem;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace Resources.Scripts.Actors.Player
 {
-    public class PlayerCharacter : Actor
+    public class PlayerCharacter : Actor, IService
     {
-        public static PlayerCharacter Instance { get; private set; }
+        [SerializeField] private ManaSettings manaSettings;
+        [SerializeField] private InteractionManager interactionManager;
+        
+        [field: SerializeField, Min(0)] public int Armor { get; protected set; }
+        
+        [HideInInspector] public float speedX;
+        [HideInInspector] public float speedY;
+        
+        public AnimationsController AnimationsController { get; private set; }
+        public MagicController MagicController { get; private set; }
+        public ManaController ManaController { get; private set; }
         public UnityEvent OnDeath { get; private set; } = new();
-        [field: SerializeField, Min(0)] 
-        public int Armor { get; protected set; }
+        
         private int _maxHealth;
-        [HideInInspector]
-        public float speedX;
-        [HideInInspector]
-        public float speedY;
 
+        public void Initialize()
+        {
+            AnimationsController = new AnimationsController();
+            MagicController = new MagicController();
+            
+            AnimationsController.Initialize(MagicController);
+            MagicController.Initialize(AnimationsController);
+            
+            ManaController = new ManaController(manaSettings);
+
+            ServiceLocator.Instance.Add(interactionManager);
+            ServiceLocator.Instance.Get<InteractionManager>().Initialize();
+        }
+        
         protected override void Awake()
         {
             base.Awake();
-            Instance = this;
             _maxHealth = Health;
         }
 
@@ -40,6 +60,8 @@ namespace Resources.Scripts.Actors.Player
             {
                 Rb.velocity = Vector2.zero;
             }
+            
+            AnimationsController.UpdateSpeed();
         }
 
         protected override void Move()
@@ -99,6 +121,11 @@ namespace Resources.Scripts.Actors.Player
         {
             OnDeath.Invoke();
             Time.timeScale = 0;
+        }
+
+        public void OnWaitMagickAttack()
+        {
+            StartCoroutine(AnimationsController.WaitMagicAttack());
         }
     }
 }

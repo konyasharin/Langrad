@@ -1,14 +1,22 @@
 using System.Collections;
 using Resources.Scripts.DialogSystem;
+using Resources.Scripts.ServiceLocatorSystem;
 using UnityEngine;
 
 namespace Resources.Scripts.Entities
 {
     public class Character : Entity
     {
-        [field: SerializeField]
-        public string CharacterName { get; private set; }
+        [field: SerializeField] public string CharacterName { get; private set; }
         [field: SerializeField] public Dialog[] Dialogs { get; private set; }
+
+        private DialogsManager _dialogsManager;
+
+        protected override void Start()
+        {
+            base.Start();
+            _dialogsManager = ServiceLocator.Instance.Get<DialogsManager>();
+        }
 
         public override void CheckInteractIsAvailable()
         {
@@ -35,7 +43,7 @@ namespace Resources.Scripts.Entities
             {
                 if (Dialogs[i].status == DialogStatus.Unblock)
                 {
-                    yield return StartCoroutine(DialogsManager.Instance.StartDialog(Dialogs[i]));
+                    yield return StartCoroutine(_dialogsManager.StartDialog(Dialogs[i]));
                     Dialogs[i].status = DialogStatus.Completed;
                     break;
                 }

@@ -1,3 +1,4 @@
+using Resources.Scripts.ServiceLocatorSystem;
 using UnityEngine;
 
 namespace Resources.Scripts.Actors.Player
@@ -6,8 +7,10 @@ namespace Resources.Scripts.Actors.Player
     {
         public static Vector2[] GetCorners()
         {
+            PlayerCharacter player = ServiceLocator.Instance.Get<PlayerCharacter>();
             Vector2[] playerCorners = new Vector2[4];
-            var bounds = PlayerCharacter.Instance.Collider.bounds;
+            
+            var bounds = player.Collider.bounds;
             playerCorners[0] = new Vector2(bounds.min.x, bounds.min.y);
             playerCorners[1] = new Vector2(bounds.max.x, bounds.min.y);
             playerCorners[2] = new Vector2(bounds.min.x, bounds.max.y);

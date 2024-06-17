@@ -14,7 +14,7 @@ namespace Resources.Scripts.Entities
 
         public abstract void Interact();
         
-        private void Start()
+        protected virtual void Start()
         {
             CheckInteractIsAvailable();
         }

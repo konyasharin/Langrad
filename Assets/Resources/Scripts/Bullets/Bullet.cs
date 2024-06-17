@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using Resources.Scripts.Actors.Player;
+using Resources.Scripts.ServiceLocatorSystem;
 using UnityEngine;
 
 namespace Resources.Scripts.Bullets
@@ -9,19 +10,19 @@ namespace Resources.Scripts.Bullets
         typeof(Animator))]
     public abstract class Bullet : MonoBehaviour
     {
-        [SerializeField]
-        protected float speed;
-        [HideInInspector]
-        public int damage;
-
+        [SerializeField] protected float speed;
+        [HideInInspector] public int damage;
+            
         protected Rigidbody2D Rb;
         private Animator _animator;
+        protected PlayerCharacter Player;
         private static readonly int DestroyAnimTrigger = Animator.StringToHash("Destroy");
 
-        private void Awake()
+        protected virtual void Awake()
         {
             Rb = GetComponent<Rigidbody2D>();
             _animator = GetComponent<Animator>();
+            Player = ServiceLocator.Instance.Get<PlayerCharacter>();
         }
 
         private void Start()

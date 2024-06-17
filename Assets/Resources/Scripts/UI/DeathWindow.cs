@@ -1,21 +1,18 @@
 using Resources.Scripts.Actors.Player;
+using Resources.Scripts.ServiceLocatorSystem;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Resources.Scripts.UI
 {
-    public class DeathWindow : MonoBehaviour
+    public class DeathWindow : MonoBehaviour, IService
     {
-        public static DeathWindow Instance { get; private set; }
-
-        private void Awake()
-        {
-            Instance = this;
-        }
+        private PlayerCharacter _player;
 
         public void Initialize()
         {
-            PlayerCharacter.Instance.OnDeath.AddListener(ShowWindow);
+            _player = ServiceLocator.Instance.Get<PlayerCharacter>();
+            _player.OnDeath.AddListener(ShowWindow);
             gameObject.SetActive(false);
         }
 

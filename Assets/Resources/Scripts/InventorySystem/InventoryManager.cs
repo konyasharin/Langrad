@@ -1,17 +1,11 @@
 using Resources.Scripts.Entities;
+using Resources.Scripts.ServiceLocatorSystem;
 using UnityEngine;
 
 namespace Resources.Scripts.InventorySystem
 {
-    public class InventoryManager : MonoBehaviour
+    public class InventoryManager : MonoBehaviour, IService
     {
-        public static InventoryManager Instance;
-
-        private void Awake()
-        {
-            Instance = this;
-        }
-
         public void TryTakeItem(PickUpItem pickUpItem)
         {
             if (!QuickAccessInventory.Instance.IsFull())

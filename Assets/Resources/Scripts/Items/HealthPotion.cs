@@ -1,11 +1,13 @@
 using Resources.Scripts.Actors.Player;
 using Resources.Scripts.Data.ItemsData;
+using Resources.Scripts.ServiceLocatorSystem;
 
 namespace Resources.Scripts.Items
 {
     public class HealthPotion : Item
     {
         private readonly HealthPotionData _data;
+        private PlayerCharacter _player = ServiceLocator.Instance.Get<PlayerCharacter>();
 
         public HealthPotion(HealthPotionData data)
         {
@@ -14,7 +16,7 @@ namespace Resources.Scripts.Items
         
         public override void Use()
         {
-            PlayerCharacter.Instance.Heal(_data.HealValue);
+            _player.Heal(_data.HealValue);
         }
     }
 }

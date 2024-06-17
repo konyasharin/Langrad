@@ -2,25 +2,29 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Resources.Scripts.Actors.Player;
+using Resources.Scripts.ServiceLocatorSystem;
 using UnityEngine;
 
 namespace Resources.Scripts.Entities
 {
     [RequireComponent(typeof(CircleCollider2D))]
-    public class InteractionManager : MonoBehaviour
+    public class InteractionManager : MonoBehaviour, IService
     {
-        public static InteractionManager Instance { get; private set; }
+        [SerializeField, Min(0.1f)] private float interactionRadius;
+        private readonly List<Entity> _entitiesInInteractZone = new();
         private Entity _entityToInteract;
         private GameObject _keyObject;
-        private readonly List<Entity> _entitiesInInteractZone = new();
         private List<Entity> _entitiesToInteract = new();
-        [SerializeField, Min(0.1f)]
-        private float interactionRadius;
         private CircleCollider2D _collider;
+        private PlayerCharacter _player;
 
+        public void Initialize()
+        {
+            _player = ServiceLocator.Instance.Get<PlayerCharacter>();
+        }
+        
         private void Awake()
         {
-            Instance = this;
             _collider = GetComponent<CircleCollider2D>();
             _collider.radius = interactionRadius;
         }
@@ -67,7 +71,7 @@ namespace Resources.Scripts.Entities
                 }
             }
         
-            if (_entitiesToInteract.Count == 0 || PlayerCharacter.Instance.moveIsBlock)
+            if (_entitiesToInteract.Count == 0 || _player.moveIsBlock)
             {
                 _entityToInteract = null;
                 Destroy(_keyObject);
@@ -77,17 +81,17 @@ namespace Resources.Scripts.Entities
             float minDistance = 0;
             if (_entityToInteract == null)
             {
-                minDistance = Vector2.Distance(_entitiesToInteract[0].transform.position, PlayerCharacter.Instance.transform.position);
+                minDistance = Vector2.Distance(_entitiesToInteract[0].transform.position, _player.transform.position);
                 _entityToInteract = _entitiesToInteract[0];
                 isChange = true;
             }
             else
             {
-                minDistance = Vector2.Distance(_entityToInteract.transform.position, PlayerCharacter.Instance.transform.position);
+                minDistance = Vector2.Distance(_entityToInteract.transform.position, _player.transform.position);
             }
             for (int i = 0; i < _entitiesToInteract.Count; i++)
             {
-                float distance = Vector2.Distance(_entitiesToInteract[i].transform.position, PlayerCharacter.Instance.transform.position);
+                float distance = Vector2.Distance(_entitiesToInteract[i].transform.position, _player.transform.position);
                 if (distance < minDistance)
                 {
                     minDistance = distance;

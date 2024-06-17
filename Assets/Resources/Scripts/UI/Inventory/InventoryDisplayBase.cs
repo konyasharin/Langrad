@@ -1,12 +1,13 @@
 using System;
 using Resources.Scripts.InventorySystem;
+using Resources.Scripts.ServiceLocatorSystem;
 using Resources.Scripts.UI.Inventory.Slots;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Resources.Scripts.UI.Inventory
 {
-    public abstract class InventoryDisplayBase<T> : MonoBehaviour where T : SlotDisplayBase
+    public abstract class InventoryDisplayBase<T> : MonoBehaviour, IService where T : SlotDisplayBase
     {
         protected abstract T[] SlotsDisplays { get; set; }
         protected abstract InventoryBase Inventory { get; set; }

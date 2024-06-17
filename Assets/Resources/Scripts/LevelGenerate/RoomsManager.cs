@@ -3,25 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 using Resources.Scripts.LevelGenerate.RoomScripts;
+using Resources.Scripts.ServiceLocatorSystem;
 using UnityEngine;
 
 namespace Resources.Scripts.LevelGenerate
 {
-    public class RoomsManager: MonoBehaviour
+    public class RoomsManager: MonoBehaviour, IService
     {
-        public static RoomsManager Instance { get; private set; }
-        [HideInInspector]
-        public LevelGenerator levelGenerator;
+        private LevelGenerator _levelGenerator;
 
-        private void Awake()
+        public void Initialize()
         {
-            Instance = this;
+            _levelGenerator = ServiceLocator.Instance.Get<LevelGenerator>();
         }
     
         [CanBeNull]
         public Room GetRoomByDirections(Direction[] directions)
         {
-            foreach (var room in levelGenerator.Level.roomsPrefabs)
+            foreach (var room in _levelGenerator.Level.roomsPrefabs)
             {
                 if (room.Directions.Length == directions.Length)
                 {
@@ -47,7 +46,7 @@ namespace Resources.Scripts.LevelGenerate
     
         public bool IsBusyOtherRoomPoint(SpawnPoint spawnPoint, Room excludedRoom)
         {
-            foreach (var room in levelGenerator.SpawnedRooms)
+            foreach (var room in _levelGenerator.SpawnedRooms)
             {
                 if (room == excludedRoom)
                 {
@@ -79,7 +78,7 @@ namespace Resources.Scripts.LevelGenerate
             newRoom.Type = room.Type;
             newRoom.levelGenerator = room.levelGenerator;
             Destroy(room.gameObject);
-            levelGenerator.countEmptyPassages -= 1;
+            _levelGenerator.countEmptyPassages -= 1;
             return newRoom;
         }
         
@@ -114,7 +113,7 @@ namespace Resources.Scripts.LevelGenerate
                 newRoom = Instantiate(GetRoomByDirections(cachedOldDirections), newRoom.transform.position, Quaternion.identity);
                 return (newRoom, false);
             }
-            levelGenerator.countEmptyPassages += 1;
+            _levelGenerator.countEmptyPassages += 1;
             newRoom.Initialize(room.RequiredDirection, room.Type, room.levelGenerator);
             
             return (newRoom, true);
@@ -123,7 +122,7 @@ namespace Resources.Scripts.LevelGenerate
         public Room[] GetRoomsByType(RoomType roomType)
         {
             List<Room> rooms = new List<Room>();
-            foreach (var room in levelGenerator.SpawnedRooms)
+            foreach (var room in _levelGenerator.SpawnedRooms)
             {
                 if (room.Type == roomType)
                 {
@@ -137,7 +136,7 @@ namespace Resources.Scripts.LevelGenerate
         [CanBeNull]
         public Room GetActiveRoom()
         {
-            foreach (var room in levelGenerator.SpawnedRooms)
+            foreach (var room in _levelGenerator.SpawnedRooms)
             {
                 if (room.Status == RoomStatus.Active)
                 {

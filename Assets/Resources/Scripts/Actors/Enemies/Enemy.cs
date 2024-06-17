@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using Resources.Scripts.Actors.Player;
 using Resources.Scripts.LevelGenerate;
+using Resources.Scripts.ServiceLocatorSystem;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
@@ -14,15 +15,17 @@ namespace Resources.Scripts.Actors.Enemies
         [SerializeField, Min(1)] protected int attackPower;
         [SerializeField, Min(0.1f)] protected float distanceAttack;
         [SerializeField, Min(0.1f)] protected float cooldownAttack;
+        public UnityEvent<Enemy> OnDeath { get; private set; } = new();
         protected bool IsAttack = false;
         protected bool IsCooldown = false;
         protected UnityEvent OnEndCooldown = new();
-        public UnityEvent<Enemy> OnDeath { get; private set; } = new();
+        protected PlayerCharacter Player;
 
         protected override void Awake()
         {
             base.Awake();
             moveIsBlock = true;
+            Player = ServiceLocator.Instance.Get<PlayerCharacter>();
         }
 
         protected virtual void OnDrawGizmos()
@@ -33,7 +36,7 @@ namespace Resources.Scripts.Actors.Enemies
 
         protected float GetDistanceToPlayer()
         {
-            return Vector2.Distance(PlayerCharacter.Instance.transform.position, transform.position);
+            return Vector2.Distance(Player.transform.position, transform.position);
         }
 
         protected abstract void Attack();

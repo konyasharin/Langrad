@@ -7,7 +7,7 @@ namespace Resources.Scripts.DialogSystem
 {
     public class DialogWindow : MonoBehaviour
     {
-        public static DialogWindow Instance { get; private set; }
+        [SerializeField, Range(0.05f, 0.1f)] private float speedText;
         [SerializeField] private TMP_Text tmpTextField;
         [SerializeField] private TMP_Text tmpNameField;
         [SerializeField] private CanvasMove move;
@@ -25,14 +25,6 @@ namespace Resources.Scripts.DialogSystem
         /// (или для прекращения диалога)
         /// </summary>
         private bool _isWait = false;
-        [Range(0.05f, 0.1f)]
-        [SerializeField]
-        private float speedText;
-    
-        private void Awake()
-        {
-            Instance = this;
-        }
     
         private void Start()
         {

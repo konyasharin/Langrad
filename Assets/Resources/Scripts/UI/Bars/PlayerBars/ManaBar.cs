@@ -1,20 +1,14 @@
 using Resources.Scripts.Actors.Player;
+using Resources.Scripts.Actors.Player.ManaSystem;
 
 namespace Resources.Scripts.UI.Bars.PlayerBars
 {
     public class ManaBar : PlayerBarBase
     {
-        public static ManaBar Instance;
-
-        protected override void Awake()
-        {
-            base.Awake();
-            Instance = this;
-        }
-
+        
         protected override float GetValue()
         {
-            return ManaController.Instance.Mana;
+            return Player.ManaController.Mana;
         }
     }
 }

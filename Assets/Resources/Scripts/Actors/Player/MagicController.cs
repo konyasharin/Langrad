@@ -4,16 +4,15 @@ using UnityEngine;
 
 namespace Resources.Scripts.Actors.Player
 {
-    public class MagicController : MonoBehaviour
+    public class MagicController
     {
-        public static MagicController Instance { get; private set; }
-        private MagicScroll _currentMagicScroll;
-        [HideInInspector]
         public bool isWaitActivate;
+        private MagicScroll _currentMagicScroll;
+        private AnimationsController _animationsController;
 
-        private void Awake()
+        public void Initialize(AnimationsController animationsController)
         {
-            Instance = this;
+            _animationsController = animationsController;
         }
 
         public void HandleKeyDown()
@@ -29,7 +28,7 @@ namespace Resources.Scripts.Actors.Player
             if (_currentMagicScroll == null)
             {
                 _currentMagicScroll = magicScroll;
-                AnimationsController.Instance.PrepareMagicAttack();
+                _animationsController.PrepareMagicAttack();
             }
         }
 

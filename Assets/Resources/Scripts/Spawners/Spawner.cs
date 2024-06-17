@@ -1,16 +1,10 @@
+using Resources.Scripts.ServiceLocatorSystem;
 using UnityEngine;
 
 namespace Resources.Scripts.Spawners
 {
-    public class Spawner : MonoBehaviour
+    public class Spawner : MonoBehaviour, IService
     {
-        public static Spawner Instance { get; private set; }
-
-        private void Awake()
-        {
-            Instance = this;
-        }
-
         public GameObject Spawn(GameObject prefab, Vector2 position)
         {
             return Instantiate(prefab, position, Quaternion.identity);

@@ -7,14 +7,14 @@ namespace Resources.Scripts.Bullets
     {
         protected override void CalculateVelocity()
         {
-            Rb.velocity = (PlayerCharacter.Instance.transform.position - transform.position) * speed;
+            Rb.velocity = (Player.transform.position - transform.position) * speed;
         }
 
         protected override void HandleBulletHit(Collision2D other)
         {
             if (other.collider.CompareTag("Player"))
             {
-                PlayerCharacter.Instance.TakeDamage(damage);
+                Player.TakeDamage(damage);
             }
         }
     }

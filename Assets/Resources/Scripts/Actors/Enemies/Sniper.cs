@@ -11,12 +11,11 @@ namespace Resources.Scripts.Actors.Enemies
     public class Sniper : Enemy
     {
         [SerializeField] private GameObject bulletPrefab;
+        [SerializeField] private float distanceRun;
+        [SerializeField] private Transform bulletSpawnTransform;
+        
         private static readonly int AttackAnimTrigger = Animator.StringToHash("Attack");
         private static readonly int IsRun = Animator.StringToHash("IsRun");
-        [SerializeField]
-        private float distanceRun;
-        [SerializeField] private Transform bulletSpawnTransform;
-
         private readonly Vector2[] _directionsToMove = { Vector2.up, Vector2.right, Vector2.down, Vector2.left };
 
         private void Update()
@@ -41,7 +40,7 @@ namespace Resources.Scripts.Actors.Enemies
 
         private void Aim()
         {
-            Ray2D ray = new Ray2D(transform.position, PlayerCharacter.Instance.transform.position - transform.position);
+            Ray2D ray = new Ray2D(transform.position, Player.transform.position - transform.position);
             Debug.DrawRay(ray.origin, ray.direction * distanceAttack);
             RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, distanceAttack, LayerMask.GetMask("Player"));
             if (hit)

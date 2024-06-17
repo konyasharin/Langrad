@@ -9,7 +9,7 @@ namespace Resources.Scripts.Entities
         [SerializeField]
         private int sceneIndex;
 
-        private void Start()
+        protected override void Start()
         {
             InteractIsAvailable = true;
         }

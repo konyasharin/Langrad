@@ -6,9 +6,8 @@ namespace Resources.Scripts.Actors.Enemies
 {
     public class Warrior: Enemy
     {
-        [Min(0.1f), SerializeField]
-        private float timeWaitAttack;
-
+        [Min(0.1f), SerializeField] private float timeWaitAttack;
+        
         private static readonly int AnimAttack = Animator.StringToHash("Attack");
         private static readonly int IsRun = Animator.StringToHash("IsRun");
 
@@ -54,7 +53,7 @@ namespace Resources.Scripts.Actors.Enemies
             Animator.SetTrigger(AnimAttack);
             if (GetDistanceToPlayer() <= distanceAttack)
             {
-                PlayerCharacter.Instance.TakeDamage(attackPower);
+                Player.TakeDamage(attackPower);
             }
 
             StartCoroutine(WaitCooldown());

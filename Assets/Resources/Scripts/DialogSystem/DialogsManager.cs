@@ -2,57 +2,55 @@ using System.Collections;
 using System.Collections.Generic;
 using Resources.Scripts.Actors.Player;
 using Resources.Scripts.SaveLoadSystem;
+using Resources.Scripts.ServiceLocatorSystem;
 using UnityEngine;
 
 namespace Resources.Scripts.DialogSystem
 {
-    public class DialogsManager : MonoBehaviour
+    public class DialogsManager : MonoBehaviour, IService
     {
-        public static DialogsManager Instance { get; private set; }
-        private DialogWindow _dialogWindow;
-        private ChoicesWindow _choicesWindow;
-        private PlayerCharacter _playerCharacter;
+        [field: SerializeField] public ChoicesWindow ChoicesWindow { get; private set; }
+        [field: SerializeField] public DialogWindow DialogWindow { get; private set; }
+        
         public Dictionary<PlotInfluenceType, int> PlotInfluences { get; private set; }
+        
+        private PlayerCharacter _player;
+        private SaveLoadManager _saveLoadManager;
 
-        private void Awake()
+        public void Initialize()
         {
-            Instance = this;
-        }
-
-        private void Start()
-        {
-            _dialogWindow = DialogWindow.Instance;
-            _choicesWindow = ChoicesWindow.Instance;
-            _playerCharacter = PlayerCharacter.Instance;
-            PlotInfluences = SaveLoadManager.LoadGame().PlotInfluences;
+            _player = ServiceLocator.Instance.Get<PlayerCharacter>();
+            _saveLoadManager = ServiceLocator.Instance.Get<SaveLoadManager>();
+            ChoicesWindow.Initialize();
+            PlotInfluences = _saveLoadManager.LoadGame().PlotInfluences;
         }
 
         public IEnumerator StartDialog(Dialog dialog)
         {
-            _playerCharacter.moveIsBlock = true;
-            yield return _dialogWindow.Activate();
+            _player.moveIsBlock = true;
+            yield return DialogWindow.Activate();
             foreach (var sentence in dialog.scriptableObject.sentences)
             {
-                yield return _dialogWindow.ShowText(sentence);
+                yield return DialogWindow.ShowText(sentence);
             }
 
             if (dialog.choices.Length != 0)
             {
-                yield return _choicesWindow.Activate(dialog.choices);
+                yield return ChoicesWindow.Activate(dialog.choices);
         
-                while (_choicesWindow.GetIsActive())
+                while (ChoicesWindow.GetIsActive())
                 {
                     yield return null;
                 }
             }
-            yield return _dialogWindow.Deactivate();
-            _playerCharacter.moveIsBlock = false;
+            yield return DialogWindow.Deactivate();
+            _player.moveIsBlock = false;
         }
 
         public void ChangePlotInfluence(PlotInfluenceType plotInfluenceType, int countInfluence)
         {
             PlotInfluences[plotInfluenceType] += countInfluence;
-            SaveLoadManager.SaveGame();
+            _saveLoadManager.SaveGame();
         }
     }
 }

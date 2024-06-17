@@ -1,27 +1,30 @@
 using Resources.Scripts.Actors.Player;
+using Resources.Scripts.ServiceLocatorSystem;
 using UnityEngine;
 
 namespace Resources.Scripts.Spawners
 {
-    public class PlayerSpawner : MonoBehaviour
+    public class PlayerSpawner : MonoBehaviour, IService
     {
-        [field: SerializeField]
-        public GameObject PlayerPrefab { get; set; }
-        public static PlayerSpawner Instance { get; private set; }
+        [field: SerializeField] public GameObject PlayerPrefab { get; set; }
+        private PlayerCharacter _player;
+        private Spawner _spawner;
 
-        private void Awake()
+        public void Initialize()
         {
-            Instance = this;
+            _spawner = ServiceLocator.Instance.Get<Spawner>();
         }
 
-        public void SpawnPlayer(Vector2 position)
+        public PlayerCharacter SpawnPlayer(Vector2 position)
         {
-            if (PlayerCharacter.Instance != null)
+            if (_player != null)
             {
-                Destroy(PlayerCharacter.Instance.gameObject);
+                Destroy(_player.gameObject);
             }
 
-            Spawner.Instance.Spawn(PlayerPrefab, position);
+            _player = _spawner.Spawn(PlayerPrefab, position).GetComponent<PlayerCharacter>();
+
+            return _player;
         }
     }
 }

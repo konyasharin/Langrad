@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using Resources.Scripts.Actors.Enemies;
 using Resources.Scripts.Actors.Player;
 using Resources.Scripts.LevelGenerate.RoomScripts;
+using Resources.Scripts.ServiceLocatorSystem;
 using Resources.Scripts.Spawners;
 using UnityEngine;
 
 namespace Resources.Scripts.LevelGenerate
 {
-    public class LevelGenerator : MonoBehaviour
+    public class LevelGenerator : MonoBehaviour, IService
     {
-        [field: SerializeField]
-        public Level Level { get; private set; }
+        [field: SerializeField] public Level Level { get; private set; }
         public int SumSpawnPrices { get; private set; }
         public Enemy[] Enemies { get; private set; }
         public List<Room> SpawnedRooms { get; } = new();
@@ -23,12 +23,19 @@ namespace Resources.Scripts.LevelGenerate
         /// Количество еще пустых переходов между комнатами
         /// (в этом проходе должна заспавниться хотя бы одна комната)
         /// </summary>
-        [HideInInspector]
-        public int countEmptyPassages;
+        [HideInInspector] public int countEmptyPassages;
 
-        private void Awake()
+        private RoomsManager _roomsManager;
+        private PlayerSpawner _playerSpawner;
+        private Spawner _spawner;
+
+        public void Initialize()
         {
+            _roomsManager = ServiceLocator.Instance.Get<RoomsManager>();
+            _playerSpawner = ServiceLocator.Instance.Get<PlayerSpawner>();
+            _spawner = ServiceLocator.Instance.Get<Spawner>();
             Enemies = new Enemy[Level.enemiesPrefabs.Length];
+            
             for (int i = 0; i < Level.enemiesPrefabs.Length; i++)
             {
                 Enemies[i] = Level.enemiesPrefabs[i].GetComponent<Enemy>();
@@ -37,9 +44,12 @@ namespace Resources.Scripts.LevelGenerate
 
         public void Generate()
         {
-            RoomsManager.Instance.levelGenerator = this;
             SpawnRooms();
+            Room startRoom = _roomsManager.GetRoomsByType(RoomType.Start)[0];
             SumSpawnPrices = UnityEngine.Random.Range(Level.minSumSpawnPrices, Level.maxSumSpawnPrices + 1);
+            
+            ServiceLocator.Instance.Add(_playerSpawner.SpawnPlayer(startRoom.transform.position));
+            
             foreach (var room in SpawnedRooms)
             {
                 if (room.Type == RoomType.Common)
@@ -47,11 +57,8 @@ namespace Resources.Scripts.LevelGenerate
                     room.SpawnEnemies();   
                 }
             }
-
-            Room startRoom = RoomsManager.Instance.GetRoomsByType(RoomType.Start)[0];
             startRoom.SpawnItems(Level.startItemsPrefabs);
-            PlayerSpawner.Instance.SpawnPlayer(startRoom.transform.position);
-            Spawner.Instance.Spawn(Level.portal, SpawnedRooms[^1].transform.position);
+            _spawner.Spawn(Level.portal, SpawnedRooms[^1].transform.position);
         }
 
         private void SpawnRooms()
@@ -59,7 +66,7 @@ namespace Resources.Scripts.LevelGenerate
             List<Room> startRooms = new List<Room>();
             foreach (var direction in Enum.GetNames(typeof(Direction)))
             {
-                Room newRoom = RoomsManager.Instance.GetRoomByDirections(new[] { Enum.Parse<Direction>(direction) });
+                Room newRoom = _roomsManager.GetRoomByDirections(new[] { Enum.Parse<Direction>(direction) });
                 if (newRoom != null)
                 {
                     startRooms.Add(newRoom);
@@ -90,9 +97,9 @@ namespace Resources.Scripts.LevelGenerate
                             {
                                 // Удаляем проход если в месте, где стоит roomSpawnPoint уже стоит другая точка
                                 if (roomSpawnPoint.Direction != (replacedRoom ? replacedRoom.RequiredDirection : newWaitingRoom.RequiredDirection) &&
-                                    RoomsManager.Instance.IsBusyOtherRoomPoint(roomSpawnPoint, replacedRoom ? replacedRoom : newWaitingRoom))
+                                    _roomsManager.IsBusyOtherRoomPoint(roomSpawnPoint, replacedRoom ? replacedRoom : newWaitingRoom))
                                 {
-                                    Room newReplacedRoom = RoomsManager.Instance.DeleteDirection(roomSpawnPoint.Direction, replacedRoom == null ? newWaitingRoom : replacedRoom);
+                                    Room newReplacedRoom = _roomsManager.DeleteDirection(roomSpawnPoint.Direction, replacedRoom == null ? newWaitingRoom : replacedRoom);
                                     
                                     for (int j = 0; j < SpawnedRooms.Count; j++)
                                     {
@@ -114,9 +121,9 @@ namespace Resources.Scripts.LevelGenerate
                     {
                         for (int j = 0; j < SpawnedRooms.Count; j++)
                         {
-                            if (RoomsManager.Instance.IsExpandableRoom(SpawnedRooms[i]))
+                            if (_roomsManager.IsExpandableRoom(SpawnedRooms[i]))
                             {
-                                (Room newRoom, bool isReplaced) = RoomsManager.Instance.AddRandomDirection(SpawnedRooms[i]);
+                                (Room newRoom, bool isReplaced) = _roomsManager.AddRandomDirection(SpawnedRooms[i]);
                                 if (isReplaced)
                                 {
                                     WaitingRooms.Add(newRoom);

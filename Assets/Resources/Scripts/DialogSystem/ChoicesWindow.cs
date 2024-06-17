@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Resources.Scripts.ServiceLocatorSystem;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,25 +9,23 @@ namespace Resources.Scripts.DialogSystem
 {
     public class ChoicesWindow : MonoBehaviour
     {
-        public static ChoicesWindow Instance { get; private set; }
         [SerializeField] private Button choiceButton;
-    
-        [Range(0f, 1f)]
-        [SerializeField] 
-        private float showTime;
+        [SerializeField, Range(0f, 1f)] private float showTime;
 
         private bool _isActive = false;
         private bool _isWait = false;
-        private readonly List<Button> _choiceButtons = new List<Button>();
-
+        private DialogsManager _dialogsManager;
+        
+        private readonly List<Button> _choiceButtons = new();
+        
+        public void Initialize()
+        {
+            _dialogsManager = ServiceLocator.Instance.Get<DialogsManager>();
+        }
+        
         public bool GetIsActive()
         {
             return _isActive;
-        }
-
-        private void Awake()
-        {
-            Instance = this;
         }
 
         public IEnumerator Activate(Choice[] choices)
@@ -39,7 +38,7 @@ namespace Resources.Scripts.DialogSystem
             _isWait = true;
         }
     
-        public IEnumerator Deactivate()
+        private IEnumerator Deactivate()
         {
             for (int i = _choiceButtons.Count - 1; i >= 0; i--)
             {
@@ -94,7 +93,7 @@ namespace Resources.Scripts.DialogSystem
                 _isWait = false;
                 foreach (var plotInfluence in choice.plotInfluences)
                 {
-                    DialogsManager.Instance.ChangePlotInfluence(plotInfluence.type, plotInfluence.count);
+                    _dialogsManager.ChangePlotInfluence(plotInfluence.type, plotInfluence.count);
                 }
                 
                 foreach (var dialogToggle in choice.dialogToggles)

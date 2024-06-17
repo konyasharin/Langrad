@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Resources.Scripts.Actors.Enemies;
 using Resources.Scripts.Actors.Player;
 using Resources.Scripts.Items;
+using Resources.Scripts.ServiceLocatorSystem;
 using UnityEngine;
 using Random = Resources.Scripts.Utils.Random;
 
@@ -11,25 +13,29 @@ namespace Resources.Scripts.LevelGenerate.RoomScripts
     [RequireComponent(typeof(Collider2D))]
     public class Room : MonoBehaviour
     {
+        [field: SerializeField] public Direction[] Directions { get; private set; }
+        [HideInInspector] public LevelGenerator levelGenerator;
+        
         private readonly List<SpawnPoint> _passageSpawnPoints = new();
         private readonly List<SpawnPoint> _doorSpawnPoints = new();
-        private SpawnArea _spawnArea;
-        private Collider2D _collider;
-        public List<Enemy> Enemies { get; private set; } = new();
-        [HideInInspector]
-        public LevelGenerator levelGenerator;
-        public List<SpawnPoint> RoomSpawnPoints { get; private set; } = new();
         private readonly List<GameObject> _doors = new();
-        [field: SerializeField]
-        public Direction[] Directions { get; private set; }
+        
+        public List<Enemy> Enemies { get; private set; } = new();
+        public List<SpawnPoint> RoomSpawnPoints { get; private set; } = new();
+        
         public Direction? RequiredDirection;
         public RoomType? Type;
         public RoomStatus? Status;
+        
+        private SpawnArea _spawnArea;
+        private Collider2D _collider;
+        private RoomsManager _roomsManager;
         
         private void Awake()
         {
             _spawnArea = GetComponentInChildren<SpawnArea>();
             _collider = GetComponent<Collider2D>();
+            _roomsManager = ServiceLocator.Instance.Get<RoomsManager>();
             foreach (var spawnPoint in GetComponentsInChildren<SpawnPoint>())
             {
                 switch (spawnPoint.SpawnPointType)
@@ -75,7 +81,7 @@ namespace Resources.Scripts.LevelGenerate.RoomScripts
             foreach (var passageSpawnPoint in _passageSpawnPoints)
             {
                 if (passageSpawnPoint.Direction == RequiredDirection || 
-                    RoomSpawnPoints.Any(point => point.Direction == passageSpawnPoint.Direction && RoomsManager.Instance.IsBusyOtherRoomPoint(point, this)))
+                    RoomSpawnPoints.Any(point => point.Direction == passageSpawnPoint.Direction && _roomsManager.IsBusyOtherRoomPoint(point, this)))
                 {
                     continue;
                 }
@@ -98,7 +104,7 @@ namespace Resources.Scripts.LevelGenerate.RoomScripts
             List<Room> newRooms = new List<Room>();
             foreach (var roomSpawnPoint in RoomSpawnPoints)
             {
-                if (RequiredDirection == roomSpawnPoint.Direction || RoomsManager.Instance.IsBusyOtherRoomPoint(roomSpawnPoint, this))
+                if (RequiredDirection == roomSpawnPoint.Direction || _roomsManager.IsBusyOtherRoomPoint(roomSpawnPoint, this))
                 { 
                     continue;
                 }
