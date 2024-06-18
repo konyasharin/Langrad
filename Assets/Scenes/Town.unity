@@ -6718,6 +6718,7 @@ MonoBehaviour:
   <Dialogs>k__BackingField:
   - <Choices>k__BackingField: []
     <DialogScriptableObject>k__BackingField: {fileID: 11400000, guid: 3f948a038fc0fd84786d73cd78145ce3, type: 2}
+    <Toggles>k__BackingField: []
     status: 0
 --- !u!95 &704440502
 Animator:
@@ -7001,6 +7002,10 @@ MonoBehaviour:
   <Dialogs>k__BackingField:
   - <Choices>k__BackingField: []
     <DialogScriptableObject>k__BackingField: {fileID: 11400000, guid: a4a4e74d2bbfa5346b16e55061977c72, type: 2}
+    <Toggles>k__BackingField:
+    - character: {fileID: 704440501}
+      dialogScriptableObject: {fileID: 11400000, guid: 3f948a038fc0fd84786d73cd78145ce3, type: 2}
+      newDialogStatus: 1
     status: 1
 --- !u!114 &1293180830 stripped
 MonoBehaviour:

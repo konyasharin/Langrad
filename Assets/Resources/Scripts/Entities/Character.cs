@@ -14,13 +14,14 @@ namespace Resources.Scripts.Entities
 
         protected override void Start()
         {
-            base.Start();
             _dialogsManager = ServiceLocator.Instance.Get<DialogsManager>();
             
             foreach (var dialog in Dialogs)
             {
                 _dialogsManager.DialogsSaver.LoadDialog(dialog);
             }
+            
+            base.Start();
         }
 
         public override void CheckInteractIsAvailable()

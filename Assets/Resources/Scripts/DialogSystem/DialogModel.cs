@@ -8,6 +8,7 @@ namespace Resources.Scripts.DialogSystem
     {
         [field: SerializeField] public Choice[] Choices { get; private set; }
         [field: SerializeField] public DialogScriptableObject DialogScriptableObject { get; private set; }
+        [field: SerializeField] public DialogToggle[] Toggles { get; private set; }
         
         public DialogStatus status;
     }

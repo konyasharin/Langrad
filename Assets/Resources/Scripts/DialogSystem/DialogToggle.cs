@@ -7,7 +7,7 @@ namespace Resources.Scripts.DialogSystem
     public struct DialogToggle
     {
         public Character character;
-        public string dialogName;
+        public DialogScriptableObject dialogScriptableObject;
         public DialogStatus newDialogStatus;
     }
 }

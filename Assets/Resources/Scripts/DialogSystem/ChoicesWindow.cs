@@ -96,24 +96,7 @@ namespace Resources.Scripts.DialogSystem
                     _dialogsManager.ChangePlotInfluence(plotInfluence.type, plotInfluence.count);
                 }
                 
-                foreach (var dialogToggle in choice.dialogToggles)
-                {
-                    bool isWarning = true;
-                    for (int i = 0; i < dialogToggle.character.Dialogs.Length; i++)
-                    {
-                        if (dialogToggle.character.Dialogs[i].DialogScriptableObject.name == dialogToggle.dialogName)
-                        {
-                            isWarning = false;
-                            dialogToggle.character.Dialogs[i].status = dialogToggle.newDialogStatus;
-                            _dialogsManager.DialogsSaver.SaveDialog(dialogToggle.character.Dialogs[i]);
-                        }
-                    }
-                    if (isWarning)
-                    {
-                        Debug.LogWarning($"Character with name '{dialogToggle.character.CharacterName}' doesn't have dialog with name {dialogToggle.dialogName}");
-                    }
-                    dialogToggle.character.CheckInteractIsAvailable();
-                }
+                _dialogsManager.ToggleDialogs(choice.dialogToggles);
             
                 StartCoroutine(Deactivate());   
             }

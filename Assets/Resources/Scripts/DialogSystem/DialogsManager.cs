@@ -4,6 +4,7 @@ using Resources.Scripts.Actors.Player;
 using Resources.Scripts.SaveLoadSystem;
 using Resources.Scripts.ServiceLocatorSystem;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Resources.Scripts.DialogSystem
 {
@@ -44,6 +45,8 @@ namespace Resources.Scripts.DialogSystem
                 }
             }
             
+            ToggleDialogs(dialog.Toggles);
+            
             dialog.status = DialogStatus.Completed;
             DialogsSaver.SaveDialog(dialog);
             
@@ -55,6 +58,28 @@ namespace Resources.Scripts.DialogSystem
         {
             PlotInfluences[plotInfluenceType] += countInfluence;
             //_saveLoadManager.SaveGame();
+        }
+
+        public void ToggleDialogs(DialogToggle[] dialogToggles)
+        {
+            foreach (var dialogToggle in dialogToggles)
+            {
+                foreach (var dialog in dialogToggle.character.Dialogs)
+                {
+                    if (dialog.DialogScriptableObject == dialogToggle.dialogScriptableObject)
+                    {
+                        dialog.status = dialogToggle.newDialogStatus;
+                        DialogsSaver.SaveDialog(dialog);
+                    }
+                    else
+                    {
+                        Debug.LogWarning($"Character with name '{dialogToggle.character.CharacterName}' " +
+                                         $"doesn't have dialog {dialogToggle.dialogScriptableObject.name}");
+                    }
+                }
+                
+                dialogToggle.character.CheckInteractIsAvailable();
+            }
         }
     }
 }

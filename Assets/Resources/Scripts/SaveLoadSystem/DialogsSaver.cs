@@ -11,46 +11,37 @@ namespace Resources.Scripts.SaveLoadSystem
     public class DialogsSaver
     {
         private Dictionary<string, DialogStatus> _currentSave;
-        private JsonSaveService _jsonSaveService = new();
-        private static readonly string FilePath = Path.Combine(Application.persistentDataPath, "dialogs.save");
+        private readonly JsonSaveService _jsonSaveService = new();
+        private static readonly string FilePath = Path.Combine(Application.persistentDataPath, "dialogs.json");
 
         public DialogsSaver()
         {
-            Load();
+            _currentSave = Load();
         }
 
-        public void Load()
+        private Dictionary<string, DialogStatus> Load()
         {
             if (!File.Exists(FilePath))
             {
-                //_currentSave = _jsonSaveService.Load<>()
-                //callback.Invoke(new Dictionary<string, DialogStatus>());
-                return;
+                return new();
             }
 
-            BinaryFormatter bf = new BinaryFormatter();
-            using FileStream fs = new FileStream(FilePath, FileMode.Open);
-            //callback.Invoke((Dictionary<string, DialogStatus>)bf.Deserialize(fs));
+            return _jsonSaveService.Load<Dictionary<string, DialogStatus>>(FilePath);
         }
 
-        public void Save()
+        private void Save()
         {
-            BinaryFormatter bf = new BinaryFormatter();
-            using FileStream fs = new FileStream(FilePath, FileMode.Create);
-            
-            bf.Serialize(fs, _currentSave);
+            _jsonSaveService.Save(FilePath, _currentSave);
         }
-
-        /// <summary>
-        /// Сохраняет диалог, на время (до закрытия игры), если не запустить метод Save.
-        /// Нужен так как метод Save затратно постоянно вызывать.
-        /// </summary>
+        
         public void SaveDialog(DialogModel dialog)
         {
             if (!_currentSave.TryAdd(dialog.DialogScriptableObject.name, dialog.status))
             {
                 _currentSave[dialog.DialogScriptableObject.name] = dialog.status;
             }
+            
+            Save();
         }
         
         public void LoadDialog(DialogModel dialog)
